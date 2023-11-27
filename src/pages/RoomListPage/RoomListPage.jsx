@@ -2,7 +2,7 @@ import React ,{useEffect,useState} from "react";
 import socket from "../../server";
 import { useNavigate } from "react-router-dom";
 import "./RoomListPageStyle.css";
-
+// 채팅창 목록
 const RoomListPage=({rooms})=>{
     const navigate=useNavigate();
 
@@ -13,7 +13,7 @@ const RoomListPage=({rooms})=>{
     return(
         <div className="room-body">
             <div className="room-nav">채팅 ▼</div>
-
+   
             {rooms.length>0
                 ?rooms.map((room)=>(
                     <div
