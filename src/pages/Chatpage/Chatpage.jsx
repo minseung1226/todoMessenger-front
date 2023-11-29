@@ -29,7 +29,7 @@ const ChatPage=({user})=>{
         event.preventDefault();
         socket.emit("sendMessage",message,(res)=>{
             if(!res.ok){
-                console.log("error message=",res.console.error);
+                console.log("error message=",res.error.message);
             }
             setMessage("");
         })
