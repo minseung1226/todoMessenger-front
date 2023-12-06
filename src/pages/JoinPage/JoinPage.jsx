@@ -6,7 +6,7 @@ import { Button } from "@mui/base";
 const server_url=process.env.REACT_APP_SERVER_URL;
 
 const JoinPage=()=>{
-    const [userId,setUserId]=useState("");
+    const [id,setId]=useState("");
     const [pw,setPw]=useState("");
     const [name,setName]=useState("");
     const navigate=useNavigate("");
@@ -19,7 +19,7 @@ const JoinPage=()=>{
                 "Content-type":"application/json"
             },
             body:JSON.stringify({
-                userId:userId,
+                loginId:id,
             })
         })
         .then((res)=>res.json())
@@ -43,7 +43,7 @@ const JoinPage=()=>{
                 "Content-type":"application/json"
             },
             body:JSON.stringify({
-                userId:userId,
+                loginId:id,
                 pw:pw,
                 name:name
             }),
@@ -69,8 +69,8 @@ const JoinPage=()=>{
             <Input 
                 placeholder="ID"
                 disabled={idCheck}
-                value={userId}
-                onChange={(event)=>setUserId(event.target.value)}
+                value={id}
+                onChange={(event)=>setId(event.target.value)}
                 multiline={false}
                 rows={1}/>
             <Button 

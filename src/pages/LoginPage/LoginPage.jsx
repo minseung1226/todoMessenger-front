@@ -2,13 +2,17 @@ import React,{useState} from "react";
 import { useNavigate } from "react-router-dom";
 import { Input } from "@mui/base";
 import { Button } from "@mui/base";
-const server_url=process.env.REACT_APP_SERVER_URL;
+import { useDispatch } from "react-redux";
+import { connectSocket } from "../../redux/actions/socketActions";
+import { getSocket } from "../../socket/socket";
 const LoginPage=()=>{
+    const server_url=process.env.REACT_APP_SERVER_URL;
     const [id,setId]=useState("");
     const [pw,setPw]=useState("");
     const navigate=useNavigate();
+    const dispatch=useDispatch();
     const login=(event)=>{
-
+        
         event.preventDefault();
         fetch(`${server_url}/login`,{
             method:"POST",
@@ -16,7 +20,7 @@ const LoginPage=()=>{
                 "Content-Type":"application/json",
             },
             body:JSON.stringify({
-                userId:id,
+                loginId:id,
                 pw:pw
             }),
         })
@@ -28,7 +32,15 @@ const LoginPage=()=>{
             }
             else{
                 sessionStorage.setItem('jwtToken',data.token);
-                alert("로그인 성공");
+                dispatch(connectSocket());
+                const socket=getSocket();
+                socket.emit("saveSocketId",data.token,(res)=>{
+                    if(res.ok) navigate("/rooms");
+                    else{
+                        alert("socketId 저장 실패")
+                    }
+                })
+                
             }
         })
         .catch((err)=>{

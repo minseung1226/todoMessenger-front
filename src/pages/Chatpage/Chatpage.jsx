@@ -1,35 +1,50 @@
 // import React,{useEffect,useState} from "react";
-// import socket from "../../server"
 // import {Button} from "@mui/base/Button"
 // import MessageContainer from "../../components/MessageContainer/MessageContainer";
 // import InputField from "../../components/InputField/InputField";
 // import "./ChatPageStyle.css"
 // import {useParams,useNavigate} from "react-router-dom"
 
-// const ChatPage=({user})=>{
+// const ChatPage=()=>{
+//     const server_url=process.env.REACT_APP_SERVER_URL;
+//     const token=sessionStorage.getItem("jwtToken");
+//     const [user,setUser]=useState('');
 //     const [messageList,setMessageList]=useState([]);
 //     const [message,setMessage]=useState("");
 //     const {id}=useParams();
 //     const navigate=useNavigate();
 //     useEffect(()=>{
+//         fetch(`${server_url}/findUser?roomId=${id}`,{
+//             method:"GET",
+//             headers:{
+//                 "Content-type":"application/json",
+//                 "Authorization":`Bearer ${token}`
+//             },
+            
+//         }).then(res=>res.json())
+//         .then((data)=>{
+//             console.log("user=",data);
+//             setUser(data)})
+//         .catch(err=>console.log(err.message));
+
+//         socket.emit("getAllChats",id,(res)=>{
+//             setMessageList(res);
+//         });
+
 //         socket.on("message",(res)=>{
-//             console.log("message",res);
 //             setMessageList((prevState)=>prevState.concat(res));
 //         });
-//         socket.emit("joinRoom",id,(res)=>{
-//             if(res&& res.ok){
-//                 console.log("successfully join",res);
-//             }else{
-//                 console.log("fail to join",res);
-//             }
-//         })
+
+
 //     },[]);
+
+
 
 //     const sendMessage=(event)=>{
 //         event.preventDefault();
-//         socket.emit("sendMessage",message,(res)=>{
+//         socket.emit("sendMessage",message,id,(res)=>{
 //             if(!res.ok){
-//                 console.log("error message=",res.error.message);
+//                 console.log("error message=",res.error);
 //             }
 //             setMessage("");
 //         })
@@ -64,4 +79,4 @@
 //     );
 // }
 
-// //export default ChatPage;
+// export default ChatPage;
