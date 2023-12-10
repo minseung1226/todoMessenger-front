@@ -2,12 +2,14 @@ import "./MessageContainer.css";
 import { Container } from "@mui/system";
 
 const MessageContainer = ({ messageList, user }) => {
+
+  console.log("user=",user);
   return (
     <div>
       {messageList.map((message, index) => {
         return (
           <Container key={message._id} className="message-container">
-            {message.user.name === "system" ? (
+            {message.user.name==="system" ? (
               <div className="system-message-container">
                 <p className="system-message">{message.chat}</p>
               </div>

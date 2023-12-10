@@ -2,31 +2,25 @@ import React,{useState,useEffect}  from "react";
 import { useNavigate } from "react-router-dom";
 import "./RoomListPageStyle.css";
 import CreateChatModal from "../../components/CreateChatModal/CreateChatModal";
+import { getSocket } from "../../socket/socket";
 // 채팅창 목록
 const RoomListPage=()=>{
     const server_url=process.env.REACT_APP_SERVER_URL
     const token=sessionStorage.getItem('jwtToken');
     const [rooms,setRooms]=useState([]);
     const [showModal,setShowModal]=useState(false);
+    const socket=getSocket();
 
     const createRoom=(roomName)=>{
-        fetch(`${server_url}/createRoom`,{
-            method:"POST",
-            headers:{
-                "Content-type":"application/json",
-                "Authorization":`Bearer ${token}`
-            },
-            body:JSON.stringify({
-                roomName:roomName,
-            }),
-        }).then(res=>res.json())
-        .then(data=>{
-            if(data.ok){
-                navigate(`/room/${data.roomId}`);
+        
+        socket.emit(`createRoom`,token,roomName,(res)=>{
+            if(res.ok){
+                navigate(`/room/${res.roomId}`);
             }else{
-                console.log("Err=",data.error);
+                console.log("err=",res.err);
             }
         })
+        
     }
 
     useEffect(()=>{
@@ -39,10 +33,11 @@ const RoomListPage=()=>{
             
         }).then(res=>res.json())
         .then(data=>{
+
             setRooms(data.rooms);
         })
         .catch(err=>console.log(err.message));
-    })
+    },[token,server_url])
     
     
     const navigate=useNavigate();
@@ -67,7 +62,7 @@ const RoomListPage=()=>{
                     >
                         <div className="room-title">
                             {/* <img src="/profile.jpeg"/> */}
-                            <p>{room.room}</p>
+                            <p>{room.roomName}</p>
                         </div>
                         <div className="member-number">{room.members.length}</div>
                     </div>
