@@ -31,6 +31,7 @@ const LoginPage=()=>{
                 alert("아이디 또는 비밀번호가 일치하지 않습니다.");
             }
             else{
+                console.log("token=",data.token);
                 sessionStorage.setItem('jwtToken',data.token);
                 dispatch(connectSocket());
                 const socket=getSocket();
