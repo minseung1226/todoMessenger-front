@@ -5,6 +5,7 @@ import { Button } from "@mui/base";
 import { useDispatch } from "react-redux";
 import { connectSocket } from "../../redux/actions/socketActions";
 import { getSocket } from "../../socket/socket";
+
 const LoginPage=()=>{
     const server_url=process.env.REACT_APP_SERVER_URL;
     const [id,setId]=useState("");
@@ -28,17 +29,16 @@ const LoginPage=()=>{
         .then(data=>{
 
             if(!data.ok){
-                alert("아이디 또는 비밀번호가 일치하지 않습니다.");
+                window.electron.send("normal-box","확인","아이디 또는 비밀번호가 일치하지 않습니다.");
             }
             else{
-                console.log("token=",data.token);
                 sessionStorage.setItem('jwtToken',data.token);
                 dispatch(connectSocket());
                 const socket=getSocket();
                 socket.emit("saveSocketId",data.token,(res)=>{
                     if(res.ok) navigate("/rooms");
                     else{
-                        alert("socketId 저장 실패")
+                        console.log("socket.id 저장 실패");
                     }
                 })
                 
