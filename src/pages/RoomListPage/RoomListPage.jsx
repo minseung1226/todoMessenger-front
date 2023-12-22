@@ -20,8 +20,8 @@ const RoomListPage=()=>{
             
         }).then(res=>res.json())
         .then(data=>{
-
-            setRooms(data.rooms);
+            console.log("room=",data);
+            setRooms(data.chatRoomsInfo);
         })
         .catch(err=>console.log(err.message));
     },[token,server_url])
@@ -41,7 +41,12 @@ const RoomListPage=()=>{
                     <div className="room-list" key={room._id} onClick={() => moveToChat(room._id)}>
                         <div className="room-title">
                             {/* <img src="/profile.jpeg"/> */}
-                            <p>{room.roomName}</p>
+                            <p>{room.roomName?
+                            room.roomName:room.members
+                                                    .slice(0,3)
+                                                    .map(members=>members.name)
+                                                    .join(`, `)
+                                                    +(room.members.length>3?`...`:"")}</p>
                         </div>
                         <div className="member-number">{room?.members?.length}</div>
                     </div>
