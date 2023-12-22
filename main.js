@@ -13,7 +13,6 @@ function createWindow() {
     win.loadURL('http://localhost:3000'); // React 개발 서버 주소
 }
 ipcMain.on("normal-box",(event,title,message)=>{
-    console.log("title=",title);
     dialog.showMessageBox({
         type:"info",
         buttons:["확인"],

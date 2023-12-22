@@ -5,11 +5,14 @@ import { Button } from "@mui/base";
 import { useDispatch } from "react-redux";
 import { connectSocket } from "../../redux/actions/socketActions";
 import { getSocket } from "../../socket/socket";
+import AlertModal from "../../components/AlertModal/AlertModal";
 
 const LoginPage=()=>{
     const server_url=process.env.REACT_APP_SERVER_URL;
     const [id,setId]=useState("");
     const [pw,setPw]=useState("");
+    const [alertMessage,setAlertMessage]=useState("");
+    const [alertIsOpen,setAlertIsOpen]=useState(false);
     const navigate=useNavigate();
     const dispatch=useDispatch();
     const login=(event)=>{
@@ -29,7 +32,9 @@ const LoginPage=()=>{
         .then(data=>{
 
             if(!data.ok){
-                window.electron.send("normal-box","확인","아이디 또는 비밀번호가 일치하지 않습니다.");
+                setAlertMessage("아이디 또는 비밀번호 불일치");
+                setAlertIsOpen(true);
+                //window.electron.send("normal-box","로그인 실패","");
             }
             else{
                 sessionStorage.setItem('jwtToken',data.token);
@@ -74,6 +79,11 @@ const LoginPage=()=>{
             <Button
                 type="button"
                 onClick={()=>navigate("/join")}>회원가입</Button>
+
+            <AlertModal
+                isOpen={alertIsOpen}
+                message={alertMessage}
+                onClose={()=>setAlertIsOpen(false)}/>
         </div>
     )
 }

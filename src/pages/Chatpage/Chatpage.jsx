@@ -16,7 +16,7 @@ const ChatPage=()=>{
     const socket=getSocket();
     useEffect(()=>{
         socket.emit("getAllChatsAndUser",roomId,token,(res)=>{
-            console.log("완료 res=",res);
+            console.log()
             setUser(res.user);
             setMessageList(res.chats);
         });
