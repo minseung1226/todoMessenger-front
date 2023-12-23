@@ -5,6 +5,7 @@ import RoomListPage from "./pages/RoomListPage/RoomListPage";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import JoinPage from "./pages/JoinPage/JoinPage";
 import CreateRoomPage from "./pages/CreateRoom/CreateRoomPage";
+import FriendListPage from "./pages/FriendListPage/FriendListPage";
 function App() {
 
 
@@ -18,6 +19,7 @@ function App() {
       <Route exact path="/rooms" element={<RoomListPage/>}/>
       <Route exact path="/room/:roomId" element={<ChatPage/>}/>
       <Route exact path="/createRoom" element={<CreateRoomPage/>}/>
+      <Route exact path="/friends" element={<FriendListPage/>}/>
       </Routes>
     </BrowserRouter>
 

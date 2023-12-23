@@ -41,7 +41,7 @@ const LoginPage=()=>{
                 dispatch(connectSocket());
                 const socket=getSocket();
                 socket.emit("saveSocketId",data.token,(res)=>{
-                    if(res.ok) navigate("/rooms");
+                    if(res.ok) navigate("/friends");
                     else{
                         console.log("socket.id 저장 실패");
                     }
