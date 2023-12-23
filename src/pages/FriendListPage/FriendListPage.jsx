@@ -11,48 +11,32 @@ const FriendListPage=()=>{
     const [friends,setFriends]=useState([]);
 
     useEffect(()=>{
-        fetch(`${server_url}/friends`,{
-            method:"post",
+        const url=new URL(`${server_url}/friends`);
+        url.searchParams.append("friendName",friendInput);
+        fetch(url,{
+            method:"get",
             headers:{
                 "Content-type":"application/json",
                 "Authorization":`Bearer ${token}`
             }
         }).then(res=>res.json())
-        .then(data=>setFriends(data))
-        .catch(err=>console.log(err));
-    },[])
-
-
-
-    const friend_search=(event)=>{
-        setFriendInput(event.target.value);
-        fetch(`${server_url}/friend/search`,{
-            method:"get",
-            headers:{
-                "Content-type":"application/json"
-            },
-            body:JSON.stringify({
-                friendName:friendInput
-            })
-        }).then(res=>res.json())
         .then(data=>setFriends(data.friends))
-        .catch(err=>{
-            console.log("friends search client error");
-            throw err;
-        })
-    }
+        .catch(err=>console.log(err));
+    },[friendInput])
+
     return (
         <div>
-            <Input type="text" onChange={friend_search}/>
+            <Input type="text" onChange={(event)=>setFriendInput(event.target.value)}/>
             <div>
                 <div >
-                    {friends.map((friend,index)=>(
+                    {friends?friends?.map((friend,index)=>(
                         <div key={index}> {friend.name}</div>
-                    ))}
+                    )):<div></div>}
                 </div>
             </div>
-            <Button type="button" onClick={()=>navigate("/rooms")}/>           
+            <Button type="button" onClick={()=>navigate("/rooms")}>채팅방이동</Button>           
             <Logout/>
+            <Button type="button" onClick={()=>navigate("/user/search")}>친구 추가</Button>
         </div>
     )
 }
