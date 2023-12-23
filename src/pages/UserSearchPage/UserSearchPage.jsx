@@ -21,6 +21,7 @@ const FriendSearchPage=()=>{
             },
         }).then(res=>res.json())
         .then(data=>{
+            console.log("data=",data);
             if(data.errorMessage){
                 setAlertIsOpen(true);
                 setAlertMessage(data.errorMessage);

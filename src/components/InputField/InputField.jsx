@@ -11,8 +11,11 @@ const InputField = ({message,setMessage,sendMessage}) => {
             <Input
               placeholder="Type in here…"
               value={message}
-              onChange={(event) => setMessage(event.target.value)}
-              multiline={false}
+              onChange={(event) => {
+                setMessage(event.target.value)
+              }}
+              
+                multiline={false}
               rows={1}
             />
 
