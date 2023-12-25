@@ -30,7 +30,6 @@ const LoginPage=()=>{
         })
         .then((res)=>res.json())
         .then(data=>{
-
             if(!data.ok){
                 setAlertMessage("아이디 또는 비밀번호 불일치");
                 setAlertIsOpen(true);

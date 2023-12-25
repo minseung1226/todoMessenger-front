@@ -34,6 +34,7 @@ const RoomListPage=()=>{
         <div className="room-body">
             <div className="room-nav">채팅 ▼</div>
             <button onClick={()=>navigate("/createRoom")}>채팅방 생성</button>
+            <button onClick={()=>navigate("/friends")}>친구목록</button>
 
             
             {rooms?.length > 0 ? (

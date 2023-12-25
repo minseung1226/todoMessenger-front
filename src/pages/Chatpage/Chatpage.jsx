@@ -42,9 +42,7 @@ const ChatPage=()=>{
     }
 
     const leaveRoom=()=>{
-        socket.emit("leaveRoom",user,(res)=>{
-            if(res.ok) navigate("/rooms") 
-        })
+        navigate("/rooms");
     }
 
     return(
