@@ -10,28 +10,24 @@ const RootPage=()=>{
     const [currentView,setCurrentView]=useState(CurrentView.friendList);
     const [friendList,setFriendList]=useState([]);
     const [roomList,setRoomList]=useState([]);
-    const socket=getSocket;
+    const server_url = process.env.REACT_APP_SERVER_URL;
+    const socket=getSocket();
     const token=sessionStorage.getItem("jwtToken");
     useEffect(()=>{
         socket.emit("friendList",token,(res)=>{
-            setFriendList(res);
+            console.log("friendList=",res.friendList);
+            setFriendList(res.friendList);
+        });
+        
+        socket.emit("roomList",token,(res)=>{
+            setRoomList(res.chatRoomListInfo);
+
         })
-        // const url=new URL(`${server_url}/friends`);
-        // url.searchParams.append("friendName",friendInput);
-        // fetch(url,{
-        //     method:"get",
-        //     headers:{
-        //         "Content-type":"application/json",
-        //         "Authorization":`Bearer ${token}`
-        //     }
-        // }).then(res=>res.json())
-        // .then(data=>setFriendList(data.friends))
-        // .catch(err=>console.log(err));
-    },[friendList])
+    },[]);
 
     useEffect(()=>{
-        
-    },[roomList]);
+        console.log("useEffect friendList=",friendList);
+    },[friendList]);
     return(
         <Container fluid>
             <Row>
@@ -43,8 +39,8 @@ const RootPage=()=>{
                 </Col>
 
                 <Col md={10} className="content">
-                {currentView===CurrentView.friendList && <FriendListPage/>}
-                    {currentView===CurrentView.roomList && <RoomListPage/>}
+                {currentView===CurrentView.friendList && <FriendListPage friendList={friendList}/>}
+                    {currentView===CurrentView.roomList && <RoomListPage roomList={roomList}/>}
                     
                 </Col>
             </Row>

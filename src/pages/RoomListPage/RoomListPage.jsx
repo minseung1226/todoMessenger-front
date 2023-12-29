@@ -3,28 +3,16 @@ import { useNavigate } from "react-router-dom";
 import "./RoomListPageStyle.css";
 import { getSocket } from "../../socket/socket";
 // 채팅창 목록
-const RoomListPage=()=>{
+const RoomListPage=({roomList})=>{
     const server_url=process.env.REACT_APP_SERVER_URL
     const token=sessionStorage.getItem('jwtToken');
-    const [rooms,setRooms]=useState([]);
+    const [rooms,setRooms]=useState(roomList);
     const navigate=useNavigate("");
     const socket=getSocket();
 
     useEffect(()=>{
-        fetch(`${server_url}/rooms`,{
-            method:"GET",
-            headers:{
-                "Content-type":"application/json"
-                ,"Authorization":`Bearer ${token}`
-            },
-            
-        }).then(res=>res.json())
-        .then(data=>{
-            console.log("room=",data);
-            setRooms(data.chatRoomsInfo);
-        })
-        .catch(err=>console.log(err.message));
-    },[token,server_url])
+        setRooms(roomList);
+    },[roomList]);
 
     const moveToChat=(rid)=>{
         navigate(`/room/${rid}`);
@@ -34,7 +22,6 @@ const RoomListPage=()=>{
         <div className="room-body">
             <div className="room-nav">채팅 ▼</div>
             <button onClick={()=>navigate("/createRoom")}>채팅방 생성</button>
-            <button onClick={()=>navigate("/friends")}>친구목록</button>
 
             
             {rooms?.length > 0 ? (

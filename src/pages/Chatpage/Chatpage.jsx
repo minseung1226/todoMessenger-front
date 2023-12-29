@@ -42,7 +42,7 @@ const ChatPage=()=>{
     }
 
     const leaveRoom=()=>{
-        navigate("/rooms");
+        navigate("/hoom");
     }
 
     return(

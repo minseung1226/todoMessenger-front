@@ -50,7 +50,7 @@ const FriendSearchPage=()=>{
             setAlertIsOpen(true);
             setAlertMessage("친구로 추가되었습니다.")
             if(!alertIsOpen){
-                navigate("/friends")
+                navigate("/home")
             }
         })
     }
