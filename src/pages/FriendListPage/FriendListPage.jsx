@@ -3,6 +3,7 @@ import { useState,useEffect } from "react";
 import Logout from "../../components/Logout/Logout";
 import { useNavigate } from "react-router-dom";
 import { ListGroup,Image,Form } from "react-bootstrap";
+
 const FriendListPage=({friendList})=>{
     const server_url=process.env.REACT_APP_SERVER_URL;
     const token=sessionStorage.getItem("jwtToken");

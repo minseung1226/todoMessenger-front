@@ -32,6 +32,7 @@ const ChatPage=()=>{
 
     const sendMessage=(event)=>{
       event.preventDefault();
+      
       socket.emit("sendMessage",message,roomId,(res)=>{
             console.log("메시지 전송 시작 message=",message)
             if(!res.ok){
