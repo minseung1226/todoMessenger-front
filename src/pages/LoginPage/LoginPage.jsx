@@ -4,7 +4,6 @@ import { Input } from "@mui/base";
 import { Button } from "@mui/base";
 import { useDispatch } from "react-redux";
 import { connectSocket } from "../../redux/actions/socketActions";
-import { getSocket } from "../../socket/socket";
 import AlertModal from "../../components/AlertModal/AlertModal";
 
 const LoginPage=()=>{
@@ -38,13 +37,7 @@ const LoginPage=()=>{
             else{
                 sessionStorage.setItem('jwtToken',data.token);
                 dispatch(connectSocket());
-                const socket=getSocket();
-                socket.emit("saveSocketId",data.token,(res)=>{
-                    if(res.ok) navigate("/home");
-                    else{
-                        console.log("socket.id 저장 실패");
-                    }
-                })
+                navigate("/home");
                 
             }
         })

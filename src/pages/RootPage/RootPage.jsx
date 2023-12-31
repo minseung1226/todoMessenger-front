@@ -5,13 +5,12 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import RoomListPage from "../RoomListPage/RoomListPage";
 import FriendListPage from "../FriendListPage/FriendListPage";
 import "./RootPageStyle.css";
-import { getSocket } from "../../socket/socket";
+import { useSocket } from "../../socket/SocketProvider";
 const RootPage=()=>{
     const [currentView,setCurrentView]=useState(CurrentView.friendList);
     const [friendList,setFriendList]=useState([]);
     const [roomList,setRoomList]=useState([]);
-    const server_url = process.env.REACT_APP_SERVER_URL;
-    const socket=getSocket();
+    const socket=useSocket();
     const token=sessionStorage.getItem("jwtToken");
     useEffect(()=>{
         socket.emit("friendList",token,(res)=>{
@@ -23,7 +22,7 @@ const RootPage=()=>{
             setRoomList(res.chatRoomListInfo);
 
         })
-    },[]);
+    },[socket,token]);
 
     useEffect(()=>{
         console.log("useEffect friendList=",friendList);

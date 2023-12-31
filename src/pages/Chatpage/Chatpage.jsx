@@ -5,15 +5,16 @@ import InputField from "../../components/InputField/InputField";
 import "./ChatPageStyle.css"
 import {useParams,useNavigate} from "react-router-dom"
 import { getSocket } from "../../socket/socket";
+import { useSocket } from "../../socket/SocketProvider";
 const ChatPage=()=>{
-    const server_url=process.env.REACT_APP_SERVER_URL;
+
     const token=sessionStorage.getItem("jwtToken");
     const [user,setUser]=useState('');
     const [messageList,setMessageList]=useState([]);
     const [message,setMessage]=useState("");
     const {roomId}=useParams();
     const navigate=useNavigate();
-    const socket=getSocket();
+    const socket=useSocket();
     useEffect(()=>{
         socket.emit("getAllChatsAndUser",roomId,token,(res)=>{
             setUser(res.user);
@@ -26,14 +27,14 @@ const ChatPage=()=>{
         });
 
 
-    },[]);
+    },[roomId,token,socket]);
 
 
 
     const sendMessage=(event)=>{
       event.preventDefault();
       
-      socket.emit("sendMessage",message,roomId,(res)=>{
+      socket.emit("sendMessage",message,roomId,token,(res)=>{
             console.log("메시지 전송 시작 message=",message)
             if(!res.ok){
                 console.log("error message=",res.error);
