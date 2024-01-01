@@ -1,13 +1,13 @@
 import React,{useState,useEffect}  from "react";
 import { useNavigate } from "react-router-dom";
 import "./RoomListPageStyle.css";
-import { useSocket } from "../../socket/SocketProvider";
+import { getSocket } from "../../socket/socket";
 // 채팅창 목록
 const RoomListPage=({roomList})=>{
     const token=sessionStorage.getItem('jwtToken');
     const [rooms,setRooms]=useState(roomList);
     const navigate=useNavigate("");
-    const socket=useSocket();
+    const socket=getSocket();
 
     useEffect(()=>{
         setRooms(roomList);

@@ -5,14 +5,15 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import RoomListPage from "../RoomListPage/RoomListPage";
 import FriendListPage from "../FriendListPage/FriendListPage";
 import "./RootPageStyle.css";
-import { useSocket } from "../../socket/SocketProvider";
+import { getSocket } from "../../socket/socket";
 const RootPage=()=>{
     const [currentView,setCurrentView]=useState(CurrentView.friendList);
     const [friendList,setFriendList]=useState([]);
     const [roomList,setRoomList]=useState([]);
-    const socket=useSocket();
+    const socket=getSocket();
     const token=sessionStorage.getItem("jwtToken");
     useEffect(()=>{
+        console.log("옴");
         socket.emit("friendList",token,(res)=>{
             console.log("friendList=",res.friendList);
             setFriendList(res.friendList);

@@ -5,7 +5,6 @@ import InputField from "../../components/InputField/InputField";
 import "./ChatPageStyle.css"
 import {useParams,useNavigate} from "react-router-dom"
 import { getSocket } from "../../socket/socket";
-import { useSocket } from "../../socket/SocketProvider";
 const ChatPage=()=>{
 
     const token=sessionStorage.getItem("jwtToken");
@@ -14,7 +13,7 @@ const ChatPage=()=>{
     const [message,setMessage]=useState("");
     const {roomId}=useParams();
     const navigate=useNavigate();
-    const socket=useSocket();
+    const socket=getSocket();
     useEffect(()=>{
         socket.emit("getAllChatsAndUser",roomId,token,(res)=>{
             setUser(res.user);
