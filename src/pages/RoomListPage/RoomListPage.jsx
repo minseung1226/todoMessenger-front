@@ -14,7 +14,8 @@ const RoomListPage=({roomList})=>{
     },[roomList]);
 
     const moveToChat=(rid)=>{
-        navigate(`/room/${rid}`);
+        window.electron.send("open-chat-room",rid);
+        //navigate(`/room/${rid}`);
     };
 
     return (

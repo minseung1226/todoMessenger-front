@@ -15,6 +15,7 @@ const ChatPage=()=>{
     const navigate=useNavigate();
     const socket=getSocket();
     useEffect(()=>{
+      console.log("token=",token);
         socket.emit("getAllChatsAndUser",roomId,token,(res)=>{
             setUser(res.user);
             setMessageList(res.chats);
@@ -43,7 +44,7 @@ const ChatPage=()=>{
     }
 
     const leaveRoom=()=>{
-        navigate("/hoom");
+        navigate("/home");
     }
 
     return(
