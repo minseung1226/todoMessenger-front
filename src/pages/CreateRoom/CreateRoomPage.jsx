@@ -2,7 +2,7 @@
 import React,{useEffect,useState} from "react";
 import { useNavigate } from "react-router-dom";
 const CreateRoomPage=()=>{
-    const token=sessionStorage.getItem("jwtToken");
+    const token=localStorage.getItem("jwtToken");
     console.log("token=",token);
     const [friends,setfriends]=useState([]);
     const [checkedState,setCheckedState]=useState({});

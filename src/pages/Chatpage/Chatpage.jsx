@@ -7,7 +7,7 @@ import {useParams,useNavigate} from "react-router-dom"
 import { getSocket } from "../../socket/socket";
 const ChatPage=()=>{
 
-    const token=sessionStorage.getItem("jwtToken");
+    const token=localStorage.getItem("jwtToken");
     const [user,setUser]=useState('');
     const [messageList,setMessageList]=useState([]);
     const [message,setMessage]=useState("");

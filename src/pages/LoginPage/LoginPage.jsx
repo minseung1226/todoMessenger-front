@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React,{useEffect, useState} from "react";
 import { useNavigate } from "react-router-dom";
 import { Input } from "@mui/base";
 import { Button } from "@mui/base";
@@ -14,6 +14,10 @@ const LoginPage=()=>{
     const [alertIsOpen,setAlertIsOpen]=useState(false);
     const navigate=useNavigate();
     const dispatch=useDispatch();
+
+    useEffect(()=>{
+        console.log("jwt=",localStorage.getItem("jwtToken"));
+    },[]);
     const login=(event)=>{
         
         event.preventDefault();
@@ -35,7 +39,7 @@ const LoginPage=()=>{
                 //window.electron.send("normal-box","로그인 실패","");
             }
             else{
-                sessionStorage.setItem('jwtToken',data.token);
+                localStorage.setItem('jwtToken',data.token);
                 dispatch(connectSocket());
                 navigate("/home");
                 

@@ -4,7 +4,7 @@ import "./RoomListPageStyle.css";
 import { getSocket } from "../../socket/socket";
 // 채팅창 목록
 const RoomListPage=({roomList})=>{
-    const token=sessionStorage.getItem('jwtToken');
+    const token=localStorage.getItem('jwtToken');
     const [rooms,setRooms]=useState(roomList);
     const navigate=useNavigate("");
     const socket=getSocket();

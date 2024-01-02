@@ -5,7 +5,7 @@ import { disconnect } from "../../socket/socket";
 const Logout=()=>{
     const navigate=useNavigate();
     const logout=()=>{
-        sessionStorage.removeItem("jwtToken");
+        localStorage.removeItem("jwtToken");
         disconnect();
         navigate("/");
     }

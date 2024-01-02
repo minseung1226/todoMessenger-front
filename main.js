@@ -1,7 +1,9 @@
 const { app, BrowserWindow,ipcMain,dialog } = require('electron');
 const path=require("path");
+
+let win;
 function createWindow() {
-    const win = new BrowserWindow({
+    win = new BrowserWindow({
         width: 800,
         height: 600,
         webPreferences: {
@@ -39,6 +41,7 @@ app.on('window-all-closed', () => {
 
 app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) {
+        
         createWindow();
     }
 });

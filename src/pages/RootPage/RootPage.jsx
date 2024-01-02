@@ -11,9 +11,8 @@ const RootPage=()=>{
     const [friendList,setFriendList]=useState([]);
     const [roomList,setRoomList]=useState([]);
     const socket=getSocket();
-    const token=sessionStorage.getItem("jwtToken");
+    const token=localStorage.getItem("jwtToken");
     useEffect(()=>{
-        console.log("옴");
         socket.emit("friendList",token,(res)=>{
             console.log("friendList=",res.friendList);
             setFriendList(res.friendList);

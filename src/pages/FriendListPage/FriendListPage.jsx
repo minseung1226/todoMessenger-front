@@ -6,7 +6,7 @@ import { ListGroup,Image,Form } from "react-bootstrap";
 
 const FriendListPage=({friendList})=>{
     const server_url=process.env.REACT_APP_SERVER_URL;
-    const token=sessionStorage.getItem("jwtToken");
+    const token=localStorage.getItem("jwtToken");
     const navigate=useNavigate();
     const [friendInput,setFriendInput]=useState("");
     const [friends,setFriends]=useState(friendList);
