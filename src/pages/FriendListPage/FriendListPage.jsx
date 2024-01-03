@@ -14,10 +14,34 @@ const FriendListPage=({friendList})=>{
     useEffect(() => {
         setFriends(friendList);
         }, [friendList]);
+
+    const friendSearch=(event)=>{
+      console.log("실행");
+      const friendName=event.target.value;
+      
+      if(friendName){
+        setFriends(friendList);
+        return;
+      }
+
+      const lastChar=friendName.charAt(friendName.length-1);
+
+      if((lastChar>=`/u3131` && lastChar<=`/u314E`)||
+         (lastChar>=`/u314F` && lastChar<=`/u3163`)){
+          friendName=friendName.slice(0,-1);
+          if(!friendName){
+            setFriends(friendList);
+            return;
+          }
+      }
+      setFriends(friendList.filter(name=>name.includes(friendName)));
+      console.log("friend=",friends);
+
+    }
     return (
         <div>
         <Form.Control type="text" placeholder="친구 검색" 
-        onChange={(event)=>setFriendInput(event.target.value)}
+        onChange={friendSearch}
       />
             <ListGroup>
       {friends.map((friend, index) => (

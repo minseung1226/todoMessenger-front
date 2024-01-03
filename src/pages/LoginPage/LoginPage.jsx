@@ -14,10 +14,6 @@ const LoginPage=()=>{
     const [alertIsOpen,setAlertIsOpen]=useState(false);
     const navigate=useNavigate();
     const dispatch=useDispatch();
-
-    useEffect(()=>{
-        console.log("jwt=",localStorage.getItem("jwtToken"));
-    },[]);
     const login=(event)=>{
         
         event.preventDefault();

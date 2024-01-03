@@ -1,13 +1,16 @@
 const { app, BrowserWindow,ipcMain,dialog } = require('electron');
+ const {default:installExtension,REACT_DEVELOPER_TOOLS}=require("electron-devtools-installer");
 const path=require("path");
 
 let win;
 function createWindow() {
+     installExtension(REACT_DEVELOPER_TOOLS)
+     .then((name)=>console.log(`Added Extension:${name}`))
+     .catch((err)=>console.log(`An error occurred :`,err));
     win = new BrowserWindow({
         width: 800,
         height: 600,
         webPreferences: {
-            partition:"persist:myApp",
             preload:path.join(__dirname,"preload.js"),
             contextIsolation:true,
             devTools: true, // 개발자 도구 활성화
@@ -17,11 +20,11 @@ function createWindow() {
     win.loadURL('http://localhost:3000'); // React 개발 서버 주소
 }
 ipcMain.on("open-chat-room",(event,roomId)=>{
+    
     let chatWin=new BrowserWindow({
         width:500,
         height:700,
         webPreferences:{
-            partition:"persist:myApp",
             preload:path.join(__dirname,"preload.js"),
             contextIsolation:true,
             devTools: true, // 개발자 도구 활성화
