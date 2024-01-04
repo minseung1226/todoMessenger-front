@@ -16,31 +16,32 @@ const FriendListPage=({friendList})=>{
         }, [friendList]);
 
     const friendSearch=(event)=>{
-      console.log("실행");
-      const friendName=event.target.value;
+      setFriendInput(event.target.value);
+      let friendName=event.target.value;
       
-      if(friendName){
+      if(!friendName){
         setFriends(friendList);
         return;
       }
 
-      const lastChar=friendName.charAt(friendName.length-1);
-
-      if((lastChar>=`/u3131` && lastChar<=`/u314E`)||
-         (lastChar>=`/u314F` && lastChar<=`/u3163`)){
+      const lastCharCode=friendName.charCodeAt(friendName.length-1);
+      console.log("lastChar=",friendName.charAt(friendName.length-1));
+      console.log("friendName=",friendName);
+      if ((lastCharCode >= 0x3131 && lastCharCode <= 0x314E) ||
+      (lastCharCode >= 0x314F && lastCharCode <= 0x3163)){
+        if(friendName.length<=1){
+          setFriends(friendList);
+        }
           friendName=friendName.slice(0,-1);
-          if(!friendName){
-            setFriends(friendList);
-            return;
-          }
-      }
-      setFriends(friendList.filter(name=>name.includes(friendName)));
-      console.log("friend=",friends);
+          console.log("slice friendName=",friendName);
 
+      }
+      setFriends(friendList.filter(friend=>friend.name.includes(friendName)));
+      console.log("============================")
     }
     return (
         <div>
-        <Form.Control type="text" placeholder="친구 검색" 
+        <Form.Control type="text" placeholder="친구 검색" value={friendInput}
         onChange={friendSearch}
       />
             <ListGroup>
