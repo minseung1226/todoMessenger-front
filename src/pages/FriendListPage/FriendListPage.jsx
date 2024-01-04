@@ -57,7 +57,7 @@ const FriendListPage=({friendList})=>{
     </ListGroup>
           
             <Logout/>
-            <Button type="button" onClick={()=>navigate("/user/search")}>친구 추가</Button>
+            <Button type="button" onClick={()=>window.electron.send("user-search")}>친구 추가</Button>
         </div>
     )
 }

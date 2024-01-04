@@ -13,18 +13,9 @@ const RootPage=()=>{
     const socket=getSocket();
     const token=localStorage.getItem("jwtToken");
 
-    //LocalStorage 비우기
-    useEffect(() => {
-        window.addEventListener('beforeunload', () => {
-            localStorage.clear();
-        });
-
-        return () => {
-            window.removeEventListener('beforeunload', () => {
-                localStorage.clear();
-            });
-        };
-    }, []);
+    useEffect(()=>{
+        console.log("root token=",token);
+    })
 
 
     useEffect(()=>{

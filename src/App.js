@@ -6,8 +6,19 @@ import JoinPage from "./pages/JoinPage/JoinPage";
 import CreateRoomPage from "./pages/CreateRoom/CreateRoomPage";
 import UserSearchPage from "./pages/UserSearchPage/UserSearchPage";
 import RootPage from "./pages/RootPage/RootPage";
+import { useEffect } from "react";
 function App() {
+  useEffect(() => {
+    window.addEventListener('beforeunload', () => {
+        localStorage.clear();
+    });
 
+    return () => {
+        window.removeEventListener('beforeunload', () => {
+            localStorage.clear();
+        });
+    };
+}, []);
 
   
   return (

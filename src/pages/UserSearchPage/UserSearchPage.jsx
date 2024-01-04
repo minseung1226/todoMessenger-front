@@ -1,15 +1,22 @@
-import { Button } from "@mui/base";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { Input } from "@mui/base";
+import { useEffect } from "react";
+import { Form,Button,Container } from "react-bootstrap";
+import FloatingLabelInput from "../../components/FloatingLabelInput/FloatingLabelInput";
+
 const FriendSearchPage=()=>{
     const [friendId,setFriendId]=useState("");
     const [user,setUser]=useState("");
     const [alertMessage,setAlertMessage]=useState("");
     const [alertIsOpen,setAlertIsOpen]=useState(false);
     const server_url=process.env.REACT_APP_SERVER_URL;
-    const token=sessionStorage.getItem("jwtToken");
+    const token=localStorage.getItem("jwtToken");
     const navigate=useNavigate();
+
+    useEffect(()=>{
+        console.log("token=",token);
+    })
+
     const user_search=()=>{
         const url=new URL(`${server_url}/user`);
         url.searchParams.append("friendLoginId",friendId);
@@ -32,7 +39,7 @@ const FriendSearchPage=()=>{
         })
         .catch(err=>{
             console.log("user search error");
-            throw err;
+            console.log("err=",err);
         })
         
     }
@@ -56,15 +63,15 @@ const FriendSearchPage=()=>{
     }
 
     return (
-        <div>
-            <Input type="text" onChange={(event)=>setFriendId(event.target.value)}/>
-            <Button type="button" onClick={user_search}>검색</Button>
+        <Container fluid>
+            <FloatingLabelInput label="ID" onChange={(event)=>setFriendId(event.target.value)}/>
+            <Button variant="outline-dark" onClick={user_search}>검색</Button>
 
             {user?<div>
                 <div>{user.name}</div>
-                <Button type="button" onClick={addFriend}>추가</Button>
+                <Button variant="outline-dark" onClick={addFriend}>추가</Button>
             </div>:<div></div>}
-        </div>
+        </Container>
     )
 }
 

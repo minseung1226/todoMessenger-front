@@ -19,6 +19,24 @@ function createWindow() {
 
     win.loadURL('http://localhost:3000'); // React 개발 서버 주소
 }
+
+//사용자 검색 
+ipcMain.on("user-search",(event)=>{
+    let userSearchWin=new BrowserWindow({
+        width:400,
+        height:500,
+        webPreferences:{
+            preload:path.join(__dirname,"preload.js"),
+            contextIsolation:true,
+            devTools:true,
+        }
+    })
+
+    userSearchWin.loadURL("http://localhost:3000/user/search");
+})
+
+
+//채팅방
 ipcMain.on("open-chat-room",(event,roomId)=>{
     
     let chatWin=new BrowserWindow({
