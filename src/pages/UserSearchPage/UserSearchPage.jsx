@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useEffect } from "react";
-import { Form,Button,Container } from "react-bootstrap";
+import {Button,Container,ListGroup,Image } from "react-bootstrap";
 import FloatingLabelInput from "../../components/FloatingLabelInput/FloatingLabelInput";
 
 const FriendSearchPage=()=>{
@@ -66,11 +66,15 @@ const FriendSearchPage=()=>{
         <Container fluid>
             <FloatingLabelInput label="ID" onChange={(event)=>setFriendId(event.target.value)}/>
             <Button variant="outline-dark" onClick={user_search}>검색</Button>
-
-            {user?<div>
-                <div>{user.name}</div>
-                <Button variant="outline-dark" onClick={addFriend}>추가</Button>
-            </div>:<div></div>}
+            
+            {user?
+            <ListGroup.Item className="d-flex align-items-center">
+            <Image src="/profile.jpeg" roundedCircle  style={{width:"50px",height:"50px",marginRight:"20px"}}/>
+            <div className="ml-2">
+              <div><strong>{user.name}</strong></div> {/* 이름을 굵게 표시합니다 */}
+              <div className="small">online</div> {/* 온라인 여부를 작은 텍스트로 표시합니다 */}
+            </div>
+          </ListGroup.Item>:<div></div>}
         </Container>
     )
 }
