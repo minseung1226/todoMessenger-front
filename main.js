@@ -4,9 +4,7 @@ const path=require("path");
 
 let win;
 function createWindow() {
-     installExtension(REACT_DEVELOPER_TOOLS)
-     .then((name)=>console.log(`Added Extension:${name}`))
-     .catch((err)=>console.log(`An error occurred :`,err));
+
     win = new BrowserWindow({
         width: 800,
         height: 600,
@@ -16,7 +14,10 @@ function createWindow() {
             devTools: true, // 개발자 도구 활성화
         }
     });
+    win.webContents.once('dom-ready', () => {
+        win.webContents.executeJavaScript(`window.electron.setWindowId(${win.id})`);
 
+    });
     win.loadURL('http://localhost:3000'); // React 개발 서버 주소
 }
 
@@ -28,10 +29,13 @@ ipcMain.on("user-search",(event)=>{
         webPreferences:{
             preload:path.join(__dirname,"preload.js"),
             contextIsolation:true,
-            devTools:true,
+            devTools:true,  
         }
     })
+    userSearchWin.webContents.once('dom-ready', () => {
+        userSearchWin.webContents.executeJavaScript(`window.electron.setWindowId(${userSearchWin.id})`);
 
+    });
     userSearchWin.loadURL("http://localhost:3000/user/search");
 })
 
@@ -48,8 +52,20 @@ ipcMain.on("open-chat-room",(event,roomId)=>{
             devTools: true, // 개발자 도구 활성화
         }
     });
+    chatWin.webContents.once('dom-ready', () => {
+        chatWin.webContents.executeJavaScript(`window.electron.setWindowId(${chatWin.id})`);
 
+    });
     chatWin.loadURL(`http://localhost:3000/room/${roomId}`);
+})
+
+ipcMain.on('close-window',(event,windowId)=>{
+    const window=BrowserWindow.fromId(windowId);
+    console.log("실행");
+    if(window){
+        console.log("왓다");
+        window.close();
+    }
 })
 
 app.whenReady().then(createWindow);

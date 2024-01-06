@@ -12,11 +12,17 @@ const RootPage=()=>{
     const [roomList,setRoomList]=useState([]);
     const socket=getSocket();
     const token=localStorage.getItem("jwtToken");
-
-    useEffect(()=>{
-        console.log("root token=",token);
-    })
-
+    useEffect(() => {
+        window.addEventListener('beforeunload', () => {
+            localStorage.clear();
+        });
+    
+        return () => {
+            window.removeEventListener('beforeunload', () => {
+                localStorage.clear();
+            });
+        };
+    }, []);
 
     useEffect(()=>{
         socket.emit("friendList",token,(res)=>{
