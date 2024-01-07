@@ -45,15 +45,12 @@ const FriendSearchPage=()=>{
     }
 
     const addFriend=()=>{
-        if(window.electron){
-            window.electron.closeWindow();
-        }
-        else{
-            console.log("없음");
-        }
-        setAlertIsOpen(true);
-        setAlertMessage("친구로 추가되었습니다.")
-        // socket.emit("addFriend",token,user._id)
+        socket.emit("addFriend",token,user._id,(res)=>{
+            setAlertIsOpen(true);
+            setAlertMessage("친구로 추가되었습니다.")
+        });
+
+        
         // fetch(`${server_url}/friend/request`,{
         //     method:"PATCH",
         //     headers:{
@@ -74,6 +71,8 @@ const FriendSearchPage=()=>{
 
     const modalOnClose=()=>{
         setAlertIsOpen(false);
+        window.electron.closeWindow();
+        
     }
 
     return (

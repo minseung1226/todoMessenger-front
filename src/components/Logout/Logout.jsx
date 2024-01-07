@@ -1,18 +1,17 @@
 import { Button } from "@mui/base";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { disconnect } from "../../socket/socket";
-const Logout=()=>{
+import { logout } from "../../utils/method";
+const Logout=(server_url,token)=>{
     const navigate=useNavigate();
-    const logout=()=>{
-        localStorage.removeItem("jwtToken");
-        disconnect();
+    const onClick=()=>{
+        logout();
         navigate("/");
     }
 
 
     return(<div>
-        <Button type="button" onClick={logout}>logout</Button>
+        <Button type="button" onClick={onClick}>logout</Button>
     </div>)
 }
 

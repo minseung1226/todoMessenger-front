@@ -6,20 +6,24 @@ import RoomListPage from "../RoomListPage/RoomListPage";
 import FriendListPage from "../FriendListPage/FriendListPage";
 import "./RootPageStyle.css";
 import { getSocket } from "../../socket/socket";
+import { logout } from "../../utils/method";
 const RootPage=()=>{
     const [currentView,setCurrentView]=useState(CurrentView.friendList);
     const [friendList,setFriendList]=useState([]);
     const [roomList,setRoomList]=useState([]);
     const socket=getSocket();
     const token=localStorage.getItem("jwtToken");
+    
+
+    // user를 offline으로 바꾸고 localStorage 비우기
     useEffect(() => {
         window.addEventListener('beforeunload', () => {
-            localStorage.clear();
+            logout();
         });
     
         return () => {
             window.removeEventListener('beforeunload', () => {
-                localStorage.clear();
+                logout();
             });
         };
     }, []);
