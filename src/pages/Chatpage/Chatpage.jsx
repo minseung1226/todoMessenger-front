@@ -13,7 +13,7 @@ const ChatPage=()=>{
     const [message,setMessage]=useState("");
     const {roomId}=useParams();
     const navigate=useNavigate();
-    const socket=getSocket();
+    const socket=getSocket(token);
     useEffect(()=>{
       console.log("token=",token);
         socket.emit("getAllChatsAndUser",roomId,token,(res)=>{

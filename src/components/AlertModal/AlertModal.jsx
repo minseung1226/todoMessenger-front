@@ -1,20 +1,20 @@
-import React,{useState} from "react";
-import Modal from "react-modal";
-import "./AlertModal.css";
+import { Modal,Button } from "react-bootstrap";
 const AlertModal=({message,isOpen,onClose})=>{
 
     return (
         <div>
-            <Modal
-            className="alert-modal"
-            isOpen={isOpen}
-            contentLabel="알림"
-            onRequestClose={onClose}
-            >
-            <h2>알림</h2>
-            <div>{message}</div>
-            <button onClick={onClose}>닫기</button>
-            </Modal>
+        <Modal show={isOpen} onHide={onClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>알림</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p>{message}</p>
+        </Modal.Body>
+        <Modal.Footer>
+          
+          <Button variant="outline-dark" onClick={onClose}>확인</Button>
+        </Modal.Footer>
+      </Modal>
         </div>
     )
 }

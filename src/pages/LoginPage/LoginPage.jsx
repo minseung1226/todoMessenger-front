@@ -2,8 +2,7 @@ import React,{useEffect, useState} from "react";
 import { useNavigate } from "react-router-dom";
 import { Input } from "@mui/base";
 import { Button } from "@mui/base";
-import { useDispatch } from "react-redux";
-import { connectSocket } from "../../redux/actions/socketActions";
+import { connect } from "../../socket/socket";
 import AlertModal from "../../components/AlertModal/AlertModal";
 
 const LoginPage=()=>{
@@ -13,7 +12,7 @@ const LoginPage=()=>{
     const [alertMessage,setAlertMessage]=useState("");
     const [alertIsOpen,setAlertIsOpen]=useState(false);
     const navigate=useNavigate();
-    const dispatch=useDispatch();
+
     const login=(event)=>{
         
         event.preventDefault();
@@ -32,11 +31,10 @@ const LoginPage=()=>{
             if(!data.ok){
                 setAlertMessage("아이디 또는 비밀번호 불일치");
                 setAlertIsOpen(true);
-                //window.electron.send("normal-box","로그인 실패","");
             }
             else{
                 localStorage.setItem('jwtToken',data.token);
-                dispatch(connectSocket());
+                connect(data.token);
                 navigate("/home");
                 
             }

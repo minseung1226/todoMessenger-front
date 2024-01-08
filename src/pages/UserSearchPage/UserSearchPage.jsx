@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useEffect } from "react";
 import {Button,Container,ListGroup,Image, Row, Col,Form } from "react-bootstrap";
@@ -11,8 +10,8 @@ const FriendSearchPage=()=>{
     const [alertIsOpen,setAlertIsOpen]=useState(false);
     const server_url=process.env.REACT_APP_SERVER_URL;
     const token=localStorage.getItem("jwtToken");
-    const socket=getSocket();
-    const navigate=useNavigate();
+    const socket=getSocket(token);
+    const [isWindowClose,setIsWindowClose]=useState(false);
 
     useEffect(()=>{
         console.log("token=",token);
@@ -47,31 +46,17 @@ const FriendSearchPage=()=>{
     const addFriend=()=>{
         socket.emit("addFriend",token,user._id,(res)=>{
             setAlertIsOpen(true);
+            setIsWindowClose(true);
             setAlertMessage("친구로 추가되었습니다.")
         });
-
-        
-        // fetch(`${server_url}/friend/request`,{
-        //     method:"PATCH",
-        //     headers:{
-        //         "Content-type":"application/json",
-        //         "Authorization":`Bearer ${token}`
-        //     },
-        //     body:JSON.stringify({friendId:user._id})
-        // }).then(res=>res.json())
-        // .then(data=>{
-        //     setAlertIsOpen(true);
-        //     setAlertMessage("친구로 추가되었습니다.")
-        //     if(!alertIsOpen){
-        //         navigate("/home")
-        //     }
-        // })
     }
 
 
     const modalOnClose=()=>{
         setAlertIsOpen(false);
-        window.electron.closeWindow();
+        if(isWindowClose){
+            window.electron.closeWindow();
+        }
         
     }
 
@@ -80,7 +65,6 @@ const FriendSearchPage=()=>{
             <Row className="mb-2">
                 <Col xs={9}>
                     <Form.Control placeholder="ID" onChange={(event)=>setFriendId(event.target.value)}/>
-                    {/* <FloatingLabelInput label="ID" onChange={(event)=>setFriendId(event.target.value)}/> */}
                 </Col>
                 <Col xs={3}>
                     <Button variant="outline-dark" onClick={user_search}>검색</Button>

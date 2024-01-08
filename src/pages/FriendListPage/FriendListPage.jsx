@@ -1,34 +1,29 @@
 import { Button, Input } from "@mui/base";
 import { useState,useEffect } from "react";
 import Logout from "../../components/Logout/Logout";
-import { useNavigate } from "react-router-dom";
 import { ListGroup,Image,Form } from "react-bootstrap";
 import { getSocket } from "../../socket/socket";
 import "./FriendListPage.css"
-const FriendListPage=({friendList})=>{
-    const server_url=process.env.REACT_APP_SERVER_URL;
+const FriendListPage=({friendList,newFriendList})=>{
     const token=localStorage.getItem("jwtToken");
-    const navigate=useNavigate();
     const [friendInput,setFriendInput]=useState("");
     const [friends,setFriends]=useState(friendList);
-    const [newFriends,setNewFriends]=useState([]);
+    const [newFriends,setNewFriends]=useState(newFriendList);
     const [user,setUser]=useState("");
-    const socket=getSocket();
+    const socket=getSocket(token);
+
+
 
     useEffect(() => {
         setFriends(friendList);
-        }, [friendList]);
+        setNewFriends(newFriendList);
+        }, [friendList,newFriendList]);
 
     useEffect(()=>{
-      socket.on("newFriend",(res)=>{
-        setNewFriends([...newFriends,res.newFriend]);
-      })
-
       socket.emit("findUser",token,(res)=>{
         setUser(res.user);
       })
-    },[])
-
+    },[socket])
     //친구 검색
     const friendSearch=(event)=>{
       setFriendInput(event.target.value);
@@ -66,7 +61,7 @@ const FriendListPage=({friendList})=>{
             </ListGroup.Item>
           </ListGroup>
 
-          {newFriends.lenght>0?
+          {newFriends.length>0?
           <div>
             <p>새로운 친구</p>
             <hr></hr>
@@ -76,7 +71,7 @@ const FriendListPage=({friendList})=>{
               <Image src={friend.profileImg?friend.profileImg:"/profile.jpeg"} className="profile-img" roundedCircle/>
               <div className="ml-2">
                 <div><strong>{friend.name}</strong></div>
-                <div className="small">{friend.online}</div>
+                <div className="small">{friend.online?"online":"offline"}</div>
               </div>
             </ListGroup.Item>
             ))}
@@ -91,7 +86,7 @@ const FriendListPage=({friendList})=>{
               <Image src="/profile.jpeg" className="profile-img" roundedCircle/>
               <div className="ml-2">
                 <div><strong>{friend.name}</strong></div>
-                <div className="small">{friend.online}</div>
+                <div className="small">{friend.online?"online":"offline"}</div>
               </div>
         </ListGroup.Item>
       ))}

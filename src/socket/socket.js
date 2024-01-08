@@ -2,8 +2,12 @@ import io from "socket.io-client";
 
 let socket =null;
 
-export const connect=()=>{
+export const connect=(token)=>{
     socket=io("http://localhost:5001");
+    socket.on("connect",()=>{
+        socket.emit("userIdJoin",token);
+    })
+    
 }
 
 export const disconnect=()=>{
@@ -11,9 +15,9 @@ export const disconnect=()=>{
     socket=null;
 }
 
-export const getSocket=()=>{
+export const getSocket=(token)=>{
     if(!socket){
-        socket=io("http://localhost:5001");
+        connect(token);
     }
     return socket;
 }

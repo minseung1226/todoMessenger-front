@@ -7,7 +7,7 @@ const RoomListPage=({roomList})=>{
     const token=localStorage.getItem('jwtToken');
     const [rooms,setRooms]=useState(roomList);
     const navigate=useNavigate("");
-    const socket=getSocket();
+    const socket=getSocket(token);
 
     useEffect(()=>{
         setRooms(roomList);

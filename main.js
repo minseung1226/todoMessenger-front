@@ -61,9 +61,7 @@ ipcMain.on("open-chat-room",(event,roomId)=>{
 
 ipcMain.on('close-window',(event,windowId)=>{
     const window=BrowserWindow.fromId(windowId);
-    console.log("실행");
     if(window){
-        console.log("왓다");
         window.close();
     }
 })
