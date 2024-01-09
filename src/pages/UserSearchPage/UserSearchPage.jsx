@@ -13,9 +13,6 @@ const FriendSearchPage=()=>{
     const socket=getSocket(token);
     const [isWindowClose,setIsWindowClose]=useState(false);
 
-    useEffect(()=>{
-        console.log("token=",token);
-    })
 
     const user_search=()=>{
         const url=new URL(`${server_url}/user`);

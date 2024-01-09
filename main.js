@@ -1,4 +1,4 @@
-const { app, BrowserWindow,ipcMain,dialog } = require('electron');
+const { app, BrowserWindow,ipcMain,dialog,Menu } = require('electron');
  const {default:installExtension,REACT_DEVELOPER_TOOLS}=require("electron-devtools-installer");
 const path=require("path");
 
@@ -66,7 +66,10 @@ ipcMain.on('close-window',(event,windowId)=>{
     }
 })
 
-app.whenReady().then(createWindow);
+app.whenReady().then(()=>{
+    createWindow();
+    Menu.setApplicationMenu(null);
+});
 
 app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') {

@@ -81,16 +81,17 @@ const RootPage=()=>{
 
 
     return(
-        <Container fluid>
+        <Container fluid className="mainContainer">
             <Row>
-                <Col md={2} className="sidebar">
+                <Col md={2} xs={2} className="sidebar">
                     <Nav className="flex-column">
                         <Nav.Link onClick={()=>setCurrentView(CurrentView.friendList)}>친구목록</Nav.Link>
                         <Nav.Link onClick={()=>setCurrentView(CurrentView.roomList)}>채팅방 목록</Nav.Link>
+                        
                     </Nav>  
                 </Col>
 
-                <Col md={10} className="content">
+                <Col md={10} xs={10} className="content">
                 {currentView===CurrentView.friendList && <FriendListPage friendList={friendList} newFriendList={newFriendList}/>}
                     {currentView===CurrentView.roomList && <RoomListPage roomList={roomList}/>}
                     

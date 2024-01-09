@@ -1,7 +1,7 @@
 import { Button, Input } from "@mui/base";
 import { useState,useEffect } from "react";
 import Logout from "../../components/Logout/Logout";
-import { ListGroup,Image,Form } from "react-bootstrap";
+import { ListGroup,Image,Form,Row,Col } from "react-bootstrap";
 import { getSocket } from "../../socket/socket";
 import "./FriendListPage.css"
 const FriendListPage=({friendList,newFriendList})=>{
@@ -46,10 +46,18 @@ const FriendListPage=({friendList,newFriendList})=>{
     }
     return (
         <div>
-          <Form.Control type="text" placeholder="친구 검색" value={friendInput}
+            <Row className="align-items-center mb-2">
+      <Col xs={6} className="text-start">
+        <h4>Friend</h4>
+      </Col>
+      <Col xs={6} className="text-end">
+        <Image src="/friendPlus.png" className="friend-plus" onClick={() => window.electron.send("user-search")}/>
+      </Col>
+    </Row>
+          <Form.Control type="text" placeholder="검색" value={friendInput}
             onChange={friendSearch}
           />
-          <p>나</p>
+          <p>me</p>
           <hr></hr>
           <ListGroup>
             <ListGroup.Item className="d-flex align-items-center no-border">
@@ -63,7 +71,7 @@ const FriendListPage=({friendList,newFriendList})=>{
 
           {newFriends.length>0?
           <div>
-            <p>새로운 친구</p>
+            <p>새 친구</p>
             <hr></hr>
             <ListGroup>
             {newFriends.map((friend, index) => (
@@ -93,7 +101,7 @@ const FriendListPage=({friendList,newFriendList})=>{
     </ListGroup>
           
             <Logout/>
-            <Button type="button" onClick={()=>window.electron.send("user-search")}>친구 추가</Button>
+            
         </div>
     )
 }
