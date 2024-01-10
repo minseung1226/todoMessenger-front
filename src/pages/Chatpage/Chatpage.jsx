@@ -15,14 +15,12 @@ const ChatPage=()=>{
     const navigate=useNavigate();
     const socket=getSocket(token);
     useEffect(()=>{
-      console.log("token=",token);
         socket.emit("getAllChatsAndUser",roomId,token,(res)=>{
             setUser(res.user);
             setMessageList(res.chats);
         });
 
         socket.on("message",(res)=>{
-            console.log("메시지 받기 완료 res=",res)
             setMessageList((prevState)=>prevState.concat(res));
         });
 
@@ -35,7 +33,6 @@ const ChatPage=()=>{
       event.preventDefault();
       
       socket.emit("sendMessage",message,roomId,token,(res)=>{
-            console.log("메시지 전송 시작 message=",message)
             if(!res.ok){
                 console.log("error message=",res.error);
             }

@@ -68,7 +68,7 @@ ipcMain.on('close-window',(event,windowId)=>{
 
 app.whenReady().then(()=>{
     createWindow();
-    Menu.setApplicationMenu(null);
+    //Menu.setApplicationMenu(null);
 });
 
 app.on('window-all-closed', () => {

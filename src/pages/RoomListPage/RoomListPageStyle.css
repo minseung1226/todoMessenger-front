@@ -1,18 +1,13 @@
 .room-body {
     height:100vh;
-   background-color: whitesmoke;
-    margin-left: auto;
-    margin-right: auto;
-    max-width: 28rem;
+   background-color: white;
+    /* margin-left: auto;
+    margin-right: auto; */
+    /* max-width: 28rem; */
     position: relative;
  
   }
-  .room-nav{
-    padding: 20px 10px;
 
-    background-color: white;
-
-  }
 .room-list{
     display: flex;
     align-items: center;
