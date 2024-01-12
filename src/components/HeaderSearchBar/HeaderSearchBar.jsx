@@ -1,9 +1,11 @@
+import 'bootstrap/dist/css/bootstrap.min.css';
 import { useState } from "react";
-import { Row, Col, Image, Form,InputGroup,Button,FormControl } from "react-bootstrap"
-import "../../styles/common.css"
-import "./HeaderSearchBar.css"
-import { BsX } from 'react-icons/bs';
-const HeaderSearchBar = ({ title, allData, setSearchResult, children }) => {
+import { Button, Col, Form,Image, Row } from "react-bootstrap";
+import "../../styles/common.css";
+import "./HeaderSearchBar.css";
+//import { BsX } from 'react-icons/bs';
+const HeaderSearchBar = ({ title,children,allData, setSearchResult }) => {
+
     const [showSearchInput, setShowSearchInput] = useState(false);
     const [searchInput, setSearchInput] = useState("");
     //친구 검색
@@ -24,42 +26,31 @@ const HeaderSearchBar = ({ title, allData, setSearchResult, children }) => {
             searchName = searchName.slice(0, -1);
 
         }
-        setSearchResult(allData.filter(data => data.name.includes(searchInput)));
-    }
+        setSearchResult(allData.filter(data => data.name.includes(searchName)));
+     }
 
     return (
         <div>
             <Row className="align-items-center mb-2">
-                <Col md={6} className="d flex align-items-center">
+                <Col md={6} className="d-flex align-items-center">
                     <h4>{title}</h4>
                 </Col>
-                <Col md={6} className="d-flex justify-content-end align-items-center">
+                <Col md={6} className="d-flex justify-content-end align-items-center right-content">
                     <Image src="/search.png" className="search-img icon-img" onClick={() => setShowSearchInput(true)} />
                     {children}
                 </Col>
             </Row>
-            {showSearchInput &&<InputGroup className="mb-3">
-      <FormControl
-        placeholder="검색어 입력"
-        value={searchInput}
-        onChange={dataSearch}
-      />
-      <InputGroup.Append>
-        <Button variant="outline-secondary" onClick={() => setShowSearchInput(false)}>
-          <BsX /> {/* X 아이콘 */}
-        </Button>
-      </InputGroup.Append>
-    </InputGroup>}
-            {/* {showSearchInput && <Row>
+            
+            {showSearchInput && <Row>
                 <Col md={10}>
                     <Form.Control type="text" placeholder="검색" value={searchInput}
-                        onChange={dataSearch}
+                         onChange={dataSearch}
                     /></Col>
                 <Col md={2}>
                     <Image src="/close.png" className="close-img" onClick={() => setShowSearchInput(false)} />
                 </Col>
             </Row>
-            } */}
+            }
         </div>
     )
 }

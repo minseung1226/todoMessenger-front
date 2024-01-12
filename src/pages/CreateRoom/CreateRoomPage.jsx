@@ -1,28 +1,28 @@
-
+import { ListGroup,Image } from "react-bootstrap";
 import React,{useEffect,useState} from "react";
 import { useNavigate } from "react-router-dom";
+import { getSocket } from "../../socket/socket";
 const CreateRoomPage=()=>{
     const token=localStorage.getItem("jwtToken");
-    console.log("token=",token);
-    const [friends,setfriends]=useState([]);
+    const [friends,setFriends]=useState([]);
     const [checkedState,setCheckedState]=useState({});
     const server_url=process.env.REACT_APP_SERVER_URL;
+    const socket=getSocket(token);
     const navigate=useNavigate("");
 
+    const getFriendList=()=>{
+        socket.emit("friendList",token,(res)=>{
+            setFriends(res.friendList);
+        });
+    }
     useEffect(()=>{
-        fetch(`${server_url}/friends`,{
-            method:"GET",
-            headers:{
-                "Content-type":"application/json",
-                "Authorization":`Bearer ${token}`,
-            },
-        }).then(res=>res.json())
-        .then((data)=>{
-            setfriends(data.friends);
-        }).catch(err=>{
-            console.log("err=",err)
+        console.log("jwtToken=",token);
+        getFriendList();
+
+        socket.on("newFriend",(data)=>{
+            getFriendList();
         })
-    },[])
+    },[socket])
 
     const handleCheckboxChange=(friendId)=>{
         setCheckedState(prevState=>({
@@ -54,19 +54,18 @@ const CreateRoomPage=()=>{
 
     return (
         <div>
-            {friends.map((friend,index) => (
-                <div key={index}>
-                    <input
-                        type="checkbox"
-                        value={friend._id}
-                        checked={checkedState[friend._id] || false}
-                        onChange={() => handleCheckboxChange(friend._id)}
-                    />
-                    {friend.name}
-                </div>
-            ))}
-            <button onClick={handleSubmit}>전송</button>
-        </div>
+                    <ListGroup>
+        {friends.map((friend, index) => (
+        <ListGroup.Item key={index} className="d-flex align-items-center no-border">
+          <Image src="/profile.jpeg" className="profile-img" roundedCircle/>
+          <div className="ml-2">
+            <div><strong>{friend.name}</strong></div>
+          </div>
+
+    </ListGroup.Item>
+  ))}
+</ListGroup><button onClick={handleSubmit}>전송</button>
+            </div>
     );
 }
 

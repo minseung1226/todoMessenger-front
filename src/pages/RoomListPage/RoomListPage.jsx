@@ -4,6 +4,7 @@ import "./RoomListPageStyle.css";
 import { getSocket } from "../../socket/socket";
 import {Row,Col} from "react-bootstrap"
 import 'bootstrap/dist/css/bootstrap.min.css';
+import HeaderSearchBar from "../../components/HeaderSearchBar/HeaderSearchBar";
 
 // 채팅창 목록
 const RoomListPage=({roomList})=>{
@@ -23,7 +24,13 @@ const RoomListPage=({roomList})=>{
 
     return (
         <div className="room-body mt-3">
-            <Row>
+            <HeaderSearchBar title="채팅 ▼" allData={roomList} setSearchResult={rooms}>
+            <div>메렁</div>
+            <div>
+            <button onClick={()=>window.electron.send("create-chat-room")}>채팅방 생성</button>
+            </div>
+            </HeaderSearchBar>
+            {/* <Row>
                 <Col md={6} className="d flex align-items-center">
             <h5>채팅 ▼</h5>
             </Col>
@@ -34,7 +41,7 @@ const RoomListPage=({roomList})=>{
             <button onClick={()=>navigate("/createRoom")}>채팅방 생성</button>
             </div>
             </Col>
-            </Row>
+            </Row> */}
             {rooms?.length > 0 ? (
                 rooms.map((room) => (
                     <div className="room-list" key={room._id} onClick={() => moveToChat(room._id)}>

@@ -39,6 +39,25 @@ ipcMain.on("user-search",(event)=>{
     userSearchWin.loadURL("http://localhost:3000/user/search");
 })
 
+// //채팅방 생성
+ipcMain.on("create-chat-room",(event)=>{
+    let  createChatRoomWin=new BrowserWindow({
+        width:400,
+        height:600,
+        webPreferences:{
+            preload:path.join(__dirname,"preload.js"),
+            contextIsolation:true,
+            devTools:true
+        }
+    });
+    createChatRoomWin.webContents.once("dom-ready",()=>{
+        createChatRoomWin.webContents.executeJavaScript(`window.electron.setWindowId(${createChatRoomWin.id})`);
+        });
+
+    
+        createChatRoomWin.loadURL(`http://localhost:3000/createRoom`);
+})
+
 
 //채팅방
 ipcMain.on("open-chat-room",(event,roomId)=>{
