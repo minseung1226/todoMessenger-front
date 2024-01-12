@@ -53,7 +53,7 @@ const ChatPage=()=>{
               <div className='nav-user'>{user.name}</div>
             </nav>
           <div>
-            {messageList.length > 0 ? (
+            {messageList?.length > 0 ? (
               <MessageContainer messageList={messageList} user={user} />
             ) : null}
           </div>

@@ -1,0 +1,12 @@
+.modal-body{
+    max-height: 350px;
+    overflow-y: auto;
+    height: 350px;
+}
+
+.friend-list{
+    margin-top: 10px;
+}
+.title{
+    font-size: 20px;
+}

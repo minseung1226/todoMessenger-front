@@ -37,6 +37,13 @@ const RootPage=()=>{
         });
     }
 
+    //채팅방이 생성되었을 때 채팅방 받기
+    useEffect(()=>{
+        socket.on("newRoom",(res)=>{
+            setRoomList(prevRoomList=>[res,...prevRoomList]);
+        })
+    })
+
     //5분에 한번씩 친구 조회
     useEffect(()=>{
         getFriendList();
@@ -93,7 +100,7 @@ const RootPage=()=>{
 
                 <Col md={10} xs={10} className="content">
                 {currentView===CurrentView.friendList && <FriendListPage friendList={friendList} newFriendList={newFriendList}/>}
-                    {currentView===CurrentView.roomList && <RoomListPage roomList={roomList}/>}
+                    {currentView===CurrentView.roomList && <RoomListPage roomList={roomList} friendList={friendList}/>}
                     
                 </Col>
             </Row>

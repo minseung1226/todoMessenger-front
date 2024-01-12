@@ -3,10 +3,9 @@ import {BrowserRouter,Routes,Route} from "react-router-dom";
 import ChatPage from "./pages/Chatpage/Chatpage";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import JoinPage from "./pages/JoinPage/JoinPage";
-import CreateRoomPage from "./pages/CreateRoom/CreateRoomPage";
+import CreateRoomPage from "./components/CreateRoomModal/CreateRoomModal";
 import UserSearchPage from "./pages/UserSearchPage/UserSearchPage";
 import RootPage from "./pages/RootPage/RootPage";
-import { useEffect } from "react";
 function App() {
 
 

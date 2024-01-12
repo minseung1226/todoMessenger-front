@@ -1,4 +1,4 @@
-import "./ProfileGroup.css";
+import "../../styles/common.css";
 
 import { ListGroup,Image } from "react-bootstrap";
 const ProfileGroup=({users})=>{

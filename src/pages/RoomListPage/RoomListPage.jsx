@@ -5,21 +5,22 @@ import { getSocket } from "../../socket/socket";
 import {Row,Col} from "react-bootstrap"
 import 'bootstrap/dist/css/bootstrap.min.css';
 import HeaderSearchBar from "../../components/HeaderSearchBar/HeaderSearchBar";
+import CreateRoomModal from "../../components/CreateRoomModal/CreateRoomModal";
 
 // 채팅창 목록
-const RoomListPage=({roomList})=>{
+const RoomListPage=({roomList,friendList})=>{
     const token=localStorage.getItem('jwtToken');
     const [rooms,setRooms]=useState(roomList);
     const navigate=useNavigate("");
     const socket=getSocket(token);
-
+    const [createRoomModalisOpen,setCreateRoomModalisOpen]=useState(false);
     useEffect(()=>{
         setRooms(roomList);
     },[roomList]);
 
     const moveToChat=(rid)=>{
         window.electron.send("open-chat-room",rid);
-        //navigate(`/room/${rid}`);
+        
     };
 
     return (
@@ -27,32 +28,18 @@ const RoomListPage=({roomList})=>{
             <HeaderSearchBar title="채팅 ▼" allData={roomList} setSearchResult={rooms}>
             <div>메렁</div>
             <div>
-            <button onClick={()=>window.electron.send("create-chat-room")}>채팅방 생성</button>
+            <button onClick={()=>setCreateRoomModalisOpen(true)}>채팅방 생성</button>
             </div>
             </HeaderSearchBar>
-            {/* <Row>
-                <Col md={6} className="d flex align-items-center">
-            <h5>채팅 ▼</h5>
-            </Col>
-            <Col md={6} className="d-flex justify-content-end align-items-center">
-
-            <div>메렁</div>
-            <div>
-            <button onClick={()=>navigate("/createRoom")}>채팅방 생성</button>
-            </div>
-            </Col>
-            </Row> */}
+            <CreateRoomModal token={token} friendList={friendList} 
+                            createRoomModalisOpen={createRoomModalisOpen}
+                            onClose={()=>setCreateRoomModalisOpen(false)}/>
             {rooms?.length > 0 ? (
                 rooms.map((room) => (
                     <div className="room-list" key={room._id} onClick={() => moveToChat(room._id)}>
                         <div className="room-title">
                             {/* <img src="/profile.jpeg"/> */}
-                            <p>{room.roomName?
-                            room.roomName:room.members
-                                                    .slice(0,3)
-                                                    .map(members=>members.name)
-                                                    .join(`, `)
-                                                    +(room.members.length>3?`...`:"")}</p>
+                            <p>{room.roomName?.length>15?room.roomName.slice(0,15)+"...":room.roomName}</p>
                         </div>
                         <div className="member-number">{room?.members?.length}</div>
                     </div>
