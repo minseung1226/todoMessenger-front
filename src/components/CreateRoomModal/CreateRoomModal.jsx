@@ -1,4 +1,4 @@
-import { ListGroup, Image, Modal, Button } from "react-bootstrap";
+import { ListGroup, Image, Modal, Button,Form } from "react-bootstrap";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getSocket } from "../../socket/socket";
@@ -7,67 +7,79 @@ import "./CreateRoomModal.css";
 import HeaderSearchBar from "../HeaderSearchBar/HeaderSearchBar";
 import SearchInput from "../searchInput/SearchInput";
 
-const CreateRoomModal = ({ token, friendList, createRoomModalisOpen, onClose }) => {
+const CreateRoomModal = ({ token, friendList, createRoomModalisOpen, onClose, socket }) => {
     const [checkedState, setCheckedState] = useState({});
     const server_url = process.env.REACT_APP_SERVER_URL;
-    const socket = getSocket(token);
     const navigate = useNavigate("");
-    const [friends,setFriends]=useState([]);
+    const [friends, setFriends] = useState([]);
 
-    useEffect(()=>{
-        console.log(friendList);
+    useEffect(() => {
         setFriends(friendList);
-    },[friendList]);
+    }, [friendList]);
 
     const handleCheckboxChange = (friendId) => {
         setCheckedState(prevState => ({
             ...prevState,
             [friendId]: !prevState[friendId]
         }));
+
+        console.log("checkedState=",checkedState)
     };
+
+    useEffect(()=>{
+        
+        console.log("checkedState=",checkedState)
+    },[checkedState])
 
     const handleSubmit = () => {
 
-        const selectFriendId = friends.filter(friend => checkedState[friend._id]);
-
-        socket.emit("createChatRoom",token,selectFriendId,(res)=>{
-            if(res.ok){
+        const selectFriendId = friends.
+            filter(friend => checkedState[friend._id])
+            .map(friend => friend._id);
+        socket.emit("createChatRoom", token, selectFriendId, (res) => {
+            if (res.ok) {
                 setCheckedState({});
-                window.electron.send("open-chat-room",res.roomId);
+                window.electron.send("open-chat-room", res.roomId);
                 onClose();
             }
         })
     }
-        
+
+    const closeModal = () => {
+        onClose();
+        setCheckedState({});
+    }
+
 
     return (
         <div>
-            <Modal show={createRoomModalisOpen} onHide={onClose} backdrop="static" keyboard={false}>
+            <Modal show={createRoomModalisOpen} onHide={closeModal}
+                backdrop="static" keyboard={false} size="sm">
                 <Modal.Header closeButton>
                     <div className="title"><strong>대화상대 선택</strong></div>
                 </Modal.Header>
 
                 <Modal.Body className="modal-body">
-                <SearchInput allData={friendList} setSearchResult={setFriends}/>
+                    <SearchInput allData={friendList} setSearchResult={setFriends} />
                     <ListGroup className="friend-list">
-                        {friends&&friends.map((friend, index) => (
-                            <ListGroup.Item key={index} className="d-flex align-items-center no-border"
+                        {friends && friends.map((friend, index) => (
+                            <ListGroup.Item key={friend._id} className="d-flex align-items-center no-border"
                                 onClick={() => handleCheckboxChange(friend._id)}>
-                               
-                                    <Image src="/profile.jpeg" className="profile-img" roundedCircle />
-                                    <div className="flex-grow-1 ml-2">
-                                        <div><strong>{friend.name}</strong></div>
-                                    </div>
-                                
+
+                                <Image src="/profile.jpeg" className="profile-img" roundedCircle />
+                                <div className="flex-grow-1 ml-2">
+                                    <div><strong>{friend.name}</strong></div>
+                                </div>
+
                                 <div className="flex-shrink-0">
-                                <input
-                                    className="ml-auto"
-                                    type="checkbox"
-                                    value={friend._id}
-                                    checked={checkedState[friend._id] || false}
-                                    onChange={() => { }}
-                                    onClick={(e) => e.stopPropagation()}
-                                />
+                                    <Form.Check aria-label="option 1"
+                                        type="radio"
+                                        className="ml-auto"
+                                        value={friend._id}
+                                        checked={checkedState[friend._id] || false}
+                                        onChange={() => { }}
+                                    />
+
                                 </div>
                             </ListGroup.Item>
                         ))}
@@ -75,11 +87,12 @@ const CreateRoomModal = ({ token, friendList, createRoomModalisOpen, onClose }) 
                 </Modal.Body>
 
                 <Modal.Footer>
-                    <Button variant="outline-dark" onClick={onClose}>닫기</Button>
-                    <Button onClick={handleSubmit} variant="outline-dark">확인</Button>
+                    <Button variant="outline-dark" onClick={closeModal}>닫기</Button>
+                    <Button
+                        onClick={handleSubmit} variant="outline-dark">확인</Button>
                 </Modal.Footer>
             </Modal>
-            
+
         </div>
     );
 }

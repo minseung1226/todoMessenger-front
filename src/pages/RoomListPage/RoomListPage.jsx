@@ -1,21 +1,19 @@
 import React,{useState,useEffect}  from "react";
 import { useNavigate } from "react-router-dom";
 import "./RoomListPageStyle.css";
-import { getSocket } from "../../socket/socket";
-import {Row,Col} from "react-bootstrap"
 import 'bootstrap/dist/css/bootstrap.min.css';
 import HeaderSearchBar from "../../components/HeaderSearchBar/HeaderSearchBar";
 import CreateRoomModal from "../../components/CreateRoomModal/CreateRoomModal";
 
 // 채팅창 목록
-const RoomListPage=({roomList,friendList})=>{
+const RoomListPage=({roomList,friendList,socket})=>{
     const token=localStorage.getItem('jwtToken');
     const [rooms,setRooms]=useState(roomList);
     const navigate=useNavigate("");
-    const socket=getSocket(token);
     const [createRoomModalisOpen,setCreateRoomModalisOpen]=useState(false);
     useEffect(()=>{
         setRooms(roomList);
+
     },[roomList]);
 
     const moveToChat=(rid)=>{
@@ -33,7 +31,9 @@ const RoomListPage=({roomList,friendList})=>{
             </HeaderSearchBar>
             <CreateRoomModal token={token} friendList={friendList} 
                             createRoomModalisOpen={createRoomModalisOpen}
-                            onClose={()=>setCreateRoomModalisOpen(false)}/>
+                            socket={socket}
+                            onClose={()=>setCreateRoomModalisOpen(false)}
+                            />
             {rooms?.length > 0 ? (
                 rooms.map((room) => (
                     <div className="room-list" key={room._id} onClick={() => moveToChat(room._id)}>

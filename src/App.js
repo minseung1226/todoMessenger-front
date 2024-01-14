@@ -3,8 +3,6 @@ import {BrowserRouter,Routes,Route} from "react-router-dom";
 import ChatPage from "./pages/Chatpage/Chatpage";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import JoinPage from "./pages/JoinPage/JoinPage";
-import CreateRoomPage from "./components/CreateRoomModal/CreateRoomModal";
-import UserSearchPage from "./pages/UserSearchPage/UserSearchPage";
 import RootPage from "./pages/RootPage/RootPage";
 function App() {
 
@@ -17,9 +15,6 @@ function App() {
       <Route  path="/join" element={<JoinPage/>}/>
       <Route  path="home" element={<RootPage/>}/>
       <Route  path="room/:roomId" element={<ChatPage/>}/>
-      <Route  path="createRoom" element={<CreateRoomPage/>}/>
-      <Route  path="user/search" element={<UserSearchPage/>}/>
-      
       </Routes>
     </BrowserRouter>
 

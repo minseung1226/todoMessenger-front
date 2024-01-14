@@ -3,11 +3,11 @@ const AlertModal=({message,isOpen,onClose})=>{
 
     return (
         <div>
-        <Modal show={isOpen} onHide={onClose}>
+        <Modal show={isOpen} onHide={onClose} size="sm" style={{maxHeight:"500px",overflowY:"auto"}}>
         <Modal.Header closeButton>
           <Modal.Title>알림</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
+        <Modal.Body style={{height:"110px"}}>
           <p>{message}</p>
         </Modal.Body>
         <Modal.Footer>

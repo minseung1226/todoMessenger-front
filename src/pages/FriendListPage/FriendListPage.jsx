@@ -1,20 +1,17 @@
-import { Button, Input } from "@mui/base";
 import { useState,useEffect } from "react";
 import Logout from "../../components/Logout/Logout";
-import { ListGroup,Image,Form,Row,Col } from "react-bootstrap";
-import { getSocket } from "../../socket/socket";
+import { ListGroup,Image} from "react-bootstrap";
 import "./FriendListPage.css";
 import "../../styles/common.css";
 import ProfileGroup from "../../components/ProfileGroup/ProfileGroup";
 import HeaderSearchBar from "../../components/HeaderSearchBar/HeaderSearchBar";
-const FriendListPage=({friendList,newFriendList})=>{
+import UserSearchModal from "../../components/UserSearchModal/UserSearchModal";
+const FriendListPage=({friendList,newFriendList,socket})=>{
     const token=localStorage.getItem("jwtToken");
-    const [friendInput,setFriendInput]=useState("");
     const [friends,setFriends]=useState(friendList);
     const [newFriends,setNewFriends]=useState(newFriendList);
     const [user,setUser]=useState("");
-    const socket=getSocket(token);
-
+    const [userSearchModalIsOpen,setUserSearchModalIsOpen]=useState(false);
 
 
     useEffect(() => {
@@ -33,8 +30,12 @@ const FriendListPage=({friendList,newFriendList})=>{
         <div>
           <HeaderSearchBar title="Friend"
           allData={friendList} setSearchResult={setFriends}>
-          <Image src="/friendPlus.png" className="friend-plus icon-img" onClick={() => window.electron.send("user-search")}/>
+          <Image src="/friendPlus.png" className="friend-plus icon-img" onClick={() =>setUserSearchModalIsOpen(true)}/>
           </HeaderSearchBar>
+          <UserSearchModal token={token} socket={socket}
+                           userSearchModalIsOpen={userSearchModalIsOpen}
+                           onClose={()=>setUserSearchModalIsOpen(false)}/>
+
           <p>me</p>
           <hr></hr>
           <ListGroup>
