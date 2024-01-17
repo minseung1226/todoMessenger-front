@@ -16,10 +16,6 @@ const RoomListPage=({roomList,friendList,socket})=>{
 
     },[roomList]);
 
-    const moveToChat=(rid)=>{
-        window.electron.send("open-chat-room",rid);
-        
-    };
 
     return (
         <div className="room-body mt-3">
@@ -36,7 +32,7 @@ const RoomListPage=({roomList,friendList,socket})=>{
                             />
             {rooms?.length > 0 ? (
                 rooms.map((room) => (
-                    <div className="room-list" key={room._id} onClick={() => moveToChat(room._id)}>
+                    <div className="room-list" key={room._id} onClick={() => window.electron.send("open-chat-room",room._id)}>
                         <div className="room-title">
                             {/* <img src="/profile.jpeg"/> */}
                             <p>{room.roomName?.length>15?room.roomName.slice(0,15)+"...":room.roomName}</p>

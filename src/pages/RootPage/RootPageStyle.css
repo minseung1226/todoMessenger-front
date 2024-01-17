@@ -6,3 +6,13 @@
 .sidebar{
     background: #f0f0f0;
 }
+
+.custom-dropdown-menu .dropdown-menu {
+    width: 50px; /* 예시로 너비를 150px로 설정 */
+    /* 필요한 경우 추가 스타일링 */
+}
+
+.custom-dropdown-menu .dropdown-item{
+    
+    font-size: 13px;
+}

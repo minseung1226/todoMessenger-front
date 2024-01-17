@@ -6,7 +6,7 @@ const ProfileGroup=({users})=>{
     return (
         <ListGroup>
         {users.map((user, index) => (
-        <ListGroup.Item key={index} className="d-flex align-items-center no-border">
+        <ListGroup.Item key={index} className="d-flex align-items-center no-border profile">
           <Image src="/profile.jpeg" className="profile-img" roundedCircle/>
           <div className="ml-2">
             <div><strong>{user.name}</strong></div>

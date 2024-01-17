@@ -39,7 +39,7 @@ const FriendListPage=({friendList,newFriendList,socket})=>{
           <p>me</p>
           <hr></hr>
           <ListGroup>
-        <ListGroup.Item className="d-flex align-items-center no-border">
+        <ListGroup.Item className="d-flex align-items-center no-border profile">
           <Image src="/profile.jpeg" className="profile-img" roundedCircle/>
           <div className="ml-2">
             <div><strong>{user.name}</strong></div>
@@ -59,7 +59,7 @@ const FriendListPage=({friendList,newFriendList,socket})=>{
           <hr></hr>
           <ProfileGroup users={friends}/>
           
-            <Logout/>
+            
             
         </div>
     )

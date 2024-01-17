@@ -12,3 +12,10 @@ p{
     margin-bottom: 0;
     font-size: 15px;
 }
+
+
+
+
+.profile:hover{
+    background-color: #f0f0f0;
+}

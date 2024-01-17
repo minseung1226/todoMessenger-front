@@ -11,7 +11,7 @@ const Logout=(server_url,token)=>{
 
 
     return(<div>
-        <Button type="button" onClick={onClick}>logout</Button>
+        <Button type="button" onClick={onClick}>로그아웃</Button>
     </div>)
 }
 
