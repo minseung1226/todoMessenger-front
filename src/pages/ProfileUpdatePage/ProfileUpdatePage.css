@@ -1,0 +1,36 @@
+.profile-img-div{
+    position: relative;
+    display: inline-block;
+}
+.my-profile-img{
+    height: 110px;
+    width: 110px;
+}
+
+.img-change-dropdown{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+.img-change-toggle{
+    
+    padding: 0;
+    border:none;
+    background-color: transparent;
+}
+.camera-img{
+    height: 20px;
+    width: 20px;
+}
+
+.file-input-label{
+    display: block;
+    white-space: nowrap;
+    margin-bottom: 0;
+}
+
+.img-change-dropdown .dropdown-menu{
+    font-size: 13px;
+    --bs-dropdown-min-width:5rem;
+}

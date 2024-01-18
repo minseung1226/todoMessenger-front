@@ -29,7 +29,7 @@ ipcMain.on("profile-update",(event)=>{
     }
     profileUpdate=new BrowserWindow({
         width:350,
-        height:350,
+        height:500,
         webPreferences:{
             preload:path.join(__dirname,"preload.js"),
             contextIsolation:true,
