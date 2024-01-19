@@ -6,31 +6,27 @@ import "../../styles/common.css";
 import ProfileGroup from "../../components/ProfileGroup/ProfileGroup";
 import HeaderSearchBar from "../../components/HeaderSearchBar/HeaderSearchBar";
 import UserSearchModal from "../../components/UserSearchModal/UserSearchModal";
-const FriendListPage=({friendList,newFriendList,socket})=>{
+const FriendListPage=({friendList,newFriendList,socket,user})=>{
     const token=localStorage.getItem("jwtToken");
     const [friends,setFriends]=useState(friendList);
     const [newFriends,setNewFriends]=useState(newFriendList);
-    const [user,setUser]=useState("");
     const [userSearchModalIsOpen,setUserSearchModalIsOpen]=useState(false);
-
+    const img_url=process.env.REACT_APP_PROFILE_IMG_URL;
 
     useEffect(() => {
         setFriends(friendList);
         setNewFriends(newFriendList);
         }, [friendList,newFriendList]);
 
-    useEffect(()=>{
-      socket.emit("findUser",token,(res)=>{
-        setUser(res.user);
-      })
-    },[socket])
+
     //친구 검색
     
     return (
         <div>
           <HeaderSearchBar title="Friend"
           allData={friendList} setSearchResult={setFriends}>
-          <Image src="/friendPlus.png" className="friend-plus icon-img" onClick={() =>setUserSearchModalIsOpen(true)}/>
+          <Image src="/friendPlus.png"
+          className="friend-plus icon-img" onClick={() =>setUserSearchModalIsOpen(true)}/>
           </HeaderSearchBar>
           <UserSearchModal token={token} socket={socket}
                            userSearchModalIsOpen={userSearchModalIsOpen}
@@ -40,7 +36,7 @@ const FriendListPage=({friendList,newFriendList,socket})=>{
           <hr></hr>
           <ListGroup>
         <ListGroup.Item className="d-flex align-items-center no-border profile">
-          <Image src="/profile.jpeg" className="profile-img" roundedCircle/>
+          <Image src={user.profileImg?img_url+user.profileImg:"/profile.jpeg"} className="profile-img" roundedCircle/>
           <div className="ml-2">
             <div><strong>{user.name}</strong></div>
             
