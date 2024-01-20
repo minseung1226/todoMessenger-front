@@ -42,6 +42,16 @@ const RootPage = () => {
 
     //채팅방이 생성되었을 때 채팅방 받기
     useEffect(() => {
+        socket.on("message",(res)=>{
+            console.log("res=",res);
+            window.electron.showMessage("새 메시지",res.chat);
+        })
+        socket.on("refreshRoomList",()=>{
+            socket.emit("roomList",token,(res)=>{
+
+                setRoomList(res.chatRoomListInfo);
+            })
+        })
         socket.on("newRoom", (res) => {
 
             setRoomList(prevRoomList => [res, ...prevRoomList]);

@@ -12,6 +12,9 @@ contextBridge.exposeInMainWorld('electron', {
     },
     closeWindow:()=>{
         ipcRenderer.send('close-window',window.id);
+    },
+    showMessage:(title,body)=>{
+        ipcRenderer.send("show-message",title,body);
     }
 
 });

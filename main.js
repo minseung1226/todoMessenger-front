@@ -1,4 +1,4 @@
-const { app, BrowserWindow,ipcMain,dialog,Menu } = require('electron');
+const { app, BrowserWindow,ipcMain,dialog,Menu ,Notification} = require('electron');
  const {default:installExtension,REACT_DEVELOPER_TOOLS}=require("electron-devtools-installer");
 const path=require("path");
 
@@ -21,6 +21,26 @@ function createWindow() {
     });
     win.loadURL('http://localhost:3000'); // React 개발 서버 주소
 }
+
+function showNotification(title,body){
+    const originalAppName = app.getName();
+
+    // 애플리케이션 이름을 임시로 변경
+    app.setName('My Custom App Name');
+
+    const notification = new Notification({ title, body });
+    notification.show();
+
+    setTimeout(() => {
+        notification.close();
+        // 애플리케이션 이름을 원래대로 복원
+        app.setName(originalAppName);
+    }, 5000);
+}
+
+ipcMain.on("show-message",(event,title,body)=>{
+    showNotification(title,body);
+})
 
 ipcMain.on("profile-update",(event)=>{
     if(profileUpdate){
@@ -76,6 +96,7 @@ ipcMain.on('close-window',(event,windowId)=>{
 
 app.whenReady().then(()=>{
     createWindow();
+
     //Menu.setApplicationMenu(null);
 });
 

@@ -30,7 +30,8 @@ const ProfileUpdatePage = () => {
         socket.emit("findUser", token, (res) => {
             setUser(res.user);
             setName(res.user.name);
-            if(profileImg){
+            console.log("profileImg=",profileImg);
+            if(res.user.profileImg){
                 setProfileImgPreview(process.env.REACT_APP_PROFILE_IMG_URL+res.user.profileImg);
             }
         });
@@ -51,13 +52,8 @@ const ProfileUpdatePage = () => {
         if(profileImg){
             formData.append("file",profileImg);
         }
-        if(name){
-            if(name!==user.name){
-                formData.append("name",name);
-            }
-        }else{
+        formData.append("name",name);
 
-        }
 
         fetch(`${server_url}/user/update`,{
             method:"PATCH",
@@ -69,7 +65,7 @@ const ProfileUpdatePage = () => {
         .then(data=>{
             if(data.ok){
                 socket.emit("refreshUser",token);
-                //window.electron.closeWindow();
+                window.electron.closeWindow();
             }
         }).catch(err=>{
             console.log("err=",err);

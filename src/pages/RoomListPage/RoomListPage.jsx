@@ -35,8 +35,9 @@ const RoomListPage=({roomList,friendList,socket})=>{
                     <div className="room-list" key={room._id} onClick={() => window.electron.send("open-chat-room",room._id)}>
                         <div className="room-title">
                             {/* <img src="/profile.jpeg"/> */}
-                            <p>{room.roomName?.length>15?room.roomName.slice(0,15)+"...":room.roomName}</p>
+                            <strong>{room.roomName?.length>15?room.roomName.slice(0,15)+"...":room.roomName}</strong>
                         </div>
+                        <div>{room.chat}</div>
                         <div className="member-number">{room?.members?.length}</div>
                     </div>
                 ))
