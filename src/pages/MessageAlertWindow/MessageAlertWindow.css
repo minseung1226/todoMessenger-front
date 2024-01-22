@@ -1,0 +1,16 @@
+.message-alert-close:hover{
+    cursor: pointer;
+}
+
+.alert-text{
+    margin-top: 3px;
+    font-size: 14px;
+}
+
+.message-alert-title{
+    font-size:16px;
+}
+
+.message-alert-content{
+    font-size: 13px;
+}

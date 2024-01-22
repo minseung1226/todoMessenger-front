@@ -1,17 +1,17 @@
-const { app, BrowserWindow,ipcMain,dialog,Menu ,Notification} = require('electron');
- const {default:installExtension,REACT_DEVELOPER_TOOLS}=require("electron-devtools-installer");
-const path=require("path");
+const { app, BrowserWindow, ipcMain, dialog, Menu, Notification,screen } = require('electron');
+const { default: installExtension, REACT_DEVELOPER_TOOLS } = require("electron-devtools-installer");
+const path = require("path");
 
 let win;
-let profileUpdate=null;
+let profileUpdate = null;
 function createWindow() {
 
     win = new BrowserWindow({
         width: 650,
         height: 800,
         webPreferences: {
-            preload:path.join(__dirname,"preload.js"),
-            contextIsolation:true,
+            preload: path.join(__dirname, "preload.js"),
+            contextIsolation: true,
             devTools: true, // 개발자 도구 활성화
         }
     });
@@ -22,7 +22,7 @@ function createWindow() {
     win.loadURL('http://localhost:3000'); // React 개발 서버 주소
 }
 
-function showNotification(title,body){
+function showNotification(title, body) {
     const originalAppName = app.getName();
 
     // 애플리케이션 이름을 임시로 변경
@@ -38,21 +38,21 @@ function showNotification(title,body){
     }, 5000);
 }
 
-ipcMain.on("show-message",(event,title,body)=>{
-    showNotification(title,body);
+ipcMain.on("show-message", (event, title, body) => {
+    showNotification(title, body);
 })
 
-ipcMain.on("profile-update",(event)=>{
-    if(profileUpdate){
+ipcMain.on("profile-update", (event) => {
+    if (profileUpdate) {
         profileUpdate.focus();
         return;
     }
-    profileUpdate=new BrowserWindow({
-        width:350,
-        height:500,
-        webPreferences:{
-            preload:path.join(__dirname,"preload.js"),
-            contextIsolation:true,
+    profileUpdate = new BrowserWindow({
+        width: 350,
+        height: 500,
+        webPreferences: {
+            preload: path.join(__dirname, "preload.js"),
+            contextIsolation: true,
             devTools: true, // 개발자 도구 활성화
         }
     });
@@ -69,14 +69,14 @@ ipcMain.on("profile-update",(event)=>{
 
 
 //채팅방
-ipcMain.on("open-chat-room",(event,roomId)=>{
-    
-    let chatWin=new BrowserWindow({
-        width:600,
-        height:700,
-        webPreferences:{
-            preload:path.join(__dirname,"preload.js"),
-            contextIsolation:true,
+ipcMain.on("open-chat-room", (event, roomId) => {
+
+    let chatWin = new BrowserWindow({
+        width: 600,
+        height: 700,
+        webPreferences: {
+            preload: path.join(__dirname, "preload.js"),
+            contextIsolation: true,
             devTools: true, // 개발자 도구 활성화
         }
     });
@@ -87,14 +87,44 @@ ipcMain.on("open-chat-room",(event,roomId)=>{
     chatWin.loadURL(`http://localhost:3000/room/${roomId}`);
 })
 
-ipcMain.on('close-window',(event,windowId)=>{
-    const window=BrowserWindow.fromId(windowId);
-    if(window){
+ipcMain.on("message-alert", (event, chatId) => {
+    const { width, height } = screen.getPrimaryDisplay().workAreaSize;
+    let messageWin = new BrowserWindow({
+        width: 300,
+        height: 80,
+        x: width - 300,
+        y: height - 80,
+        frame: false,
+         alwaysOnTop: true,
+         skipTaskbar: true,
+         transparent: true,
+        webPreferences: {
+            preload: path.join(__dirname, "preload.js"),
+            contextIsolation: true,
+            devTools: true, // 개발자 도구 활성화
+            contextIsolation: true,
+            nodeIntegration:false
+        }
+    
+
+    });
+    messageWin.webContents.once('dom-ready', () => {
+        messageWin.webContents.executeJavaScript(`window.electron.setWindowId(${messageWin.id})`);
+
+    });
+     messageWin.loadURL(`http://localhost:3000/message/${chatId}`);
+    setTimeout(() => {
+        messageWin.hide(); // 5초 후에 창 닫기
+      }, 5000);
+})
+ipcMain.on('close-window', (event, windowId) => {
+    const window = BrowserWindow.fromId(windowId);
+    if (window) {
         window.close();
     }
 })
 
-app.whenReady().then(()=>{
+app.whenReady().then(() => {
     createWindow();
 
     //Menu.setApplicationMenu(null);
@@ -108,7 +138,7 @@ app.on('window-all-closed', () => {
 
 app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) {
-        
+
         createWindow();
     }
 });

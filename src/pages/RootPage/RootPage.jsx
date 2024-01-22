@@ -44,7 +44,7 @@ const RootPage = () => {
     useEffect(() => {
         socket.on("message",(res)=>{
             console.log("res=",res);
-            window.electron.showMessage("새 메시지",res.chat);
+            window.electron.send("message-alert",res._id);
         })
         socket.on("refreshRoomList",()=>{
             socket.emit("roomList",token,(res)=>{
@@ -84,6 +84,7 @@ const RootPage = () => {
         // 채팅방 조회
         socket.emit("roomList", token, (res) => {
             setRoomList(res.chatRoomListInfo);
+            console.log("res=",res);
 
         })
 

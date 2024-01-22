@@ -4,6 +4,7 @@ import "./RoomListPageStyle.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import HeaderSearchBar from "../../components/HeaderSearchBar/HeaderSearchBar";
 import CreateRoomModal from "../../components/CreateRoomModal/CreateRoomModal";
+import ImgGroup from "../../components/ImgGroup/ImgGroup";
 
 // 채팅창 목록
 const RoomListPage=({roomList,friendList,socket})=>{
@@ -33,6 +34,7 @@ const RoomListPage=({roomList,friendList,socket})=>{
             {rooms?.length > 0 ? (
                 rooms.map((room) => (
                     <div className="room-list" key={room._id} onClick={() => window.electron.send("open-chat-room",room._id)}>
+                        <ImgGroup members={room.members}/>
                         <div className="room-title">
                             {/* <img src="/profile.jpeg"/> */}
                             <strong>{room.roomName?.length>15?room.roomName.slice(0,15)+"...":room.roomName}</strong>
