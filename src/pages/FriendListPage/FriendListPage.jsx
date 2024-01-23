@@ -23,7 +23,7 @@ const FriendListPage=({friendList,newFriendList,socket,user})=>{
     
     return (
         <div>
-          <HeaderSearchBar title="Friend"
+          <HeaderSearchBar title="친구"
           allData={friendList} setSearchResult={setFriends}>
           <Image src="/friendPlus.png"
           className="friend-plus icon-img" onClick={() =>setUserSearchModalIsOpen(true)}/>

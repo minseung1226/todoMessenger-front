@@ -9,6 +9,7 @@ const server_url = process.env.REACT_APP_SERVER_URL;
 const JoinPage = () => {
     const [id, setId] = useState("");
     const [pw, setPw] = useState("");
+    const [pw2, setPw2] = useState("");
     const [name, setName] = useState("");
     const [phoneNumber, setPhoneNumber] = useState("");
     const navigate = useNavigate("");
@@ -18,6 +19,7 @@ const JoinPage = () => {
     const [realCode, setRealCode] = useState("");
     const [alertMessage, setAlertMessage] = useState("");
     const [alertIsOpen, setAlertIsOpen] = useState(false);
+    const [joinSuccess, setJoinSuccess] = useState(false);
     const idDuplication = () => {
         fetch(`${server_url}/idDuplication`, {
             method: "post",
@@ -30,9 +32,14 @@ const JoinPage = () => {
         })
             .then((res) => res.json())
             .then(data => {
-                if (!data.ok) alert("중복 ID")
+                if (!data.ok) {
+                    console.log("여ㅛㅕㄱ");
+                    setAlertMessage("중복된 아이디 입니다.");
+                    setAlertIsOpen(true);
+                }
                 else {
-                    alert("사용 가능한 아이디 입니다.");
+                    setAlertMessage("사용 가능한 ID 입니다.");
+                    setAlertIsOpen(true);
                     setIdCheck(true);
 
                 }
@@ -52,17 +59,20 @@ const JoinPage = () => {
         })
             .then((res) => res.json())
             .then((data) => {
-                alert("인증번호 발송");
+                setAlertMessage("인증번호가 발송되었습니다.");
+                setAlertIsOpen(true);
                 setRealCode(data.code);
             })
     }
 
     const codeValid = () => {
         if (realCode != code || !code) {
-            alert("인증번호가 일치하지 않음");
+            setAlertMessage("인증번호가 일치하지 않습니다.");
+            setAlertIsOpen(true);
         }
         else {
-            alert("인증성공");
+            setAlertMessage("인증 완료");
+            setAlertIsOpen(true);
             setCodeCheck(true);
         }
     }
@@ -70,6 +80,11 @@ const JoinPage = () => {
 
     const join = (event) => {
         event.preventDefault();
+        if(pw!==pw2){
+            setAlertMessage("비밀번호가 일치하지 않습니다.")
+            setAlertIsOpen(true);
+            return;
+        }
         fetch(`${server_url}/join`, {
             method: "POST",
             headers: {
@@ -85,15 +100,18 @@ const JoinPage = () => {
             .then((res) => res.json())
             .then((data) => {
                 if (data.ok) {
-                    if (window.confirm("회원가입 성공")) {
-                        navigate("/");
-                    }
+                    setAlertMessage("회원가입 되셨습니다.");
+                    setAlertIsOpen(true);
+                    setJoinSuccess(true);
                 }
             })
             .catch((err) => console.log(err.message));
     }
 
-
+    const alertModalOnClose = () => {
+        setAlertIsOpen(false);
+        if (joinSuccess) navigate("/");
+    }
 
     return (
         <div className="join-body">
@@ -143,7 +161,7 @@ const JoinPage = () => {
                                 <Form.Control type="password"
                                     value={pw}
                                     onChange={(event) => setPw(event.target.value)}
-                                    id="pwd" placeholder="비밀번호" />
+                                     placeholder="비밀번호" />
                             </div>
                         </Col>
                     </Row>
@@ -153,6 +171,8 @@ const JoinPage = () => {
                             <div className="form-field d-flex align-items-center">
                                 <span className="fas fa-key"></span>
                                 <Form.Control type="password"
+                                value={pw2}
+                                onChange={(event) => setPw2(event.target.value)}
                                     placeholder="비밀번호 확인" />
                             </div>
                         </Col>
@@ -200,7 +220,7 @@ const JoinPage = () => {
                     <Button type="submit"
                         className="submit-btn"
                         disabled={!idCheck || !codeCheck}
-                        variant="outline-dark">Login</Button>
+                        variant="outline-dark">회원 가입</Button>
 
                 </form>
                 <div className="text-center fs-6">
@@ -209,7 +229,7 @@ const JoinPage = () => {
                 <AlertModal
                     isOpen={alertIsOpen}
                     message={alertMessage}
-                    onClose={() => setAlertIsOpen(false)} />
+                    onClose={alertModalOnClose} />
 
 
             </div>

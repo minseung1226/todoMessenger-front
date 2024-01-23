@@ -7,7 +7,7 @@ import CreateRoomModal from "../../components/CreateRoomModal/CreateRoomModal";
 import ImgGroup from "../../components/ImgGroup/ImgGroup";
 
 // 채팅창 목록
-const RoomListPage=({roomList,friendList,socket})=>{
+const RoomListPage=({roomList,friendList,user,socket,})=>{
     const token=localStorage.getItem('jwtToken');
     const [rooms,setRooms]=useState(roomList);
     const navigate=useNavigate("");
@@ -17,6 +17,14 @@ const RoomListPage=({roomList,friendList,socket})=>{
 
     },[roomList]);
 
+    const formatRoomName=(roomName)=>{
+        const filterNameArr=roomName.split(",")
+                              .filter(name=>name!==user.name && name!=="");
+        
+        const filterRoomName=filterNameArr.join(",");
+
+        return filterRoomName?.length>15?filterRoomName.slice(0,15)+"...":filterRoomName
+    }
 
     return (
         <div className="room-body mt-3">
@@ -37,7 +45,7 @@ const RoomListPage=({roomList,friendList,socket})=>{
                         <ImgGroup members={room.members}/>
                         <div className="room-title">
                             {/* <img src="/profile.jpeg"/> */}
-                            <strong>{room.roomName?.length>15?room.roomName.slice(0,15)+"...":room.roomName}</strong>
+                            <strong>{formatRoomName(room.roomName)}</strong>
                         </div>
                         <div>{room.chat}</div>
                         <div className="member-number">{room?.members?.length}</div>

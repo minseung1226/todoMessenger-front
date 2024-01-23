@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import CurrentView from "../../enums/CurrentView";
-import { Container, Row, Col, Nav, NavDropdown, Button } from "react-bootstrap";
+import { Container, Row, Col, Nav, Dropdown, Image,NavDropdown } from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import RoomListPage from "../RoomListPage/RoomListPage";
 import FriendListPage from "../FriendListPage/FriendListPage";
@@ -18,6 +18,8 @@ const RootPage = () => {
     let timeoutId = useRef(null);
     const server_url = process.env.REACT_APP_SERVER_URL;
     const navigate = useNavigate("");
+    const [friendImg,setFriendImg]=useState("/friend.png");
+    const [roomImg,setRoomImg]=useState("/room.png");
 
 
     // user를 offline으로 바꾸고 localStorage 비우기
@@ -42,12 +44,11 @@ const RootPage = () => {
 
     //채팅방이 생성되었을 때 채팅방 받기
     useEffect(() => {
-        socket.on("message",(res)=>{
-            console.log("res=",res);
-            window.electron.send("message-alert",res._id);
+        socket.on("message", (res) => {
+            window.electron.send("message-alert", res._id);
         })
-        socket.on("refreshRoomList",()=>{
-            socket.emit("roomList",token,(res)=>{
+        socket.on("refreshRoomList", () => {
+            socket.emit("roomList", token, (res) => {
 
                 setRoomList(res.chatRoomListInfo);
             })
@@ -84,7 +85,7 @@ const RootPage = () => {
         // 채팅방 조회
         socket.emit("roomList", token, (res) => {
             setRoomList(res.chatRoomListInfo);
-            console.log("res=",res);
+            console.log("res=", res);
 
         })
 
@@ -133,9 +134,21 @@ const RootPage = () => {
             <Row>
                 <Col md={2} xs={2} className="sidebar">
                     <Nav className="flex-column">
-                        <Nav.Link onClick={() => setCurrentView(CurrentView.friendList)}>친구목록</Nav.Link>
-                        <Nav.Link onClick={() => setCurrentView(CurrentView.roomList)}>채팅방 목록</Nav.Link>
-                        <NavDropdown title="더보기" id="basic-nav-dropdown" className="custom-dropdown-menu">
+                        <Nav.Link onClick={() => setCurrentView(CurrentView.friendList)}
+                                  className={currentView===CurrentView.friendList?"click-color":""}
+                        >
+                            <Image className="menu-img" 
+                                src={currentView===CurrentView.friendList?"/clickFriend.png":"/friend.png"}
+                                 />
+                        </Nav.Link>
+                        <Nav.Link onClick={() => setCurrentView(CurrentView.roomList)}
+                        className={currentView===CurrentView.roomList?"click-color":""}>
+                        <Image className="menu-img" 
+                                src={currentView===CurrentView.roomList?"/clickRoom.png":"/room.png"} />
+                        </Nav.Link>
+                        
+                        <NavDropdown title={<Image src="/moreOption.png" className="menu-img" />}
+                         id="basic-nav-dropdown">
 
                             <NavDropdown.Item onClick={() => window.electron.send("profile-update")}>프로필 변경</NavDropdown.Item>
                             <NavDropdown.Item onClick={logout}>로그아웃</NavDropdown.Item>
@@ -149,6 +162,7 @@ const RootPage = () => {
                         socket={socket} />}
                     {currentView === CurrentView.roomList && <RoomListPage roomList={roomList}
                         friendList={friendList}
+                        user={user}
                         socket={socket} />}
 
                 </Col>

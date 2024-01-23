@@ -5,14 +5,25 @@
 
 .sidebar{
     background: #f0f0f0;
+    width:100px;
 }
 
-.custom-dropdown-menu .dropdown-menu {
-    width: 50px; /* 예시로 너비를 150px로 설정 */
-    /* 필요한 경우 추가 스타일링 */
+.nav{
+    padding-top: 10px;
 }
+.menu-img{
 
-.custom-dropdown-menu .dropdown-item{
+    width:35px;
+    height: 35px;
+    margin-left: 10%;
     
-    font-size: 13px;
+   
+}
+
+.dropdown-toggle::after{
+    display: none;
+}
+
+.click-color{
+    background-color: #fff;
 }
