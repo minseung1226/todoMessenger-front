@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { Row,Col,Form,Image } from "react-bootstrap";
+import { Row, Col, Form, Image } from "react-bootstrap";
 import "../../styles/common.css";
-const SearchInput=({allData,setSearchResult,onClose})=>{
+import "./SearchInput.css"
+const SearchInput = ({ allData, setSearchResult, onClose }) => {
     const [searchInput, setSearchInput] = useState("");
 
     const dataSearch = (event) => {
@@ -22,18 +23,20 @@ const SearchInput=({allData,setSearchResult,onClose})=>{
 
         }
         setSearchResult(allData.filter(data => data.name.includes(searchName)));
-     }
-    return(
-        <Row>
-                <Col>
-                    <Form.Control type="text" placeholder="검색" value={searchInput}
-                         onChange={dataSearch}
-                    /></Col>
-                {onClose&&
-                <Col xs={1}>
+    }
+    return (
+        <Row className="search-container">
+            <Col>
+                <Form.Control type="text" placeholder="검색" value={searchInput}
+                    onChange={dataSearch}
+                />
+            </Col>
+            {onClose &&
+                <Col xs={2} className="close-col">
+
                     <Image src="/close.png" className="close-img img" onClick={onClose} />
                 </Col>}
-            </Row>
+        </Row>
     )
 }
 

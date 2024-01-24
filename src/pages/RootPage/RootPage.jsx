@@ -129,22 +129,38 @@ const RootPage = () => {
 
 
     }
+
+    //img 변경
+    useEffect(()=>{
+        if(currentView===CurrentView.roomList){
+            setRoomImg("/clickRoom.png");
+            setFriendImg("/friend.png");
+        }else{
+            setRoomImg("/room.png");
+            setFriendImg("/clickFriend.png");
+        }
+    },[currentView]);
     return (
         <Container fluid className="mainContainer">
             <Row>
-                <Col md={2} xs={2} className="sidebar">
+                <Col  md={2} xs={2} className="sidebar">
                     <Nav className="flex-column">
                         <Nav.Link onClick={() => setCurrentView(CurrentView.friendList)}
                                   className={currentView===CurrentView.friendList?"click-color":""}
+                                  onMouseOver={()=>currentView===CurrentView.roomList&&setFriendImg("/clickFriend.png")}
+                                  onMouseOut={()=>currentView===CurrentView.roomList&&setFriendImg("/friend.png")}
                         >
                             <Image className="menu-img" 
-                                src={currentView===CurrentView.friendList?"/clickFriend.png":"/friend.png"}
+                                src={friendImg}
                                  />
                         </Nav.Link>
                         <Nav.Link onClick={() => setCurrentView(CurrentView.roomList)}
-                        className={currentView===CurrentView.roomList?"click-color":""}>
+                        className={currentView===CurrentView.roomList?"click-color":""}
+                        onMouseOver={()=>currentView===CurrentView.friendList&&setRoomImg("/clickRoom.png")}
+                        onMouseOut={()=>currentView===CurrentView.friendList&&setRoomImg("/room.png")}
+                        >
                         <Image className="menu-img" 
-                                src={currentView===CurrentView.roomList?"/clickRoom.png":"/room.png"} />
+                                src={roomImg} />
                         </Nav.Link>
                         
                         <NavDropdown title={<Image src="/moreOption.png" className="menu-img" />}
@@ -156,7 +172,7 @@ const RootPage = () => {
                     </Nav>
                 </Col>
 
-                <Col md={10} xs={10} className="content">
+                <Col  className="content">
                     {currentView === CurrentView.friendList && <FriendListPage friendList={friendList}
                         newFriendList={newFriendList} user={user}
                         socket={socket} />}

@@ -1,10 +1,18 @@
+
+
 .content{
     height:100vh;
+    
     overflow-y: auto;
+    padding-left:0 ;
+    
 }
 
 .sidebar{
-    background: #f0f0f0;
+    padding: 0;
+    background: #EEF5FF;
+    /* background: #E1F0DA; */
+    /* background: #f0f0f0; */
     width:100px;
 }
 
