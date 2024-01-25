@@ -1,4 +1,4 @@
-import React,{useEffect,useState} from "react";
+import React,{useEffect,useState,useRef} from "react";
 import {Button} from "@mui/base/Button"
 import MessageContainer from "../../components/MessageContainer/MessageContainer";
 import InputField from "../../components/InputField/InputField";
@@ -14,6 +14,12 @@ const ChatPage=()=>{
     const {roomId}=useParams();
     const navigate=useNavigate();
     const socket=getSocket(token);
+    const messagesEndRef = useRef(null);
+
+
+    useEffect(()=>{
+      messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    },[messageList])
     useEffect(()=>{
         socket.emit("getAllChatsAndUser",roomId,token,(res)=>{
             setUser(res.user);
@@ -40,22 +46,19 @@ const ChatPage=()=>{
         })
     }
 
-    const leaveRoom=()=>{
-        navigate("/home");
-    }
 
     return(
         <div>
-        <div className="App">
+        <div className="room-container">
         {/* nav 이부분 추가  */}
             <nav>
-              <Button onClick={leaveRoom} className='back-button'>←</Button>
-              <div className='nav-user'>{user.name}</div>
+               <div className='nav-user'>{user.name}</div>
             </nav>
-          <div>
+          <div className="message-view-container">
             {messageList?.length > 0 ? (
               <MessageContainer messageList={messageList} user={user} />
             ) : null}
+           <div ref={messagesEndRef} />
           </div>
           <InputField
             message={message}

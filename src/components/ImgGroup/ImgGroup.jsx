@@ -1,45 +1,45 @@
-import { Container, Row,Col,Image } from "react-bootstrap";
+import { Container, Row, Col, Image } from "react-bootstrap";
 import "./ImgGroup.css"
-import { useEffect,useState } from "react";
+import { useEffect, useState } from "react";
 
 const ImgGroup = ({ members }) => {
-    const [users,setUsers]=useState([]);
+    const [users, setUsers] = useState([]);
     const img_url = process.env.REACT_APP_PROFILE_IMG_URL;
 
-    useEffect(()=>{
-        console.log("members=",members);
+    useEffect(() => {
+        console.log("members=", members);
         setUsers(members);
-    },[members])
+    }, [members])
     return (
-        <div className="img-group-container">
-            {users?.length < 1 ?
-                <Image roundedCircle src={img_url + users[0]?.profileImg}>
+        <div className="img-group-container center">
+            {users?.length < 2 ?
+                <Image roundedCircle src={users[0]?.profileImg ? img_url + users[0].profileImg : "/profile.jpeg"}>
                 </Image>
                 : <>
-                    <Row>
-                        <Col xs={6} className="p-0">
-                            {(users&&users[0])&&
-                            <Image roundedCircle className="min-img"
-                            src={users[0].profileImg ? img_url + users[0].profileImg : "/profile.jpeg"}/>
-                       
+                    <Row class className="">
+                        <Col className="p-0">
+                            {(users && users[0]) &&
+                                <Image roundedCircle className="min-img"
+                                    src={users[0].profileImg ? img_url + users[0].profileImg : "/profile.jpeg"} />
+
                             }
-                            </Col>
-                        <Col xs={6} className="p-0">
-                        {(users&&users[2])&&<Image roundedCircle className="min-img"
-                            src={users[2].profileImg ? img_url + users[2].profileImg : "/profile.jpeg"}/>
-                        }
-                             </Col>
-                    </Row>
-                    <Row>
-                        <Col xs={6} className="p-0 m-0"> 
-                        {(users&&users[3]) &&
-                            <Image roundedCircle className="min-img"
-                            src={users[3].profileImg ? img_url + users[3].profileImg : "/profile.jpeg"}/>}
                         </Col>
-                        <Col xs={6} className="p-0 m-0">
-                        {(users&&users[1]) && 
-                            <Image roundedCircle className="min-img"
-                            src={users[1].profileImg ? img_url + users[1].profileImg : "/profile.jpeg"}/>}
+                        <Col className="p-0">
+                            {(users && users[2]) && <Image roundedCircle className="min-img"
+                                src={users[2].profileImg ? img_url + users[2].profileImg : "/profile.jpeg"} />
+                            }
+                        </Col>
+                    </Row>
+                    <Row className="img-group-row" >
+                        <Col className="p-0 m-0">
+                            {(users && users[3]) &&
+                                <Image roundedCircle className="min-img"
+                                    src={users[3].profileImg ? img_url + users[3].profileImg : "/profile.jpeg"} />}
+                        </Col>
+                        <Col className="p-0 m-0" >
+                            {(users && users[1]) &&
+                                <Image roundedCircle className="min-img"
+                                    src={users[1].profileImg ? img_url + users[1].profileImg : "/profile.jpeg"} />}
                         </Col>
                     </Row></>
             }

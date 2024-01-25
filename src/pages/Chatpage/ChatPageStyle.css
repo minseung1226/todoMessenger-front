@@ -1,16 +1,23 @@
-.App {
+.room-container {
     height:100vh;
-    background-image: url("../../../public/background.png");
+    background-color: #EEF5FF;
     margin-left: auto;
     margin-right: auto;
-    max-width: 28rem;
+    max-width: 100vh;
     position: relative;
+    display: flex;
+    flex-direction: column;
   }
-
+.message-view-container{
+    flex-grow: 1; 
+  overflow-y: auto; 
+}
 nav{
     display: flex;
     justify-content: flex-start;
     align-items: center;
+    margin-left: 15px;
+    margin-top:10px;
 }
 .back-button{
     height: 50px;

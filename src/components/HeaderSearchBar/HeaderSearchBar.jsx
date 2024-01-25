@@ -10,9 +10,9 @@ const HeaderSearchBar = ({ title,children,allData, setSearchResult }) => {
 
     return (
         <div>
-            <Row className="align-items-center mb-2">
+            <Row className="align-items-center mb-2 header-container">
                 <Col xs={6} className="d-flex align-items-center">
-                    <h4><strong className='m-2'>{title}</strong></h4>
+                    <h5><strong className='m-2'>{title}</strong></h5>
                 </Col>
                 <Col xs={6} className="d-flex justify-content-end align-items-center right-content">
                     <Image src="/search.png" className="search-img icon-img" onClick={() => setShowSearchInput(true)} />

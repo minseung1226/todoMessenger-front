@@ -32,7 +32,7 @@ const FriendListPage=({friendList,newFriendList,socket,user})=>{
                            userSearchModalIsOpen={userSearchModalIsOpen}
                            onClose={()=>setUserSearchModalIsOpen(false)}/>
 
-          <p className="m-left">me</p>
+          <p className="m-left list-name">me</p>
           <hr></hr>
           <ListGroup>
         <ListGroup.Item className="d-flex align-items-center no-border profile">
@@ -46,12 +46,12 @@ const FriendListPage=({friendList,newFriendList,socket,user})=>{
 
           {newFriends.length>0?
           <div>
-            <p className="m-left">새 친구</p>
+            <p className="m-left list-name">새 친구</p>
             <hr></hr>
             <ProfileGroup users={newFriends}/>
           </div>
           :<div></div>}
-          <p className="m-left">친구</p>
+          <p className="m-left list-name">친구</p>
           <hr></hr>
           <ProfileGroup users={friends}/>
           

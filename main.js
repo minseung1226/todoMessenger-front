@@ -19,28 +19,11 @@ function createWindow() {
         win.webContents.executeJavaScript(`window.electron.setWindowId(${win.id})`);
 
     });
+    //Menu.setApplicationMenu(null); // 전체 메뉴 비활성화
     win.loadURL('http://localhost:3000'); // React 개발 서버 주소
 }
 
-function showNotification(title, body) {
-    const originalAppName = app.getName();
 
-    // 애플리케이션 이름을 임시로 변경
-    app.setName('My Custom App Name');
-
-    const notification = new Notification({ title, body });
-    notification.show();
-
-    setTimeout(() => {
-        notification.close();
-        // 애플리케이션 이름을 원래대로 복원
-        app.setName(originalAppName);
-    }, 5000);
-}
-
-ipcMain.on("show-message", (event, title, body) => {
-    showNotification(title, body);
-})
 
 ipcMain.on("profile-update", (event) => {
     if (profileUpdate) {
@@ -72,7 +55,7 @@ ipcMain.on("profile-update", (event) => {
 ipcMain.on("open-chat-room", (event, roomId) => {
 
     let chatWin = new BrowserWindow({
-        width: 600,
+        width: 500,
         height: 700,
         webPreferences: {
             preload: path.join(__dirname, "preload.js"),
