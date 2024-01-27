@@ -7,7 +7,7 @@ let profileUpdate = null;
 function createWindow() {
 
     win = new BrowserWindow({
-        width: 650,
+        width: 500,
         height: 800,
         webPreferences: {
             preload: path.join(__dirname, "preload.js"),

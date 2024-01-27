@@ -53,17 +53,19 @@ const CreateRoomModal = ({ token, friendList, createRoomModalisOpen, onClose, so
 
     return (
         <div>
-            <Modal show={createRoomModalisOpen} onHide={closeModal}
-                backdrop="static" keyboard={false} size="sm">
+            <Modal show={createRoomModalisOpen} onHide={closeModal} className="create-room-modal"
+                backdrop="static" keyboard={false} >
                 <Modal.Header closeButton>
                     <div className="title"><strong>대화상대 선택</strong></div>
                 </Modal.Header>
 
                 <Modal.Body className="modal-body">
+                    <div className="search-input">
                     <SearchInput allData={friendList} setSearchResult={setFriends} />
+                    </div>
                     <ListGroup className="friend-list">
                         {friends && friends.map((friend, index) => (
-                            <ListGroup.Item key={friend._id} className="d-flex align-items-center no-border"
+                            <ListGroup.Item key={friend._id} className="d-flex align-items-center no-border friend-profile"
                                 onClick={() => handleCheckboxChange(friend._id)}>
 
                                 <Image src="/profile.jpeg" className="profile-img" roundedCircle />

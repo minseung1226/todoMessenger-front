@@ -1,16 +1,21 @@
 .search-container input{
-    
-    margin-left:10px;
-    margin-right:50px;
-}
 
+}
+.search-container{
+    margin-bottom:10px
+}
 
 .search-container .close-col{
     place-items: center;
     text-align: center;
 
+
 }
 
 .search-container img{
-    margin-top:10px
+    margin-top:10px;
+    margin-right:5px;
+}
+.search-container .close-col{
+    padding-right:30px;
 }

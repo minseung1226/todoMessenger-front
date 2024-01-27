@@ -74,8 +74,8 @@ const ProfileUpdatePage = () => {
     }
 
     return (
-        <Container fluid>
-            <h4 className="mt-2">프로필 변경</h4>
+        <Container fluid className="profile-update-container">
+            <h4 className="title">프로필 변경</h4>
             <Row className="mt-4 mb-3">
                 <Col className="d-flex justify-content-center">
                     <div className="profile-img-div">
@@ -117,10 +117,10 @@ const ProfileUpdatePage = () => {
             </Row >
             <Row>
                 <Col>
-                    <div style={{ height: "90px" }}></div>
+                    <div style={{ height: "60px" }}></div>
                 </Col>
             </Row>
-            <Row className="mt-2 mb-2">
+            <Row className="mb-2">
                 <Col xs={1}></Col>
                 <Col className="d-flex justify-content-end">
                     <PasswordChangeModal socket={socket} token={token}/>

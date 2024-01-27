@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Button, Container, ListGroup, Image, Row, Col, Form, Modal } from "react-bootstrap";
 import AlertModal from "../AlertModal/AlertModal";
+import "./UserSearchModal.css"
 const UserSearchModal = ({token, socket, userSearchModalIsOpen, onClose}) => {
     const [friendId, setFriendId] = useState("");
     const [user, setUser] = useState("");
@@ -62,19 +63,19 @@ const UserSearchModal = ({token, socket, userSearchModalIsOpen, onClose}) => {
 
     return (
         <Container fluid>
-            <Modal show={userSearchModalIsOpen} onHide={closeModal} size="sm"
+            <Modal show={userSearchModalIsOpen} onHide={closeModal} className="user-search-modal" size="sm"
                 backdrop="static" keyboard="false">
                 <Modal.Header closeButton>
                     <div className="title"><strong>사용자 검색</strong></div>
                 </Modal.Header>
 
                 <Modal.Body>
-                    <Row className="mb-2">
-                        <Col xs={9}>
+                    <Row className="search-input-row">
+                        <Col xs={9} className="search-input-col">
                             <Form.Control placeholder="ID" onChange={(event) => setFriendId(event.target.value)} />
                         </Col>
-                        <Col xs={3}>
-                            <Button variant="outline-dark btn-sm" onClick={user_search}>검색</Button>
+                        <Col xs={3} className="search-button-col">
+                            <Button variant="outline-dark " onClick={user_search}>검색</Button>
                         </Col>
                     </Row>
                     {user ?

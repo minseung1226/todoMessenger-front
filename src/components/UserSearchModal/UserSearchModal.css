@@ -1,0 +1,23 @@
+.user-search-modal .modal-content{
+    height: 480px;
+    width: 300px;
+    background: #EEF5FF;
+}
+.modal {
+    
+    --bs-modal-margin: 6rem;
+    --bs-modal-box-shadow: var(--bs-box-shadow);
+}
+
+.user-search-modal .search-input-row{
+    margin-bottom: 20px;
+}
+.search-input-row .search-input-col{
+    padding: 3px;
+    padding-left:10px;
+}
+.search-input-row .search-button-col{
+    padding: 3px;
+    padding-left:7px;
+}
+

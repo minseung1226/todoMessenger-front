@@ -32,7 +32,7 @@ const SearchInput = ({ allData, setSearchResult, onClose }) => {
                 />
             </Col>
             {onClose &&
-                <Col xs={2} className="close-col">
+                <Col xs={1} className="close-col">
 
                     <Image src="/close.png" className="close-img img" onClick={onClose} />
                 </Col>}

@@ -1,12 +1,31 @@
 .modal-body{
     max-height: 350px;
-    overflow-y: auto;
+    position: relative;
+    display: flex;
+    flex-direction: column;
     height: 350px;
 }
-
-.friend-list{
-    margin-top: 10px;
+.create-room-modal .modal-content{
+    height: 480px;
+    width: 300px;
+    
+    
 }
+.create-room-modal .friend-profile:hover{
+    cursor: pointer;
+    background-color: #f0f0f0;
+}
+.create-room-modal .friend-list{
+    margin-top: 10px;
+    flex-grow: 1; 
+    overflow-y: auto; 
+}
+.modal {
+    --bs-modal-margin: 6rem;
+    --bs-modal-box-shadow: var(--bs-box-shadow);
+}
+
 .title{
     font-size: 20px;
 }
+

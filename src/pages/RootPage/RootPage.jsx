@@ -42,16 +42,20 @@ const RootPage = () => {
         });
     }
 
+    const getRoomList=()=>{
+        socket.emit("roomList", token, (res) => {
+            setRoomList(res.chatRoomListInfo);
+
+        })
+    }
+
     //채팅방이 생성되었을 때 채팅방 받기
     useEffect(() => {
         socket.on("message", (res) => {
             window.electron.send("message-alert", res._id);
         })
         socket.on("refreshRoomList", () => {
-            socket.emit("roomList", token, (res) => {
-
-                setRoomList(res.chatRoomListInfo);
-            })
+            getRoomList();
         })
         socket.on("newRoom", (res) => {
 
@@ -66,6 +70,7 @@ const RootPage = () => {
         socket.emit("findUser", token, (res) => {
             setUser(res.user);
         })
+
 
     }, [socket])
 
@@ -83,11 +88,7 @@ const RootPage = () => {
     useEffect(() => {
 
         // 채팅방 조회
-        socket.emit("roomList", token, (res) => {
-            setRoomList(res.chatRoomListInfo);
-            console.log("res=", res);
-
-        })
+        getRoomList();
 
         //친구 추가 시 server에서 보내는 데이터 newFriendList에 추가
         socket.on("newFriend", (data) => {

@@ -33,7 +33,6 @@ const JoinPage = () => {
             .then((res) => res.json())
             .then(data => {
                 if (!data.ok) {
-                    console.log("여ㅛㅕㄱ");
                     setAlertMessage("중복된 아이디 입니다.");
                     setAlertIsOpen(true);
                 }
@@ -136,7 +135,7 @@ const JoinPage = () => {
                         </Col>
                     </Row>
                     <Row>
-                        <Col xs={9}>
+                        <Col xs={8}>
                             <div className="form-field d-flex align-items-center">
                                 <span className="far fa-user"></span>
                                 <Form.Control
@@ -146,7 +145,7 @@ const JoinPage = () => {
                                     placeholder="ID" />
                             </div>
                         </Col>
-                        <Col xs={3}>
+                        <Col xs={4}>
                             <Button variant="outline-dark"
                                 className="btn sm-btn"
                                 disabled={idCheck}
@@ -192,7 +191,7 @@ const JoinPage = () => {
 
                         <Col xs={4}>
                             <Button variant="outline-dark"
-                                className="btn sm-btn"
+                                className="btn sm-btn long-text"
                                 onClick={verfificationCodeSend}
                                 disabled={codeCheck}>인증번호 발송</Button>
                         </Col>

@@ -14,3 +14,9 @@
     margin-bottom:18px;
 }
 
+.header-search-bar .search-bar{
+    padding-left:10px
+    /*     
+    margin-left:10px;
+    margin-right:50px; */
+}

@@ -9,8 +9,8 @@ const HeaderSearchBar = ({ title,children,allData, setSearchResult }) => {
     const [showSearchInput, setShowSearchInput] = useState(false);
 
     return (
-        <div>
-            <Row className="align-items-center mb-2 header-container">
+        <div className='header-search-bar'>
+            <Row className="align-items-center header-container">
                 <Col xs={6} className="d-flex align-items-center">
                     <h5><strong className='m-2'>{title}</strong></h5>
                 </Col>
@@ -21,8 +21,9 @@ const HeaderSearchBar = ({ title,children,allData, setSearchResult }) => {
             </Row>
             
             {showSearchInput &&
+            <div className="search-bar">
             <SearchInput allData={allData} setSearchResult={setSearchResult} onClose={() => setShowSearchInput(false)}/>
-
+            </div>
             }
         </div>
     )

@@ -16,7 +16,7 @@ const ImgGroup = ({ members }) => {
                 <Image roundedCircle src={users[0]?.profileImg ? img_url + users[0].profileImg : "/profile.jpeg"}>
                 </Image>
                 : <>
-                    <Row class className="">
+                    <Row className="">
                         <Col className="p-0">
                             {(users && users[0]) &&
                                 <Image roundedCircle className="min-img"

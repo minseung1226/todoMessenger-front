@@ -1,6 +1,20 @@
+.body{
+    margin: 0;
+    padding: 0;
+}
+.profile-update-container{
+    
+    background: #EEF5FF;
+    height: 100vh;
+}
+.profile-update-container .title{
+    padding: 10px;
+}
+
 .profile-img-div{
     position: relative;
     display: inline-block;
+    margin-bottom: 20px;
 }
 .my-profile-img{
     height: 110px;
