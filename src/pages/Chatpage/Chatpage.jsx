@@ -36,7 +36,7 @@ const ChatPage=()=>{
           console.log("res=",res);
             setUser(res.user);
             setMessageList(res.chats);
-            setRoomName(res.roomName);
+            setRoomName(res.roomName.roomName);
         });
 
         socket.on("message",(res)=>{
@@ -59,13 +59,20 @@ const ChatPage=()=>{
         })
     }
 
+    const formatRoomName = (roomName) => {
+      const filterNameArr = roomName.split(",")
+          .filter(name => name !== user.name && name !== "");
 
+      const filterRoomName = filterNameArr.join(",");
+
+      return filterRoomName?.length > 15 ? filterRoomName.slice(0, 15) + "..." : filterRoomName
+  }
     return(
         <div>
         <div className="room-container">
         {/* nav 이부분 추가  */}
             <nav>
-               <div className='nav-title'>{roomName.roomName}</div>
+               <div className='nav-title'><strong>{formatRoomName(roomName)}</strong></div>
 
                <div>
                <Dropdown>

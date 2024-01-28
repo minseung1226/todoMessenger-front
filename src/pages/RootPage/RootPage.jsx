@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import CurrentView from "../../enums/CurrentView";
-import { Container, Row, Col, Nav, Dropdown, Image,NavDropdown } from "react-bootstrap";
+import { Container, Row, Col, Nav, Dropdown, Image, NavDropdown } from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import RoomListPage from "../RoomListPage/RoomListPage";
 import FriendListPage from "../FriendListPage/FriendListPage";
@@ -18,8 +18,8 @@ const RootPage = () => {
     let timeoutId = useRef(null);
     const server_url = process.env.REACT_APP_SERVER_URL;
     const navigate = useNavigate("");
-    const [friendImg,setFriendImg]=useState("/friend.png");
-    const [roomImg,setRoomImg]=useState("/room.png");
+    const [friendImg, setFriendImg] = useState("/friend.png");
+    const [roomImg, setRoomImg] = useState("/room.png");
 
 
     // user를 offline으로 바꾸고 localStorage 비우기
@@ -42,7 +42,7 @@ const RootPage = () => {
         });
     }
 
-    const getRoomList=()=>{
+    const getRoomList = () => {
         socket.emit("roomList", token, (res) => {
             setRoomList(res.chatRoomListInfo);
 
@@ -57,10 +57,7 @@ const RootPage = () => {
         socket.on("refreshRoomList", () => {
             getRoomList();
         })
-        socket.on("newRoom", (res) => {
 
-            setRoomList(prevRoomList => [res, ...prevRoomList]);
-        })
         socket.on("refreshUser", async () => {
             socket.emit("findUser", token, (res) => {
                 setUser({ ...res.user });
@@ -132,59 +129,75 @@ const RootPage = () => {
     }
 
     //img 변경
-    useEffect(()=>{
-        if(currentView===CurrentView.roomList){
+    useEffect(() => {
+        if (currentView === CurrentView.roomList) {
             setRoomImg("/clickRoom.png");
             setFriendImg("/friend.png");
-        }else{
+        } else {
             setRoomImg("/room.png");
             setFriendImg("/clickFriend.png");
         }
-    },[currentView]);
+    }, [currentView]);
     return (
-        <Container fluid className="mainContainer">
+        <Container fluid className="root-container">
             <Row>
-                <Col  md={2} xs={2} className="sidebar">
-                    <Nav className="flex-column">
-                        <Nav.Link onClick={() => setCurrentView(CurrentView.friendList)}
-                                  className={currentView===CurrentView.friendList?"click-color":""}
-                                  onMouseOver={()=>currentView===CurrentView.roomList&&setFriendImg("/clickFriend.png")}
-                                  onMouseOut={()=>currentView===CurrentView.roomList&&setFriendImg("/friend.png")}
-                        >
-                            <Image className="menu-img" 
-                                src={friendImg}
-                                 />
-                        </Nav.Link>
-                        <Nav.Link onClick={() => setCurrentView(CurrentView.roomList)}
-                        className={currentView===CurrentView.roomList?"click-color":""}
-                        onMouseOver={()=>currentView===CurrentView.friendList&&setRoomImg("/clickRoom.png")}
-                        onMouseOut={()=>currentView===CurrentView.friendList&&setRoomImg("/room.png")}
-                        >
-                        <Image className="menu-img" 
-                                src={roomImg} />
-                        </Nav.Link>
-                        
-                        <NavDropdown title={<Image src="/moreOption.png" className="menu-img" />}
-                         id="basic-nav-dropdown">
-
-                            <NavDropdown.Item onClick={() => window.electron.send("profile-update")}>프로필 변경</NavDropdown.Item>
-                            <NavDropdown.Item onClick={logout}>로그아웃</NavDropdown.Item>
-                        </NavDropdown>
-                    </Nav>
+                <Col xs={6} className="friend-list-col">
+                    <FriendListPage friendList={friendList}
+                        newFriendList={newFriendList} user={user}
+                        socket={socket} />
                 </Col>
 
-                <Col  className="content">
-                    {currentView === CurrentView.friendList && <FriendListPage friendList={friendList}
-                        newFriendList={newFriendList} user={user}
-                        socket={socket} />}
-                    {currentView === CurrentView.roomList && <RoomListPage roomList={roomList}
+                <Col>
+                    <RoomListPage roomList={roomList}
                         friendList={friendList}
                         user={user}
-                        socket={socket} />}
-
+                        socket={socket} />
                 </Col>
             </Row>
         </Container>
+        // <Container fluid className="mainContainer">
+        //     <Row>
+        //         <Col  md={2} xs={2} className="sidebar">
+        //             <Nav className="flex-column">
+        //                 <Nav.Link onClick={() => setCurrentView(CurrentView.friendList)}
+        //                           className={currentView===CurrentView.friendList?"click-color":""}
+        //                           onMouseOver={()=>currentView===CurrentView.roomList&&setFriendImg("/clickFriend.png")}
+        //                           onMouseOut={()=>currentView===CurrentView.roomList&&setFriendImg("/friend.png")}
+        //                 >
+        //                     <Image className="menu-img" 
+        //                         src={friendImg}
+        //                          />
+        //                 </Nav.Link>
+        //                 <Nav.Link onClick={() => setCurrentView(CurrentView.roomList)}
+        //                 className={currentView===CurrentView.roomList?"click-color":""}
+        //                 onMouseOver={()=>currentView===CurrentView.friendList&&setRoomImg("/clickRoom.png")}
+        //                 onMouseOut={()=>currentView===CurrentView.friendList&&setRoomImg("/room.png")}
+        //                 >
+        //                 <Image className="menu-img" 
+        //                         src={roomImg} />
+        //                 </Nav.Link>
+
+        //                 <NavDropdown title={<Image src="/moreOption.png" className="menu-img" />}
+        //                  id="basic-nav-dropdown">
+
+        //                     <NavDropdown.Item onClick={() => window.electron.send("profile-update")}>프로필 변경</NavDropdown.Item>
+        //                     <NavDropdown.Item onClick={logout}>로그아웃</NavDropdown.Item>
+        //                 </NavDropdown>
+        //             </Nav>
+        //         </Col>
+
+        //         <Col  className="content">
+        //             {currentView === CurrentView.friendList && <FriendListPage friendList={friendList}
+        //                 newFriendList={newFriendList} user={user}
+        //                 socket={socket} />}
+        //             {currentView === CurrentView.roomList && <RoomListPage roomList={roomList}
+        //                 friendList={friendList}
+        //                 user={user}
+        //                 socket={socket} />}
+
+        //         </Col>
+        //     </Row>
+        // </Container>
     )
 }
 

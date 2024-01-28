@@ -44,7 +44,7 @@ const RoomListPage = ({ roomList, friendList, user, socket, }) => {
             />
             {rooms?.length > 0 ? (
                 rooms.map((room) => (
-                    <div className="room-list" key={room._id} onClick={() => window.electron.send("open-chat-room", room._id)}>
+                    <div className="room-list" key={room._id} onDoubleClick={() => window.electron.send("open-chat-room", room._id)}>
                         <ImgGroup members={room.members} />
                         <div className="room-content">
                             <div className="room-title">
