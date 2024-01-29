@@ -37,7 +37,7 @@
   
   /* 스크롤바 트랙 (바탕) */
   ::-webkit-scrollbar-track {
-    background: white; /* 트랙의 배경 색상 */
+    background: #ecf0f3; /* 트랙의 배경 색상 */
   }
   
   /* 스크롤바 핸들 (움직이는 부분) */

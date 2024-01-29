@@ -6,7 +6,7 @@ import RoomListPage from "../RoomListPage/RoomListPage";
 import FriendListPage from "../FriendListPage/FriendListPage";
 import "./RootPageStyle.css";
 import { getSocket, disconnect } from "../../socket/socket";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 const RootPage = () => {
     const [currentView, setCurrentView] = useState(CurrentView.friendList);
     const [friendList, setFriendList] = useState([]);
@@ -20,7 +20,7 @@ const RootPage = () => {
     const navigate = useNavigate("");
     const [friendImg, setFriendImg] = useState("/friend.png");
     const [roomImg, setRoomImg] = useState("/room.png");
-
+    
 
     // user를 offline으로 바꾸고 localStorage 비우기
     useEffect(() => {
@@ -148,6 +148,14 @@ const RootPage = () => {
                 </Col>
 
                 <Col>
+                    <div className="header-bar">
+                        
+                        <Link to="/home/rooms?all">모두</Link>
+                        <Link to="/home/rooms?">그룹 채팅</Link>
+                        <Link to="">일반 채팅</Link>
+                        <Link to="">친구 추가</Link>
+
+                    </div>
                     <RoomListPage roomList={roomList}
                         friendList={friendList}
                         user={user}

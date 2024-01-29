@@ -1,5 +1,9 @@
 .search-container input{
-
+    background-color: #f2f4f6;
+    border: 1px solid black;
+}
+.search-container input:focus{
+    background-color:#f2f4f6;
 }
 .search-container{
     margin-bottom:10px

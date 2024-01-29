@@ -1,5 +1,9 @@
 .friend-list-container{
     height: 100vh;
+
+}
+.all-profile{
+    height: 100vh;
     overflow-y: auto;
     overflow-x: hidden; /* 수평 스크롤 숨기기 */
     box-sizing: border-box; /* 패딩과 보더가 너비에 포함되도록 */
@@ -17,6 +21,11 @@ hr{
 p{
     margin-bottom: 0;
     font-size: 15px;
+}
+
+.friend-list-search{
+    padding-right: 10px;
+    padding-top:10px;
 }
 
 
