@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Row, Col, Form, Image } from "react-bootstrap";
 import "../../styles/common.css";
 import "./SearchInput.css"
-const SearchInput = ({ allData, setSearchResult, onClose }) => {
+const SearchInput = ({ allData, setSearchResult}) => {
     const [searchInput, setSearchInput] = useState("");
 
     const dataSearch = (event) => {
@@ -31,11 +31,11 @@ const SearchInput = ({ allData, setSearchResult, onClose }) => {
                     onChange={dataSearch}
                 />
             </Col>
-            {onClose &&
+            {/* {onClose &&
                 <Col xs={1} className="close-col">
 
                     <Image src="/close.png" className="close-img img" onClick={onClose} />
-                </Col>}
+                </Col>} */}
         </Row>
     )
 }

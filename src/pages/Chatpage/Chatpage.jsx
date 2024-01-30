@@ -36,7 +36,7 @@ const ChatPage=()=>{
           console.log("res=",res);
             setUser(res.user);
             setMessageList(res.chats);
-            setRoomName(res.roomName.roomName);
+            setRoomName(res.name.name);
         });
 
         socket.on("message",(res)=>{

@@ -21,9 +21,7 @@
 }
 .menu-img{
 
-    width:35px;
-    height: 35px;
-    margin-left: 10%;
+    display: inline;
     
    
 }
@@ -40,4 +38,29 @@
 .friend-list-col{
     background-color: #ecf0f3;
     width:300px;
+}
+.header-bar{
+    height:50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    
+}
+
+.div-btn{
+    padding:5px;
+    margin:5px;
+    cursor: pointer;
+}
+.div-btn:hover{
+    background-color: #ecf0f3;
+}
+.is-active{
+    background-color: #ecf0f3;
+}
+.header-img-span .dropdown{
+    display: inline;
+}
+.header-img-span{
+    padding: 3px;
 }

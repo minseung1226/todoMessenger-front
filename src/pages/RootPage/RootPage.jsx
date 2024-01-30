@@ -7,6 +7,9 @@ import FriendListPage from "../FriendListPage/FriendListPage";
 import "./RootPageStyle.css";
 import { getSocket, disconnect } from "../../socket/socket";
 import { Link, useNavigate } from "react-router-dom";
+import RoomType from "../../enums/RoomType";
+import CreateRoomModal from "../../components/CreateRoomModal/CreateRoomModal";
+import UserSearchModal from "../../components/UserSearchModal/UserSearchModal";
 const RootPage = () => {
     const [currentView, setCurrentView] = useState(CurrentView.friendList);
     const [friendList, setFriendList] = useState([]);
@@ -20,8 +23,9 @@ const RootPage = () => {
     const navigate = useNavigate("");
     const [friendImg, setFriendImg] = useState("/friend.png");
     const [roomImg, setRoomImg] = useState("/room.png");
-    
-
+    const [roomType, setRoomType] = useState(RoomType.all_room);
+    const [createRoomModalisOpen, setCreateRoomModalisOpen] = useState(false);
+    const [userSearchModalIsOpen, setUserSearchModalIsOpen] = useState(false);
     // user를 offline으로 바꾸고 localStorage 비우기
     useEffect(() => {
         window.addEventListener('beforeunload', () => {
@@ -138,6 +142,11 @@ const RootPage = () => {
             setFriendImg("/clickFriend.png");
         }
     }, [currentView]);
+
+    const div_btn_className = (room_type) => {
+        return roomType === room_type ?
+            "div-btn is-active" : "div-btn"
+    }
     return (
         <Container fluid className="root-container">
             <Row>
@@ -149,17 +158,63 @@ const RootPage = () => {
 
                 <Col>
                     <div className="header-bar">
-                        
-                        <Link to="/home/rooms?all">모두</Link>
-                        <Link to="/home/rooms?">그룹 채팅</Link>
-                        <Link to="">일반 채팅</Link>
-                        <Link to="">친구 추가</Link>
+                        <div>
+                            <span
+                                className={div_btn_className(RoomType.all_room)}
+                                onClick={() => setRoomType(RoomType.all_room)}>
+                                전체 채팅</span>
+                            <span className={div_btn_className(RoomType.normal_room)}
+                                onClick={() => setRoomType(RoomType.normal_room)}>
+                                일반 채팅</span>
+                            <span className={div_btn_className(RoomType.group_room)}
+                                onClick={() => setRoomType(RoomType.group_room)}>
+                                그룹 채팅</span>
+                        </div>
+                        <div>
+                            <span className="header-img-span">
+                                <Image src="/roomPlus.png" className="icon-img room-plus-img"
+                                    onClick={() => setCreateRoomModalisOpen(true)} /></span>
+                            <span className="header-img-span">
+                                <Image src="/friendPlus.png"
+                                    className="friend-plus icon-img"
+                                    onClick={() => setUserSearchModalIsOpen(true)} /></span>
+                            <span className="header-img-span">
+                               
+                                <Dropdown 
+                                    id="basic-nav-dropdown">
+                                        <Dropdown.Toggle style={{ padding: 0, border: 'none', backgroundColor: 'transparent' }}>
+                                        <Image src="/moreOption.png" className="icon-img menu-img" />
+                                        </Dropdown.Toggle>
+                                    
+                                    <Dropdown.Menu>
+                                    <Dropdown.Item onClick={() => window.electron.send("profile-update")}>프로필 변경</Dropdown.Item>
+                                    <Dropdown.Item onClick={logout}>로그아웃</Dropdown.Item>
+                                    </Dropdown.Menu>
+                                    
+                                </Dropdown>
+                            </span>
+                        </div>
+
+
+
+
 
                     </div>
+
+                    <UserSearchModal token={token} socket={socket}
+                        userSearchModalIsOpen={userSearchModalIsOpen}
+                        onClose={() => setUserSearchModalIsOpen(false)} />
+
+                    <CreateRoomModal token={token} friendList={friendList}
+                        createRoomModalisOpen={createRoomModalisOpen}
+                        socket={socket}
+                        onClose={() => setCreateRoomModalisOpen(false)}
+                    />
                     <RoomListPage roomList={roomList}
                         friendList={friendList}
                         user={user}
-                        socket={socket} />
+                        socket={socket}
+                        roomType={roomType} />
                 </Col>
             </Row>
         </Container>

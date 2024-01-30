@@ -39,9 +39,6 @@ const FriendListPage = ({ friendList, newFriendList, socket, user }) => {
         <SearchInput allData={friendList} setSearchResult={setFriends} />
 
       </div>
-      <UserSearchModal token={token} socket={socket}
-        userSearchModalIsOpen={userSearchModalIsOpen}
-        onClose={() => setUserSearchModalIsOpen(false)} />
       <div className="all-profile">
       <p className="m-left list-name">me</p>
       <hr></hr>
