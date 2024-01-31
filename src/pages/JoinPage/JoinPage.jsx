@@ -4,6 +4,7 @@ import { Form, Image, Button, Row, Col } from "react-bootstrap";
 import AlertModal from "../../components/AlertModal/AlertModal";
 import "./JoinPage.css"
 import { Input } from "@mui/base";
+import WindowControl from "../../components/WindowControl/WindowControl";
 const server_url = process.env.REACT_APP_SERVER_URL;
 
 const JoinPage = () => {
@@ -114,6 +115,7 @@ const JoinPage = () => {
 
     return (
         <div className="join-body">
+            <WindowControl max={true} min={true} close={true}/>
             <div className="join-wrapper">
                 {/* <div className="logo">
                 <Image src="https://www.freepnglogos.com/uploads/twitter-logo-png/twitter-bird-symbols-png-logo-0.png" alt="" />

@@ -59,7 +59,7 @@ const RoomListPage = ({ roomList, friendList, user, socket,roomType }) => {
             /> */}
             {filterRooms?.length > 0 ? (
                 filterRooms.map((room) => (
-                    <div className="room-list" key={room._id} onDoubleClick={() => window.electron.send("open-chat-room", room._id)}>
+                    <div className="room-list" key={room._id} onDoubleClick={() =>navigate(`/home/${room._id}`)}>
                         <ImgGroup members={room.members} />
                         <div className="room-content">
                             <div className="room-title">

@@ -13,10 +13,22 @@ contextBridge.exposeInMainWorld('electron', {
     closeWindow:()=>{
         ipcRenderer.send('close-window',window.id);
     },
-    showMessage:(title,body)=>{
-        ipcRenderer.send("show-message",title,body);
+    minimize:()=>{
+        ipcRenderer.send("minimize-window",window.id)
+    },
+    maximize:()=>{
+        ipcRenderer.send("maximize-window",window.id)
+    },
+    unmaximize:()=>{
+        ipcRenderer.send("unmaximize-window",window.id);
+    },
+    isMaximized:async()=>{
+        ipcRenderer.invoke("is-maximized",window.id)
+        return await ipcRenderer.invoke("is-maximized", window.id);
     }
 
 });
+
+
 
 

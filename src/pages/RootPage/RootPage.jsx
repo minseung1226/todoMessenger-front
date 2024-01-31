@@ -6,10 +6,12 @@ import RoomListPage from "../RoomListPage/RoomListPage";
 import FriendListPage from "../FriendListPage/FriendListPage";
 import "./RootPageStyle.css";
 import { getSocket, disconnect } from "../../socket/socket";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Route, Routes, useNavigate } from "react-router-dom";
 import RoomType from "../../enums/RoomType";
 import CreateRoomModal from "../../components/CreateRoomModal/CreateRoomModal";
 import UserSearchModal from "../../components/UserSearchModal/UserSearchModal";
+import WindowControl from "../../components/WindowControl/WindowControl";
+import ChatPage from "../Chatpage/Chatpage";
 const RootPage = () => {
     const [currentView, setCurrentView] = useState(CurrentView.friendList);
     const [friendList, setFriendList] = useState([]);
@@ -149,6 +151,7 @@ const RootPage = () => {
     }
     return (
         <Container fluid className="root-container">
+            <WindowControl  max={true} min={true} close={true}/>
             <Row>
                 <Col xs={6} className="friend-list-col">
                     <FriendListPage friendList={friendList}
@@ -210,11 +213,15 @@ const RootPage = () => {
                         socket={socket}
                         onClose={() => setCreateRoomModalisOpen(false)}
                     />
-                    <RoomListPage roomList={roomList}
+                    <Routes>
+                        <Route path="" element={<RoomListPage roomList={roomList}
                         friendList={friendList}
                         user={user}
                         socket={socket}
-                        roomType={roomType} />
+                        roomType={roomType} />}/>
+                        <Route path=":roomId" element={<ChatPage/>}/>
+                    </Routes>
+                    
                 </Col>
             </Row>
         </Container>

@@ -4,6 +4,7 @@ import { Image, Form, Button } from "react-bootstrap";
 import { connect } from "../../socket/socket";
 import "./LoginPage.css"
 import AlertModal from "../../components/AlertModal/AlertModal"
+import WindowControl from "../../components/WindowControl/WindowControl";
 const LoginPage = () => {
     const server_url = process.env.REACT_APP_SERVER_URL;
     const [id, setId] = useState("");
@@ -47,6 +48,7 @@ const LoginPage = () => {
 
     return (
         <div className="login-body">
+            <WindowControl max={true} min={true} close={true}/>
             <div className="wrapper">
                 {/* <div className="logo">
                 <Image src="https://www.freepnglogos.com/uploads/twitter-logo-png/twitter-bird-symbols-png-logo-0.png" alt="" />

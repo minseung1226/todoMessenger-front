@@ -4,6 +4,7 @@ import { Container, Image, Row, Col, Form, Dropdown } from "react-bootstrap";
 import { Button } from "react-bootstrap";
 import "./ProfileUpdatePage.css"
 import PasswordChangeModal from "../../components/PasswordChangeModal/PasswordChangeModal";
+import WindowControl from "../../components/WindowControl/WindowControl";
 const ProfileUpdatePage = () => {
     const token = localStorage.getItem("jwtToken");
     const socket = getSocket(token);
@@ -13,6 +14,19 @@ const ProfileUpdatePage = () => {
     const [profileImg,setProfileImg]=useState("");
     const [profileImgPreview,setProfileImgPreview]=useState("");
     const [deleteImg,setDeleteImg]=useState("");
+
+    useEffect(()=>{
+        const handleEsc=(event)=>{
+            if(event.key==="Escape"){
+                window.electron.closeWindow();
+            }    
+        }
+        window.addEventListener("keydown",handleEsc);
+        return () => {
+            window.removeEventListener('keydown', handleEsc);
+          };
+    },[])
+
     const profileImgChange = (event) => {
         const file=event.target.files[0]
         setProfileImg(file);
@@ -75,6 +89,7 @@ const ProfileUpdatePage = () => {
 
     return (
         <Container fluid className="profile-update-container">
+            <WindowControl close={true}/>
             <h4 className="title">프로필 변경</h4>
             <Row className="mt-4 mb-3">
                 <Col className="d-flex justify-content-center">

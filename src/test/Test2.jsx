@@ -10,11 +10,11 @@ const Test2=()=>{
     }, [location]);
     return(
         <div>
-            <Link to="/test2/child1">자식1</Link>
+            <Link to="/test2">자식1</Link>
             <Link to="/test2/child2">자식2</Link>
             <strong>상위 컴포넌트2</strong>
             <Routes>
-            <Route path="child1" element={<Child1/>}/>
+            <Route path="" element={<Child1/>}/>
             <Route path="child2" element={<Child2/>}/>
             </Routes>
             

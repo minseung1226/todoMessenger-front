@@ -18,9 +18,10 @@ function App() {
       <Route  path="/" element={<LoginPage/>}/>
       <Route  path="/join" element={<JoinPage/>}/>
       <Route  path="/home/*" element={<RootPage/>}/>
-      <Route  path="/room/:roomId" element={<ChatPage/>}/>
+      {/* <Route  path="/room/:roomId" element={<ChatPage/>}/> */}
       <Route path="/user/update" element={<ProfileUpdatePage/>}/>
       <Route path="/message/:chatId" element={<MessageAlertWindow/>}/>
+      <Route path="/test2/*" element={<Test2/>}/>
       </Routes>
     </BrowserRouter>
 

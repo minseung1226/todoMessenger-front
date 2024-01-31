@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain, dialog, Menu, Notification,screen } = require('electron');
+const { app, BrowserWindow, ipcMain, dialog, Menu, Notification, screen } = require('electron');
 const { default: installExtension, REACT_DEVELOPER_TOOLS } = require("electron-devtools-installer");
 const path = require("path");
 
@@ -9,6 +9,7 @@ function createWindow() {
     win = new BrowserWindow({
         width: 900,
         height: 800,
+        frame: false,
         webPreferences: {
             preload: path.join(__dirname, "preload.js"),
             contextIsolation: true,
@@ -33,6 +34,8 @@ ipcMain.on("profile-update", (event) => {
     profileUpdate = new BrowserWindow({
         width: 350,
         height: 500,
+        frame: false,
+        resizable:false,
         webPreferences: {
             preload: path.join(__dirname, "preload.js"),
             contextIsolation: true,
@@ -78,27 +81,27 @@ ipcMain.on("message-alert", (event, chatId) => {
         x: width - 300,
         y: height - 80,
         frame: false,
-         alwaysOnTop: true,
-         skipTaskbar: true,
-         transparent: true,
+        alwaysOnTop: true,
+        skipTaskbar: true,
+        transparent: true,
         webPreferences: {
             preload: path.join(__dirname, "preload.js"),
             contextIsolation: true,
             devTools: true, // 개발자 도구 활성화
             contextIsolation: true,
-            nodeIntegration:false
+            nodeIntegration: false
         }
-    
+
 
     });
     messageWin.webContents.once('dom-ready', () => {
         messageWin.webContents.executeJavaScript(`window.electron.setWindowId(${messageWin.id})`);
 
     });
-     messageWin.loadURL(`http://localhost:3000/message/${chatId}`);
+    messageWin.loadURL(`http://localhost:3000/message/${chatId}`);
     setTimeout(() => {
         messageWin.hide(); // 5초 후에 창 닫기
-      }, 5000);
+    }, 5000);
 })
 ipcMain.on('close-window', (event, windowId) => {
     const window = BrowserWindow.fromId(windowId);
@@ -107,6 +110,29 @@ ipcMain.on('close-window', (event, windowId) => {
     }
 })
 
+ipcMain.on('minimize-window', (event, windowId) => {
+    const window = BrowserWindow.fromId(windowId);
+    if (window) {
+        window.minimize();
+    }
+})
+
+ipcMain.on('maximize-window', (event, windowId) => {
+    const window = BrowserWindow.fromId(windowId);
+    if (window) {
+        window.maximize();
+    }
+})
+ipcMain.on("unmaximize-window",(event,windowId)=>{
+    const window=BrowserWindow.fromId(windowId);
+    if(window){
+        window.unmaximize();
+    }
+})
+ipcMain.handle("is-maximized",async(event,windowId)=>{
+    const window=BrowserWindow.fromId(windowId);
+    return window ? window.isMaximized() : false;
+})
 app.whenReady().then(() => {
     createWindow();
 
