@@ -54,5 +54,14 @@
     text-align: right;
     cursor: pointer;
 }
+.profile-update-container .close-btn{
+cursor: pointer;
+font-size: 20px;
+width: 20px;
+text-align: center;
+}
+.profile-update-container .close-btn:hover{
+    background-color: #f0f0f0;
+}
 
 

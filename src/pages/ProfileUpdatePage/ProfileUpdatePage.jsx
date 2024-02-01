@@ -89,7 +89,10 @@ const ProfileUpdatePage = () => {
 
     return (
         <Container fluid className="profile-update-container">
-            <WindowControl close={true}/>
+            <div className="d-flex justify-content-end">
+                <span className="close-btn"
+                onClick={()=>window.electron.closeWindow()}>x</span>
+            </div>
             <h4 className="title">프로필 변경</h4>
             <Row className="mt-4 mb-3">
                 <Col className="d-flex justify-content-center">

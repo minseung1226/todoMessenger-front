@@ -1,29 +1,17 @@
-
-
-.content{
+.root-container{
     height:100vh;
-    
-    overflow-y: auto;
-    padding-left:0 ;
-    
+    box-sizing: border-box;
 }
 
-.sidebar{
-    padding: 0;
-    background: #EEF5FF;
-    /* background: #E1F0DA; */
-    /* background: #f0f0f0; */
-    width:100px;
+
+.root-container .right-col{
+    display: flex;
+    height: 100vh;
+    flex-direction: column;
 }
 
-.nav{
-    padding-top: 10px;
-}
 .menu-img{
-
     display: inline;
-    
-   
 }
 
 .dropdown-toggle::after{
@@ -36,6 +24,7 @@
 
 
 .friend-list-col{
+    /* height: 100vh; */
     background-color: #ecf0f3;
     width:300px;
 }

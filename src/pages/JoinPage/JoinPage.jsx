@@ -115,7 +115,6 @@ const JoinPage = () => {
 
     return (
         <div className="join-body">
-            <WindowControl max={true} min={true} close={true}/>
             <div className="join-wrapper">
                 {/* <div className="logo">
                 <Image src="https://www.freepnglogos.com/uploads/twitter-logo-png/twitter-bird-symbols-png-logo-0.png" alt="" />

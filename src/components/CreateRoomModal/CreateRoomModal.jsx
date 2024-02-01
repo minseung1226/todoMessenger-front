@@ -23,13 +23,8 @@ const CreateRoomModal = ({ token, friendList, createRoomModalisOpen, onClose, so
             [friendId]: !prevState[friendId]
         }));
 
-        console.log("checkedState=",checkedState)
     };
 
-    useEffect(()=>{
-        
-        console.log("checkedState=",checkedState)
-    },[checkedState])
 
     const handleSubmit = () => {
 
@@ -39,8 +34,9 @@ const CreateRoomModal = ({ token, friendList, createRoomModalisOpen, onClose, so
         socket.emit("createChatRoom", token, selectFriendId, (res) => {
             if (res.ok) {
                 setCheckedState({});
-                window.electron.send("open-chat-room", res.roomId);
                 onClose();
+                navigate(`/home/${res.roomId}`);
+                
             }
         })
     }

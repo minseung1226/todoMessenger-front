@@ -1,9 +1,10 @@
 .friend-list-container{
+    display: flex;
+    flex-direction: column;
     height: 100vh;
-
 }
 .all-profile{
-    height: 100vh;
+    flex-grow: 1;
     overflow-y: auto;
     overflow-x: hidden; /* 수평 스크롤 숨기기 */
     box-sizing: border-box; /* 패딩과 보더가 너비에 포함되도록 */
