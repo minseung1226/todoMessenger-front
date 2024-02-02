@@ -43,11 +43,13 @@
   .send-button{
     min-width: 70px;
     border-radius:0;
-    background-color:#F7E600; 
+    background-color:#f0f0f0; 
     border:none;
+    ;
   }
   .send-button:hover {
     cursor:pointer;
+  
   }
   .send-button:active {
     background-color: yellow;

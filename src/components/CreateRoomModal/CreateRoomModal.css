@@ -8,8 +8,13 @@
 .create-room-modal .modal-content{
     height: 480px;
     width: 300px;
+    background: #EEF5FF;
     
     
+}
+.create-room-modal .friend-profile{
+    
+    background: #EEF5FF;
 }
 .create-room-modal .friend-profile:hover{
     cursor: pointer;
@@ -19,6 +24,7 @@
     margin-top: 10px;
     flex-grow: 1; 
     overflow-y: auto; 
+    
 }
 .modal {
     --bs-modal-margin: 6rem;

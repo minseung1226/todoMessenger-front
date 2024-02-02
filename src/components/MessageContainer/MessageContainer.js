@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import "./MessageContainer.css";
 import { Container } from "@mui/system";
 
@@ -12,7 +13,7 @@ const MessageContainer = ({ messageList, user }) => {
               <div className="system-message-container">
                 <p className="system-message">{message.chat}</p>
               </div>
-            ) : message.user.name === user.name ? (
+            ) : message.user.name=== user.name ? (
               <div className="my-message-container">
                 <div className="my-message">{message.chat}</div>
               </div>

@@ -19,13 +19,14 @@ const InputField = ({message,setMessage,sendMessage}) => {
               rows={1}
             />
 
-            <Button
+            {/* <Button
+
               disabled={message === ""}
               type="submit"
               className="send-button"
             >
               전송
-            </Button>
+            </Button> */}
           </form>
         </div>
   )

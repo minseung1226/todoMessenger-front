@@ -95,7 +95,6 @@ const RootPage = () => {
 
         //친구 추가 시 server에서 보내는 데이터 newFriendList에 추가
         socket.on("newFriend", (data) => {
-            console.log("여긴 오는디");
             setNewFriendList(prevFriends => [...prevFriends, data.newFriend]);
             getFriendList();
 

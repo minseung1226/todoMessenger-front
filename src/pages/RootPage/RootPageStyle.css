@@ -8,6 +8,7 @@
     display: flex;
     height: 100vh;
     flex-direction: column;
+    padding: 0;
 }
 
 .menu-img{
@@ -33,6 +34,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    background-color: #ecf0f3;
     
 }
 
@@ -42,10 +44,10 @@
     cursor: pointer;
 }
 .div-btn:hover{
-    background-color: #ecf0f3;
+    background-color:#e6e6e6
 }
 .is-active{
-    background-color: #ecf0f3;
+    background-color: #e6e6e6
 }
 .header-img-span .dropdown{
     display: inline;

@@ -32,20 +32,23 @@ const ChatPage = () => {
   }, [messageList])
   useEffect(() => {
     socket.emit("getAllChatsAndUser", roomId, token, (res) => {
-      console.log("res=", res);
-      setUser(res.user);
-      setMessageList(res.chats);
-      setRoomName(res.name.name);
+      console.log("res=",res);
+      setUser(res.roomChatUser.user);
+      setMessageList(res.roomChatUser.chats);
+      setRoomName(res.roomChatUser.room.name);
     });
 
     socket.on("message", (res) => {
       setMessageList((prevState) => prevState.concat(res));
     });
 
-
+    return()=>{
+      socket.off("message");
+    }
   }, [roomId, token, socket]);
 
-
+  useEffect(()=>{
+  },[messageList]);
 
   const sendMessage = (event) => {
     event.preventDefault();

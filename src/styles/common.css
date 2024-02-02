@@ -51,3 +51,18 @@
   ::-webkit-scrollbar-thumb:hover {
     background: #f0f0f0; /* 호버 시 핸들의 배경 색상 */
   }
+
+
+  .round-sm-btn{
+    box-shadow: none;
+    width: 60px;
+    height: 30px;
+    border-radius: 25px;
+    box-shadow: 3px 3px 3px #b1b1b1,
+        -3px -3px 3px #fff;
+    letter-spacing: 1.3px;
+    font-size:13px;
+  }
+.modal-content{
+    background: #ecf0f3;
+}
