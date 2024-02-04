@@ -32,7 +32,6 @@ const ChatPage = () => {
   }, [messageList])
   useEffect(() => {
     socket.emit("getAllChatsAndUser", roomId, token, (res) => {
-      console.log("res=",res);
       setUser(res.roomChatUser.user);
       setMessageList(res.roomChatUser.chats);
       setRoomName(res.roomChatUser.room.name);

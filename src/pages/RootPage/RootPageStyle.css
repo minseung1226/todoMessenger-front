@@ -1,6 +1,8 @@
 .root-container{
     height:100vh;
     box-sizing: border-box;
+    /* overflow-y: hidden;
+    overflow-x: hidden; */
 }
 
 
@@ -30,11 +32,13 @@
     width:300px;
 }
 .header-bar{
-    height:50px;
+    padding: 10px;
+
     display: flex;
     align-items: center;
     justify-content: space-between;
     background-color: #ecf0f3;
+    box-sizing: border-box;
     
 }
 

@@ -44,7 +44,6 @@ const ProfileUpdatePage = () => {
         socket.emit("findUser", token, (res) => {
             setUser(res.user);
             setName(res.user.name);
-            console.log("profileImg=",profileImg);
             if(res.user.profileImg){
                 setProfileImgPreview(process.env.REACT_APP_PROFILE_IMG_URL+res.user.profileImg);
             }

@@ -10,11 +10,13 @@ const MessageAlertWindow=()=>{
     const {chatId}=useParams();
     const [chat,setChat]=useState("");
     useEffect(()=>{
-        console.log("asd");
         socket.emit("alertMessage",chatId,(res)=>{
-            console.log("res=",res.chat.room.members);
             setChat(res.chat);
         })
+
+        return ()=>{
+            socket.off("alertMessage");
+        }
     },[])
     
     const formatText=(data,maxLength)=>{
@@ -24,8 +26,14 @@ const MessageAlertWindow=()=>{
             return data;
           }
     }
+
+    const goRoom=()=>{
+        socket.emit("openRoom",chat.room._id,token);
+        window.electron.closeWindow();
+        }
+
     return (
-        <Container fluid>
+        <Container fluid className="message-alert-container" onClick={goRoom}>
        
             <Row>
                 <Col className="d-flex justify-content-between">

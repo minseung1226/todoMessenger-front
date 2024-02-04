@@ -1,3 +1,7 @@
+.message-alert-container{
+    cursor: pointer;
+}
+
 .message-alert-close:hover{
     cursor: pointer;
 }

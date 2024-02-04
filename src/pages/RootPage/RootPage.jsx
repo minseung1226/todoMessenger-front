@@ -65,6 +65,7 @@ const RootPage = () => {
         })
 
         socket.on("refreshUser", async () => {
+
             socket.emit("findUser", token, (res) => {
                 setUser({ ...res.user });
             })
@@ -74,6 +75,10 @@ const RootPage = () => {
             setUser(res.user);
         })
 
+        socket.on("openRoom",async(roomId)=>{
+            console.log("")
+            navigate(`/home/${roomId}`);
+        })
 
     }, [socket])
 
@@ -150,137 +155,94 @@ const RootPage = () => {
             "div-btn is-active" : "div-btn"
     }
     return (
-        <Container fluid >
+        <Container fluid className="root-container">
 
-                <Row className="root-container">
-                    <Col xs={6} className="friend-list-col">
-                        <FriendListPage friendList={friendList}
-                            newFriendList={newFriendList} user={user}
-                            socket={socket} />
-                    </Col>
+            <Row >
+                <Col xs={6} className="friend-list-col">
+                    <FriendListPage friendList={friendList}
+                        newFriendList={newFriendList} user={user}
+                        socket={socket} />
+                </Col>
 
-                    <Col className="right-col">
-                        <div className="header-bar">
-                            <div>
-                                <span
-                                    className={div_btn_className(RoomType.all_room)}
-                                    onClick={() => {
-                                        setRoomType(RoomType.all_room);
-                                        navigate("/home")
-                                    }}>
-                                    전체 채팅</span>
-                                <span className={div_btn_className(RoomType.normal_room)}
-                                    onClick={() => {
-                                        setRoomType(RoomType.normal_room);
-                                        navigate("/home")
-                                    }}>
-                                    일반 채팅</span>
-                                <span className={div_btn_className(RoomType.group_room)}
-                                    onClick={() => {
-                                        setRoomType(RoomType.group_room);
-                                        navigate("/home")
-                                    }}>
-                                    그룹 채팅</span>
-                            </div>
-                            <div>
-                                <span className="header-img-span">
-                                    <Image src="/roomPlus.png" className="icon-img room-plus-img"
-                                        onClick={() => setCreateRoomModalisOpen(true)} /></span>
-                                <span className="header-img-span">
-                                    <Image src="/friendPlus.png"
-                                        className="friend-plus icon-img"
-                                        onClick={() => setUserSearchModalIsOpen(true)} /></span>
-                                <span className="header-img-span">
+                <Col className="right-col">
+                    <div className="header-bar">
+                        <div>
+                            <span
+                                className={div_btn_className(RoomType.all_room)}
+                                onClick={() => {
+                                    setRoomType(RoomType.all_room);
+                                    navigate("/home")
+                                }}>
+                                전체 채팅</span>
+                            <span className={div_btn_className(RoomType.normal_room)}
+                                onClick={() => {
+                                    setRoomType(RoomType.normal_room);
+                                    navigate("/home")
+                                }}>
+                                일반 채팅</span>
+                            <span className={div_btn_className(RoomType.group_room)}
+                                onClick={() => {
+                                    setRoomType(RoomType.group_room);
+                                    navigate("/home")
+                                }}>
+                                그룹 채팅</span>
+                        </div>
+                        <div>
+                            <span className="header-img-span">
+                                <Image src="/roomPlus.png" className="icon-img room-plus-img"
+                                    onClick={() => setCreateRoomModalisOpen(true)} /></span>
+                            <span className="header-img-span">
+                                <Image src="/friendPlus.png"
+                                    className="friend-plus icon-img"
+                                    onClick={() => setUserSearchModalIsOpen(true)} /></span>
+                            <span className="header-img-span">
 
-                                    <Dropdown
-                                        id="basic-nav-dropdown">
-                                        <Dropdown.Toggle style={{ padding: 0, border: 'none', backgroundColor: 'transparent' }}>
-                                            <Image src="/moreOption.png" className="icon-img menu-img" />
-                                        </Dropdown.Toggle>
+                                <Dropdown
+                                    id="basic-nav-dropdown">
+                                    <Dropdown.Toggle style={{ padding: 0, border: 'none', backgroundColor: 'transparent' }}>
+                                        <Image src="/moreOption.png" className="icon-img menu-img" />
+                                    </Dropdown.Toggle>
 
-                                        <Dropdown.Menu>
-                                            <Dropdown.Item onClick={() => window.electron.send("profile-update")}>프로필 변경</Dropdown.Item>
-                                            <Dropdown.Item onClick={logout}>로그아웃</Dropdown.Item>
-                                        </Dropdown.Menu>
+                                    <Dropdown.Menu>
+                                        <Dropdown.Item onClick={() => window.electron.send("profile-update")}>프로필 변경</Dropdown.Item>
+                                        <Dropdown.Item onClick={logout}>로그아웃</Dropdown.Item>
+                                    </Dropdown.Menu>
 
-                                    </Dropdown>
-                                </span>
-                            </div>
-
-
-
-
-
+                                </Dropdown>
+                            </span>
                         </div>
 
-                        <UserSearchModal token={token} socket={socket}
-                            userSearchModalIsOpen={userSearchModalIsOpen}
-                            onClose={() => setUserSearchModalIsOpen(false)} />
 
-                        <CreateRoomModal token={token} friendList={friendList}
-                            createRoomModalisOpen={createRoomModalisOpen}
+
+
+
+                    </div>
+
+                    <UserSearchModal token={token} socket={socket}
+                        userSearchModalIsOpen={userSearchModalIsOpen}
+                        onClose={() => setUserSearchModalIsOpen(false)} />
+
+                    <CreateRoomModal token={token} friendList={friendList}
+                        createRoomModalisOpen={createRoomModalisOpen}
+                        socket={socket}
+                        onClose={() => setCreateRoomModalisOpen(false)}
+                    />
+                    <Routes>
+                        <Route path="" element={<RoomListPage roomList={roomList}
+                            friendList={friendList}
+                            user={user}
                             socket={socket}
-                            onClose={() => setCreateRoomModalisOpen(false)}
-                        />
-                        <Routes>
-                            <Route path="" element={<RoomListPage roomList={roomList}
-                                friendList={friendList}
-                                user={user}
-                                socket={socket}
-                                roomType={roomType} />} />
-                            <Route path=":roomId" element={<ChatPage />} />
-                        </Routes>
-                        
+                            roomType={roomType} />} />
+                        <Route path=":roomId" element={<ChatPage />} />
+                    </Routes>
 
-                    </Col>
-                </Row>
-       
+
+                </Col>
+            </Row>
+
 
 
         </Container>
-        // <Container fluid className="mainContainer">
-        //     <Row>
-        //         <Col  md={2} xs={2} className="sidebar">
-        //             <Nav className="flex-column">
-        //                 <Nav.Link onClick={() => setCurrentView(CurrentView.friendList)}
-        //                           className={currentView===CurrentView.friendList?"click-color":""}
-        //                           onMouseOver={()=>currentView===CurrentView.roomList&&setFriendImg("/clickFriend.png")}
-        //                           onMouseOut={()=>currentView===CurrentView.roomList&&setFriendImg("/friend.png")}
-        //                 >
-        //                     <Image className="menu-img" 
-        //                         src={friendImg}
-        //                          />
-        //                 </Nav.Link>
-        //                 <Nav.Link onClick={() => setCurrentView(CurrentView.roomList)}
-        //                 className={currentView===CurrentView.roomList?"click-color":""}
-        //                 onMouseOver={()=>currentView===CurrentView.friendList&&setRoomImg("/clickRoom.png")}
-        //                 onMouseOut={()=>currentView===CurrentView.friendList&&setRoomImg("/room.png")}
-        //                 >
-        //                 <Image className="menu-img" 
-        //                         src={roomImg} />
-        //                 </Nav.Link>
-
-        //                 <NavDropdown title={<Image src="/moreOption.png" className="menu-img" />}
-        //                  id="basic-nav-dropdown">
-
-        //                     <NavDropdown.Item onClick={() => window.electron.send("profile-update")}>프로필 변경</NavDropdown.Item>
-        //                     <NavDropdown.Item onClick={logout}>로그아웃</NavDropdown.Item>
-        //                 </NavDropdown>
-        //             </Nav>
-        //         </Col>
-
-        //         <Col  className="content">
-        //             {currentView === CurrentView.friendList && <FriendListPage friendList={friendList}
-        //                 newFriendList={newFriendList} user={user}
-        //                 socket={socket} />}
-        //             {currentView === CurrentView.roomList && <RoomListPage roomList={roomList}
-        //                 friendList={friendList}
-        //                 user={user}
-        //                 socket={socket} />}
-
-        //         </Col>
-        //     </Row>
-        // </Container>
     )
 }
 
