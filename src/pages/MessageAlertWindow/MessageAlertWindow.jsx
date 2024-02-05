@@ -48,7 +48,7 @@ const MessageAlertWindow=()=>{
                 </Col>
                 <Col xs={9}>
                 <div className="message-alert-title">
-                    <strong>{formatText(chat?.room?.roomName,11)}</strong></div>
+                    <strong>{formatText(chat?.room?.name,11)}</strong></div>
             <div className="message-alert-content">{formatText(chat?.chat,15)}</div>
                 </Col>
             </Row>

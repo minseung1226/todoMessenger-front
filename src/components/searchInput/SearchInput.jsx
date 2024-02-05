@@ -7,7 +7,7 @@ const SearchInput = ({ allData, setSearchResult}) => {
 
     const dataSearch = (event) => {
         setSearchInput(event.target.value);
-        let searchName = event.target.value;
+        let searchName = event.target.value.trim();
 
         if (!searchName) {
             setSearchResult(allData);

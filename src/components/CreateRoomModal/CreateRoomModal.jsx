@@ -28,7 +28,7 @@ const CreateRoomModal = ({ token, friendList, createRoomModalisOpen, onClose, so
 
     const handleSubmit = () => {
 
-        const selectFriendId = friends.
+        const selectFriendId = friendList.
             filter(friend => checkedState[friend._id])
             .map(friend => friend._id);
         socket.emit("createChatRoom", token, selectFriendId, (res) => {

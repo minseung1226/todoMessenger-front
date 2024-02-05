@@ -57,7 +57,7 @@ const RootPage = () => {
 
     //채팅방이 생성되었을 때 채팅방 받기
     useEffect(() => {
-        socket.on("message", (res) => {
+        socket.on("messageAlert", (res) => {
             window.electron.send("message-alert", res._id);
         })
         socket.on("refreshRoomList", () => {
@@ -76,7 +76,6 @@ const RootPage = () => {
         })
 
         socket.on("openRoom",async(roomId)=>{
-            console.log("")
             navigate(`/home/${roomId}`);
         })
 

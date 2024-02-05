@@ -7,7 +7,6 @@ const ImgGroup = ({ members }) => {
     const img_url = process.env.REACT_APP_PROFILE_IMG_URL;
 
     useEffect(() => {
-        console.log("members=", members);
         setUsers(members);
     }, [members])
     return (

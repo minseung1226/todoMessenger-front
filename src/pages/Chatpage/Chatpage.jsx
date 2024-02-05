@@ -41,13 +41,11 @@ const ChatPage = () => {
       setMessageList((prevState) => prevState.concat(res));
     });
 
-    return()=>{
+    return () => {
       socket.off("message");
     }
   }, [roomId, token, socket]);
 
-  useEffect(()=>{
-  },[messageList]);
 
   const sendMessage = (event) => {
     event.preventDefault();
@@ -74,9 +72,9 @@ const ChatPage = () => {
       {/* nav 이부분 추가  */}
       <nav>
         <div className='nav-title'>
-          <strong className="back" onClick={()=>navigate("/home")}>←</strong>
+          <strong className="back" onClick={() => navigate("/home")}>←</strong>
           <strong>{formatRoomName(roomName)}</strong>
-          </div>
+        </div>
 
         <div>
           <Dropdown>

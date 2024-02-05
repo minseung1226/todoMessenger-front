@@ -9,6 +9,10 @@
 
  
   }
+  .room-body .room-list{
+    flex-grow: 1;
+    overflow-y: auto;
+  }
  
   .room-body .room{
     display: flex;

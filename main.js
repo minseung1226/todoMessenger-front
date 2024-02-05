@@ -4,6 +4,8 @@ const path = require("path");
 
 let win;
 let profileUpdate = null;
+let messageWin = null;
+let hideTimer=null;
 function createWindow() {
 
     win = new BrowserWindow({
@@ -35,7 +37,7 @@ ipcMain.on("profile-update", (event) => {
         width: 350,
         height: 500,
         frame: false,
-        resizable:false,
+        resizable: false,
         webPreferences: {
             preload: path.join(__dirname, "preload.js"),
             contextIsolation: true,
@@ -74,33 +76,51 @@ ipcMain.on("open-chat-room", (event, roomId) => {
 })
 
 ipcMain.on("message-alert", (event, chatId) => {
-    const { width, height } = screen.getPrimaryDisplay().workAreaSize;
-    let messageWin = new BrowserWindow({
-        width: 300,
-        height: 80,
-        x: width - 300,
-        y: height - 80,
-        frame: false,
-        alwaysOnTop: true,
-        skipTaskbar: true,
-        transparent: true,
-        webPreferences: {
-            preload: path.join(__dirname, "preload.js"),
-            contextIsolation: true,
-            devTools: true, // 개발자 도구 활성화
-            contextIsolation: true,
-            nodeIntegration: false
+    if (!messageWin|| messageWin.isDestroyed()) {
+        const { width, height } = screen.getPrimaryDisplay().workAreaSize;
+        messageWin = new BrowserWindow({
+            width: 300,
+            height: 80,
+            x: width - 300,
+            y: height - 80,
+            frame: false,
+            alwaysOnTop: true,
+            skipTaskbar: true,
+            transparent: true,
+            webPreferences: {
+                preload: path.join(__dirname, "preload.js"),
+                contextIsolation: true,
+                devTools: true, // 개발자 도구 활성화
+                contextIsolation: true,
+                nodeIntegration: false
+            }
+
+
+        });
+        messageWin.webContents.once('dom-ready', () => {
+            messageWin.webContents.executeJavaScript(`window.electron.setWindowId(${messageWin.id})`);
+
+        });
+        
+        messageWin.loadURL(`http://localhost:3000/message/${chatId}`);
+    }else{
+        messageWin.webContents.once('dom-ready', () => {
+            messageWin.webContents.executeJavaScript(`window.electron.setWindowId(${messageWin.id})`);
+
+        });
+        messageWin.loadURL(`http://localhost:3000/message/${chatId}`);
+        messageWin.show();
+    }
+
+    if (hideTimer) {
+        clearTimeout(hideTimer);
+    }
+
+    // 새 타이머 설정
+    hideTimer = setTimeout(() => {
+        if (messageWin && !messageWin.isDestroyed()) {
+            messageWin.hide(); // 5초 후에 창 숨기기
         }
-
-
-    });
-    messageWin.webContents.once('dom-ready', () => {
-        messageWin.webContents.executeJavaScript(`window.electron.setWindowId(${messageWin.id})`);
-
-    });
-    messageWin.loadURL(`http://localhost:3000/message/${chatId}`);
-    setTimeout(() => {
-        messageWin.hide(); // 5초 후에 창 닫기
     }, 5000);
 })
 ipcMain.on('close-window', (event, windowId) => {
@@ -123,14 +143,14 @@ ipcMain.on('maximize-window', (event, windowId) => {
         window.maximize();
     }
 })
-ipcMain.on("unmaximize-window",(event,windowId)=>{
-    const window=BrowserWindow.fromId(windowId);
-    if(window){
+ipcMain.on("unmaximize-window", (event, windowId) => {
+    const window = BrowserWindow.fromId(windowId);
+    if (window) {
         window.unmaximize();
     }
 })
-ipcMain.handle("is-maximized",async(event,windowId)=>{
-    const window=BrowserWindow.fromId(windowId);
+ipcMain.handle("is-maximized", async (event, windowId) => {
+    const window = BrowserWindow.fromId(windowId);
     return window ? window.isMaximized() : false;
 })
 app.whenReady().then(() => {
