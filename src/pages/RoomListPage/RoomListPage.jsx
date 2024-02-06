@@ -2,20 +2,15 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./RoomListPageStyle.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import HeaderSearchBar from "../../components/HeaderSearchBar/HeaderSearchBar";
-import CreateRoomModal from "../../components/CreateRoomModal/CreateRoomModal";
 import ImgGroup from "../../components/ImgGroup/ImgGroup";
-import { Image } from "react-bootstrap";
 import RoomType from "../../enums/RoomType";
 import SearchInput from "../../components/searchInput/SearchInput";
 
 // 채팅창 목록
-const RoomListPage = ({ roomList, friendList, user, socket, roomType }) => {
-    const token = localStorage.getItem('jwtToken');
+const RoomListPage = ({ roomList, user, roomType }) => {
     const [rooms, setRooms] = useState(roomList);
     const [filterRooms, setFilterRooms] = useState("");
     const navigate = useNavigate("");
-    const [createRoomModalisOpen, setCreateRoomModalisOpen] = useState(false);
     useEffect(() => {
 
         if (roomList.length < 1 || roomType === RoomType.all_room) {
@@ -60,12 +55,15 @@ const RoomListPage = ({ roomList, friendList, user, socket, roomType }) => {
                             <ImgGroup members={room.members} />
                             <div className="room-content">
                                 <div className="room-title">
-                                    {/* <img src="/profile.jpeg"/> */}
                                     <strong>{formatRoomName(room.name)}</strong>
                                     <span className="user-count">{room?.members?.length}</span>
                                 </div>
                                 <div className="room-chat">{formatChat(room.chat)}</div>
                             </div>
+                            {room?.unreadCount>0&&
+                            <div className="circle">
+                                {room.unreadCount}
+                                </div>}
                         </div>
                     ))
                 ) : (

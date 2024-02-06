@@ -19,6 +19,7 @@
     align-items: center;
     background-color: #FBF9F1;
     padding:10px;
+    position: relative; /* 상대 위치 설정 */
 }
 .room-body .room:hover{
     background-color: whitesmoke;
@@ -36,7 +37,20 @@
 .room .room-chat{
     color:#a9a9a9;
 }
-
+.room-body .room .circle{
+    position: absolute; /* 절대 위치 설정 */
+    right: 2%; /* 오른쪽 끝에 위치 */
+    top: 10%; /* 상단에서부터의 위치 */
+    width: 20px; /* 동그라미의 크기 조정 */
+    height: 20px; /* 동그라미의 크기 조정 */
+    background-color: black; /* 배경색을 빨간색으로 설정 */
+    border-radius: 50%; /* 모서리를 둥글게 하여 동그라미 형태로 만듦 */
+    color: white; /* 숫자의 색상을 흰색으로 설정 */
+    text-align: center; /* 텍스트를 가운데 정렬 */
+    line-height: 20px; /* 텍스트를 수직 중앙에 위치시킴 */
+    font-size: 12px; /* 폰트 크기 조정 */
+    font-weight: bold; /* 폰트 두께를 굵게 설정 */
+}
 .room-title{
     display: flex;
 }

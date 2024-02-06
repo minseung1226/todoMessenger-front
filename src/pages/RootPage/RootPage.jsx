@@ -1,16 +1,15 @@
 import React, { useEffect, useRef, useState } from "react";
 import CurrentView from "../../enums/CurrentView";
-import { Container, Row, Col, Nav, Dropdown, Image, NavDropdown } from "react-bootstrap";
+import { Container, Row, Col, Dropdown, Image} from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import RoomListPage from "../RoomListPage/RoomListPage";
 import FriendListPage from "../FriendListPage/FriendListPage";
 import "./RootPageStyle.css";
 import { getSocket, disconnect } from "../../socket/socket";
-import { Link, Route, Routes, useNavigate } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import RoomType from "../../enums/RoomType";
 import CreateRoomModal from "../../components/CreateRoomModal/CreateRoomModal";
 import UserSearchModal from "../../components/UserSearchModal/UserSearchModal";
-import WindowControl from "../../components/WindowControl/WindowControl";
 import ChatPage from "../Chatpage/Chatpage";
 const RootPage = () => {
     const [currentView, setCurrentView] = useState(CurrentView.friendList);
@@ -50,6 +49,7 @@ const RootPage = () => {
 
     const getRoomList = () => {
         socket.emit("roomList", token, (res) => {
+            console.log("room=",res.chatRoomListInfo);
             setRoomList(res.chatRoomListInfo);
 
         })

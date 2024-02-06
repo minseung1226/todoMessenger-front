@@ -16,7 +16,7 @@
 .my-message-container {
   display: flex;
   justify-content: flex-end;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
 }
 .my-message {
   background-color: white;
@@ -29,8 +29,9 @@
 .your-message-container {
   display: flex;
   justify-content: flex-start;
-  /* margin-bottom: 5px; */
+  margin-bottom: 5px;
   align-items: center;
+
 }
 .your-message {
   background-color: white;
@@ -39,10 +40,22 @@
   max-width: 200px;
   font-size: 12px;
 }
-
-.profile-image {
+.message-container .you-count{
+  padding-left:5px;
+  font-size:10px;
+}
+.message-container .my-count{
+  padding-right:5px;
+  font-size:10px;
+}
+.message-container .profile-img {
   width: 38px;
   height: 38px;
   border-radius: 100px;
   margin-right: 10px;
+}
+.message-container .user-name{
+  font-size: 15px;
+  padding-bottom: 3px;
+  font-weight: bold;
 }
