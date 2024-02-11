@@ -29,9 +29,12 @@ const ChatPage = () => {
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    console.log("messageList=",messageList);
   }, [messageList])
+
   useEffect(() => {
     socket.emit("getAllChatsAndUser", roomId, token, (res) => {
+     
       setUser(res.roomChatUser.user);
       setMessageList(res.roomChatUser.chats);
       setRoomName(res.roomChatUser.room.name);
@@ -40,8 +43,13 @@ const ChatPage = () => {
     socket.on("message", (res) => {
       setMessageList((prevState) => prevState.concat(res));
     });
+    socket.on("refreshChats", (res)=>{
+      setMessageList(res);
+    })
 
     return () => {
+      socket.emit("roomOut",roomId,token);
+      socket.off("refreshChats");
       socket.off("message");
     }
   }, [roomId, token, socket]);

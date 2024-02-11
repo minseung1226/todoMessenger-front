@@ -27,7 +27,7 @@
     
 }
 .modal {
-    --bs-modal-margin: 6rem;
+    --bs-modal-margin: 5rem;
     --bs-modal-box-shadow: var(--bs-box-shadow);
 }
 

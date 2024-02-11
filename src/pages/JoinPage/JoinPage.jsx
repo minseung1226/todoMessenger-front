@@ -22,6 +22,11 @@ const JoinPage = () => {
     const [alertIsOpen, setAlertIsOpen] = useState(false);
     const [joinSuccess, setJoinSuccess] = useState(false);
     const idDuplication = () => {
+        if (!id ||id.length < 1) {
+            setAlertMessage("ID를 입력해 주세요");
+            setAlertIsOpen(true);
+            return ;
+        }
         fetch(`${server_url}/idDuplication`, {
             method: "post",
             headers: {
@@ -80,7 +85,7 @@ const JoinPage = () => {
 
     const join = (event) => {
         event.preventDefault();
-        if(pw!==pw2){
+        if (pw !== pw2) {
             setAlertMessage("비밀번호가 일치하지 않습니다.")
             setAlertIsOpen(true);
             return;
@@ -142,7 +147,9 @@ const JoinPage = () => {
                                 <Form.Control
                                     value={id}
                                     disabled={idCheck}
-                                    onChange={(event) => setId(event.target.value)}
+                                    onChange={(event) => {
+                                        
+                                        setId(event.target.value)}}
                                     placeholder="ID" />
                             </div>
                         </Col>
@@ -161,7 +168,7 @@ const JoinPage = () => {
                                 <Form.Control type="password"
                                     value={pw}
                                     onChange={(event) => setPw(event.target.value)}
-                                     placeholder="비밀번호" />
+                                    placeholder="비밀번호" />
                             </div>
                         </Col>
                     </Row>
@@ -171,8 +178,8 @@ const JoinPage = () => {
                             <div className="form-field d-flex align-items-center">
                                 <span className="fas fa-key"></span>
                                 <Form.Control type="password"
-                                value={pw2}
-                                onChange={(event) => setPw2(event.target.value)}
+                                    value={pw2}
+                                    onChange={(event) => setPw2(event.target.value)}
                                     placeholder="비밀번호 확인" />
                             </div>
                         </Col>

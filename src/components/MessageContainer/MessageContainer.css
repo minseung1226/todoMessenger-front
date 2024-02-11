@@ -29,7 +29,7 @@
 .your-message-container {
   display: flex;
   justify-content: flex-start;
-  margin-bottom: 5px;
+  margin-bottom: 15px;
   align-items: center;
 
 }
@@ -44,9 +44,31 @@
   padding-left:5px;
   font-size:10px;
 }
+
+.message-container .my-date-and-count {
+  float: left;
+  clear: left;
+  margin-right:5px;
+}
 .message-container .my-count{
-  padding-right:5px;
+  float:right;
+  padding-right:2px;
   font-size:10px;
+}
+.message-container .you-date-and-count {
+  float: right;
+  clear: right;
+  margin-left:5px;
+}
+.message-container .you-count{
+  float:left;
+  padding-left:2px;
+  font-size:10px;
+}
+.message-container .my-date,
+.message-container .you-date{
+  font-size: 10px;
+
 }
 .message-container .profile-img {
   width: 38px;

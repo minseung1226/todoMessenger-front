@@ -54,14 +54,15 @@
 
 
   .round-sm-btn{
+    padding:0 !important;
     box-shadow: none;
-    width: 60px;
+    width: 70px;
     height: 30px;
     border-radius: 25px;
     box-shadow: 3px 3px 3px #b1b1b1,
         -3px -3px 3px #fff;
     letter-spacing: 1.3px;
-    font-size:13px;
+    font-size:15px;
   }
 .modal-content{
     background: #ecf0f3;

@@ -3,11 +3,11 @@
     width: 300px;
     background: #EEF5FF;
 }
-.modal {
+/* .modal {
     
     --bs-modal-margin: 6rem;
     --bs-modal-box-shadow: var(--bs-box-shadow);
-}
+} */
 
 .user-search-modal .search-input-row{
     margin-bottom: 20px;

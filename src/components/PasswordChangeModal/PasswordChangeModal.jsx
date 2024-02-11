@@ -43,7 +43,7 @@ const PasswordChangeModal=({token})=>{
           비밀번호 변경
         </Button>
   
-        <Modal show={show} onHide={()=>setShow(false)}>
+        <Modal show={show} onHide={()=>setShow(false)} className="password-modal">
           <Modal.Header closeButton className="password-modal-header">
             <Modal.Title>
             <h6>비밀번호 변경</h6>
