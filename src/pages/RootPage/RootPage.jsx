@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import CurrentView from "../../enums/CurrentView";
-import { Container, Row, Col, Dropdown, Image} from "react-bootstrap";
+import { Container, Row, Col, Dropdown, Image } from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import RoomListPage from "../RoomListPage/RoomListPage";
 import FriendListPage from "../FriendListPage/FriendListPage";
@@ -11,6 +11,7 @@ import RoomType from "../../enums/RoomType";
 import CreateRoomModal from "../../components/CreateRoomModal/CreateRoomModal";
 import UserSearchModal from "../../components/UserSearchModal/UserSearchModal";
 import ChatPage from "../Chatpage/Chatpage";
+import CustomCalendar from "../../components/Calendar/CustomCalendar";
 const RootPage = () => {
     const [currentView, setCurrentView] = useState(CurrentView.friendList);
     const [friendList, setFriendList] = useState([]);
@@ -24,7 +25,7 @@ const RootPage = () => {
     const navigate = useNavigate("");
     const [friendImg, setFriendImg] = useState("/friend.png");
     const [roomImg, setRoomImg] = useState("/room.png");
-    const [roomType, setRoomType] = useState(RoomType.all_room);
+    const [roomType, setRoomType] = useState(RoomType.calendar);
     const [createRoomModalisOpen, setCreateRoomModalisOpen] = useState(false);
     const [userSearchModalIsOpen, setUserSearchModalIsOpen] = useState(false);
     // user를 offline으로 바꾸고 localStorage 비우기
@@ -49,7 +50,6 @@ const RootPage = () => {
 
     const getRoomList = () => {
         socket.emit("roomList", token, (res) => {
-            console.log("room=",res.chatRoomListInfo);
             setRoomList(res.chatRoomListInfo);
 
         })
@@ -75,7 +75,7 @@ const RootPage = () => {
             setUser(res.user);
         })
 
-        socket.on("openRoom",async(roomId)=>{
+        socket.on("openRoom", async (roomId) => {
             navigate(`/home/${roomId}`);
         })
 
@@ -167,22 +167,30 @@ const RootPage = () => {
                     <div className="header-bar">
                         <div>
                             <span
+                                className={div_btn_className(RoomType.calendar)}
+                                onClick={() => {
+                                    setRoomType(RoomType.calendar);
+                                    navigate("/home")
+                                }}>
+                                캘린더</span>
+                            <span
                                 className={div_btn_className(RoomType.all_room)}
                                 onClick={() => {
                                     setRoomType(RoomType.all_room);
-                                    navigate("/home")
+                                    navigate("/home/rooms")
                                 }}>
                                 전체 채팅</span>
+
                             <span className={div_btn_className(RoomType.normal_room)}
                                 onClick={() => {
                                     setRoomType(RoomType.normal_room);
-                                    navigate("/home")
+                                    navigate("/home/rooms")
                                 }}>
                                 일반 채팅</span>
                             <span className={div_btn_className(RoomType.group_room)}
                                 onClick={() => {
                                     setRoomType(RoomType.group_room);
-                                    navigate("/home")
+                                    navigate("/home/rooms")
                                 }}>
                                 그룹 채팅</span>
                         </div>
@@ -227,7 +235,8 @@ const RootPage = () => {
                         onClose={() => setCreateRoomModalisOpen(false)}
                     />
                     <Routes>
-                        <Route path="" element={<RoomListPage roomList={roomList}
+                        <Route path="" element={<CustomCalendar />} />
+                        <Route path="rooms" element={<RoomListPage roomList={roomList}
                             friendList={friendList}
                             user={user}
                             socket={socket}
