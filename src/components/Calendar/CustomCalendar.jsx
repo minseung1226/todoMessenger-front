@@ -5,6 +5,7 @@ import "./CustomCalendar.css"
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button } from 'react-bootstrap';
 import ScheduleAddModal from '../ScheduleAddModal/ScheduleAddModal';
+import moment from 'moment';
 const CustomCalendar = () => {
   const [value, setValue] = useState(new Date());
   const [isOpen,setIsOpen]=useState(false);
@@ -16,7 +17,10 @@ const CustomCalendar = () => {
   return (
     <div className="calendar-container">
 
-        <Calendar onChange={onChange} value={value} />
+        <Calendar onChange={onChange}
+         value={value}
+        formatDay={(locale,date)=>moment(date).format("DD")}
+         />
 
 
 

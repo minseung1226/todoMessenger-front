@@ -1,12 +1,15 @@
 import { Modal, Button } from "react-bootstrap";
 import { useState } from "react";
-import TimePicker from 'react-time-picker';
+import Calendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css';
+import moment from "moment";
 const ScheduleAddModal = ({ isOpen, onClose }) => {
-    const [time, setTime] = useState('10:00');
-  
-    const handleTimeChange = (event) => {
-        setTime(event.target.value);
+    const [value, setValue] = useState(new Date());
+
+    const onChange = (nextValue) => {
+        setValue(nextValue);
     };
+
     return (
         <Modal show={isOpen} onHide={onClose} className="schedule-add-modal"
             backdrop="static" keyboard={false} >
@@ -15,10 +18,10 @@ const ScheduleAddModal = ({ isOpen, onClose }) => {
             </Modal.Header>
 
             <Modal.Body className="body">
-            <TimePicker
-                    onChange={setTime}
-                    value={time}
-                    clockIcon={null} // 시계 아이콘 제거
+                <Calendar
+                    onChange={onChange}
+                    value={value}
+                    formatDay={(locale,date)=>moment(date).format("DD")}
                 />
             </Modal.Body>
 
