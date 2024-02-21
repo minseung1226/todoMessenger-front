@@ -1,0 +1,40 @@
+.schedule-add-modal .modal-content{
+    height: 320px;
+    width: 400px;
+}
+
+.schedule-add-modal .body{
+    padding:15px;
+}
+.schedule-add-modal .daily-check{
+    margin-right:0px;
+}
+.schedule-add-modal .title{
+    margin-top:10px;
+}
+
+.schedule-add-modal .title .title-input{
+    resize: none;
+}
+
+.schedule-add-modal .sm-text{
+    font-size:13px;
+}
+
+.react-datepicker__input-container input{
+    
+    padding: 7px;
+    border: 1px solid #e0e0e0;
+    border-radius:15px;
+    width:170px;
+    margin-right:20px;
+}
+.react-datepicker__input-container .date{
+    display: flex;
+}
+
+
+.react-datepicker__input-container input:hover{
+    background-color: #f0f0f0;
+    cursor: pointer;
+}

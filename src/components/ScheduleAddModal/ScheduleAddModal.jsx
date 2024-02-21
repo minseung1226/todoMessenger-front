@@ -1,14 +1,21 @@
 import { Modal, Button } from "react-bootstrap";
-import { useState } from "react";
-import Calendar from 'react-calendar';
-import 'react-calendar/dist/Calendar.css';
-import moment from "moment";
+import { useEffect, useState } from "react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { ko } from 'date-fns/locale';
+import "./ScheduleAddModal.css"
+import { Form } from "react-bootstrap";
+import 'bootstrap/dist/css/bootstrap.min.css';
 const ScheduleAddModal = ({ isOpen, onClose }) => {
-    const [value, setValue] = useState(new Date());
+    const [date, setDate] = useState(new Date());
+    const [isDaily, setIsDaily] = useState(false);
+    
+    useEffect(()=>{
+        const onSubmit=()=>{
+            
+        }
+    },[])
 
-    const onChange = (nextValue) => {
-        setValue(nextValue);
-    };
 
     return (
         <Modal show={isOpen} onHide={onClose} className="schedule-add-modal"
@@ -18,11 +25,32 @@ const ScheduleAddModal = ({ isOpen, onClose }) => {
             </Modal.Header>
 
             <Modal.Body className="body">
-                <Calendar
-                    onChange={onChange}
-                    value={value}
-                    formatDay={(locale,date)=>moment(date).format("DD")}
-                />
+                <div className="date">
+                    <DatePicker selected={date} onChange={date => setDate(date)}
+                        locale={ko}
+                        dateFormat="yyyy년 MM월 dd일"
+                        disabled={isDaily} />
+
+                    <Form.Check
+                        className="daily-check"
+                        inline
+                        label="매일"
+                        checked={isDaily}
+                        onChange={(e) => {
+                            setIsDaily(e.target.checked)
+                        }}
+                    />
+                    <span className="sm-text">(한달 기준)</span>
+                </div>
+
+
+                <div className="title">
+                    <Form.Group >
+                        <Form.Label>제목</Form.Label>
+                        <Form.Control as="textarea"className="title-input" rows={2} />
+                    </Form.Group>
+                </div>
+
             </Modal.Body>
 
             <Modal.Footer className="footer">
