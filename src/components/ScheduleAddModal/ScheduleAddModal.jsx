@@ -1,21 +1,32 @@
-import { Modal, Button } from "react-bootstrap";
+import { Modal} from "react-bootstrap";
 import { useEffect, useState } from "react";
-import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { ko } from 'date-fns/locale';
 import "./ScheduleAddModal.css"
 import { Form } from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
-const ScheduleAddModal = ({ isOpen, onClose }) => {
-    const [date, setDate] = useState(new Date());
-    const [isDaily, setIsDaily] = useState(false);
+import Button from "react-multi-date-picker/components/button"
+import DatePicker from "react-multi-date-picker";
+const ScheduleAddModal = ({ isOpen, onClose, socket,token }) => {
+    const [message, setMessage] = useState("");
+    const [dates, setDates] = useState([]);
     
     useEffect(()=>{
-        const onSubmit=()=>{
-            
-        }
-    },[])
+        console.log("date=",dates);
+    },[dates])
 
+    const onSubmit = () => {
+        socket.emit("scheduleCreate", token, message, dates, (res) => {
+            setMessage("");
+            setDates([]);
+            onClose();
+        })
+    }
+
+    const closeModal = () => {
+        setMessage("");
+        setDates([]);
+        onClose();
+    }
 
     return (
         <Modal show={isOpen} onHide={onClose} className="schedule-add-modal"
@@ -26,36 +37,37 @@ const ScheduleAddModal = ({ isOpen, onClose }) => {
 
             <Modal.Body className="body">
                 <div className="date">
-                    <DatePicker selected={date} onChange={date => setDate(date)}
-                        locale={ko}
-                        dateFormat="yyyy년 MM월 dd일"
-                        disabled={isDaily} />
+                    <strong className="select-date-title">선택된 날짜</strong>
 
-                    <Form.Check
-                        className="daily-check"
-                        inline
-                        label="매일"
-                        checked={isDaily}
-                        onChange={(e) => {
-                            setIsDaily(e.target.checked)
-                        }}
+                    <DatePicker
+                        value={dates}
+                        onChange={setDates}
+                        multiple
+                        format="YYYY-MM-DD"
+                        render={<Button  className="custom-btn">날짜 선택</Button>}
                     />
-                    <span className="sm-text">(한달 기준)</span>
+                </div>
+
+
+                <div className="select-date">
+                    {dates.map(date => date.format("YYYY-MM-DD")).join(", ")}
                 </div>
 
 
                 <div className="title">
+                    <strong>message</strong>
                     <Form.Group >
-                        <Form.Label>제목</Form.Label>
-                        <Form.Control as="textarea"className="title-input" rows={2} />
+                        <Form.Control as="textarea" className="title-input" rows={2}
+                            value={message}
+                            onChange={(e) => setMessage(e.target.value)} />
                     </Form.Group>
                 </div>
 
             </Modal.Body>
 
             <Modal.Footer className="footer">
-                <Button variant="outline-dark" onClick={onClose}>닫기</Button>
-                <Button variant="outline-dark">확인</Button>
+                <Button className="custom-btn big-btn" onClick={closeModal}>닫기</Button>
+                <Button className="custom-btn big-btn" onClick={onSubmit}>확인</Button>
             </Modal.Footer>
         </Modal>
 

@@ -33,6 +33,33 @@
     height: 30px;
 }
 
+.schedule .schedule-list{
+  border-radius: 10px;
+  border:1px solid #b3b3b3;
+  margin : 5px;
+  background-color: #f8f8f8;
+}
+
+.schedule .schedule-list .message-and-btn{
+  padding-top: 20px;
+  display: flex;
+
+  padding-left: 20px;
+}
+.schedule .schedule-list .message-and-btn:hover{
+  cursor: pointer;
+}
+.schedule .schedule-list .message-and-btn .message{
+  margin-right:10px;
+  font-size: 17px;;
+}
+.schedule .schedule-list .schedule-close-btn{
+  float: right;
+  margin-right:10px;
+}
+.schedule .schedule-list .schedule-close-btn:hover{
+  cursor: pointer;
+}
 
 
 .react-calendar {

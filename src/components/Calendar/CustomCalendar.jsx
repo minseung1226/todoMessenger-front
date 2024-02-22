@@ -6,7 +6,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button } from 'react-bootstrap';
 import ScheduleAddModal from '../ScheduleAddModal/ScheduleAddModal';
 import moment from 'moment';
-const CustomCalendar = () => {
+import { Form } from 'react-bootstrap';
+const CustomCalendar = ({socket,token}) => {
   const [value, setValue] = useState(new Date());
   const [isOpen,setIsOpen]=useState(false);
 
@@ -31,8 +32,16 @@ const CustomCalendar = () => {
              variant='outline-dark'>일정 추가</Button>
           </div>
 
-          <div className='schedule-content'>
-              <ScheduleAddModal isOpen={isOpen} onClose={()=>setIsOpen(false)}/>
+          <div className='schedule-list'>
+              <div className='schedule-content'>
+                  <div className='schedule-close-btn'>x</div>
+                <div className='message-and-btn'>
+                  <div className='message'>책읽기 30분</div>
+                  <Form.Check />
+                </div>
+              </div>
+              <ScheduleAddModal socket={socket} token={token}
+               isOpen={isOpen} onClose={()=>setIsOpen(false)}/>
           </div>
       </div>
     </div>

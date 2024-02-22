@@ -235,7 +235,7 @@ const RootPage = () => {
                         onClose={() => setCreateRoomModalisOpen(false)}
                     />
                     <Routes>
-                        <Route path="" element={<CustomCalendar />} />
+                        <Route path="" element={<CustomCalendar socket={socket} token={token} />} />
                         <Route path="rooms" element={<RoomListPage roomList={roomList}
                             friendList={friendList}
                             user={user}
