@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import "./CustomCalendar.css"
@@ -7,19 +7,40 @@ import { Button } from 'react-bootstrap';
 import ScheduleAddModal from '../ScheduleAddModal/ScheduleAddModal';
 import moment from 'moment';
 import { Form } from 'react-bootstrap';
+import { set } from 'date-fns';
 const CustomCalendar = ({socket,token}) => {
-  const [value, setValue] = useState(new Date());
+  const [date, setDate] = useState(new Date());
   const [isOpen,setIsOpen]=useState(false);
-
+  const [schedules,setSchedules]=useState([]);
   const onChange = (nextValue) => {
-    setValue(nextValue);
+    setDate(nextValue);
   };
+
+  useEffect(()=>{
+    socket.emit("schedule",token,date,(res)=>{
+      console.log("res=",res);
+     setSchedules(res); 
+    })
+  },[date])
+
+  const handleItemClick=(index)=>{
+    const newSchedules=schedules.map((schedule,i)=>{
+      if(i==index){
+        return {...schedule,success:!schedule.success};
+      }
+      return schedule;
+    })
+
+    setSchedules(newSchedules);
+
+    socket.emit("ScheduleChangeSuccess",schedules[index]._id);
+  }
 
   return (
     <div className="calendar-container">
 
         <Calendar onChange={onChange}
-         value={value}
+         value={date}
         formatDay={(locale,date)=>moment(date).format("DD")}
          />
 
@@ -33,13 +54,22 @@ const CustomCalendar = ({socket,token}) => {
           </div>
 
           <div className='schedule-list'>
-              <div className='schedule-content'>
-                  <div className='schedule-close-btn'>x</div>
-                <div className='message-and-btn'>
-                  <div className='message'>책읽기 30분</div>
-                  <Form.Check />
-                </div>
-              </div>
+            {schedules.map((schedule,index)=>(
+              <div className='schedule-content'
+                key={index}
+                onClick={()=>handleItemClick(index)}
+                >
+              <div className='schedule-close-btn'>x</div>
+            <div className='message-and-btn'>
+              <div className='message'>{schedule.message}</div>
+              <Form.Check 
+                type="checkbox"
+                checked={schedule.success}
+                onClick={()=>handleItemClick(index)}/>
+            </div>
+          </div>
+            ))}
+              
               <ScheduleAddModal socket={socket} token={token}
                isOpen={isOpen} onClose={()=>setIsOpen(false)}/>
           </div>

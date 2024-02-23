@@ -1,10 +1,13 @@
-.input-area {
-    background-color: red;
+.chat-area {
+
     min-height:50px;
     display: flex;
     bottom: 0;
     width: 100%;
   }
+.chat-input{
+  width:100%;
+}
   .plus-button{
     background-color: lightslategray;
     width: 50px;
@@ -30,7 +33,7 @@
   }
   
   
-  input{
+.chat-area  input{
     border:none;
     width: 100%;
     height: 100%;

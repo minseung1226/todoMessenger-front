@@ -5,11 +5,11 @@ import './InputField.css'
 const InputField = ({message,setMessage,sendMessage}) => {
 
   return (
-    <div className="input-area">
-          {/* <div className="plus-button">+</div> */}
+    <div className="chat-area">
           <form onSubmit={sendMessage} className="input-container">
             <Input
               placeholder="Type in here…"
+              className="chat-input"
               value={message}
               onChange={(event) => {
                 setMessage(event.target.value)
@@ -19,14 +19,6 @@ const InputField = ({message,setMessage,sendMessage}) => {
               rows={1}
             />
 
-            {/* <Button
-
-              disabled={message === ""}
-              type="submit"
-              className="send-button"
-            >
-              전송
-            </Button> */}
           </form>
         </div>
   )

@@ -33,33 +33,40 @@
     height: 30px;
 }
 
-.schedule .schedule-list{
+/* .schedule .schedule-list{
   border-radius: 10px;
   border:1px solid #b3b3b3;
   margin : 5px;
   background-color: #f8f8f8;
+} */
+.schedule .schedule-list .schedule-content{
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* 부드러운 전환 효과 */
+  border-radius: 10px; /* 부드러운 모서리 */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* 기본 그림자 */
+  border:1px solid #b3b3b3;
+  margin : 10px;
+  background-color: #f0f0f0;
 }
-
+.schedule .schedule-list .schedule-content:hover{
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+}
 .schedule .schedule-list .message-and-btn{
-  padding-top: 20px;
+  padding-top: 10px;
   display: flex;
 
   padding-left: 20px;
 }
-.schedule .schedule-list .message-and-btn:hover{
-  cursor: pointer;
-}
+
 .schedule .schedule-list .message-and-btn .message{
   margin-right:10px;
-  font-size: 17px;;
+  font-size: 20px;;
 }
 .schedule .schedule-list .schedule-close-btn{
   float: right;
   margin-right:10px;
 }
-.schedule .schedule-list .schedule-close-btn:hover{
-  cursor: pointer;
-}
+
 
 
 .react-calendar {
