@@ -1,5 +1,6 @@
 .calendar-container{
     flex-grow: 1;
+    overflow-y: auto;
     padding-left: 10%;
     padding-right: 10%;
     /* box-sizing: border-box; */
@@ -13,6 +14,7 @@
     width: 100%;
 }
 .calendar-container .schedule{
+    display: flex;
     flex-grow: 1;
     overflow-y: auto;
     background-color: white;
@@ -20,6 +22,7 @@
     margin-top:10px;
     margin-bottom: 10px;
     padding:10px;
+    flex-direction: column;
 
 }
 .calendar-container .schedule .schedule-header{
@@ -32,20 +35,18 @@
 .schedule-header .schedule-add-btn{
     height: 30px;
 }
+.schedule .schedule-list{
+  flex-grow: 1;
+  overflow-y: auto;
 
-/* .schedule .schedule-list{
-  border-radius: 10px;
-  border:1px solid #b3b3b3;
-  margin : 5px;
-  background-color: #f8f8f8;
-} */
+}
 .schedule .schedule-list .schedule-content{
   transition: transform 0.3s ease, box-shadow 0.3s ease; /* 부드러운 전환 효과 */
   border-radius: 10px; /* 부드러운 모서리 */
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* 기본 그림자 */
   border:1px solid #b3b3b3;
   margin : 10px;
-  background-color: #f0f0f0;
+
 }
 .schedule .schedule-list .schedule-content:hover{
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
@@ -54,12 +55,12 @@
 .schedule .schedule-list .message-and-btn{
   padding-top: 10px;
   display: flex;
-
+  padding-bottom: 10px;
   padding-left: 20px;
 }
 
 .schedule .schedule-list .message-and-btn .message{
-  margin-right:10px;
+  margin-left:10px;
   font-size: 20px;;
 }
 .schedule .schedule-list .schedule-close-btn{
@@ -67,7 +68,20 @@
   margin-right:10px;
 }
 
+.schedule-count{
+  /* float: right; */
+  font-size: 13px;
+  border-radius: 20px;
+  background-color: white;
+  color: black;
+  padding-left: 3px;
+  padding-right: 3px;
 
+
+  position: absolute;
+  top: 3px;
+  right:3px;
+}
 
 .react-calendar {
     border-radius: 10px;
@@ -98,4 +112,9 @@
   .react-calendar__tile--active {
     background: var(--festie-primary-orange, #707070);
     color: white;
+  }
+  .react-calendar__month-view__days__day{
+    border: 1px solid #f0f0f0 !important;
+    border-radius: 10px;
+    position: relative;
   }

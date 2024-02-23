@@ -7,22 +7,35 @@ import { Button } from 'react-bootstrap';
 import ScheduleAddModal from '../ScheduleAddModal/ScheduleAddModal';
 import moment from 'moment';
 import { Form } from 'react-bootstrap';
-import { set } from 'date-fns';
 const CustomCalendar = ({socket,token}) => {
   const [date, setDate] = useState(new Date());
   const [isOpen,setIsOpen]=useState(false);
   const [schedules,setSchedules]=useState([]);
+  const [scheduleCounts,setScheduleCounts]=useState([]);
   const onChange = (nextValue) => {
     setDate(nextValue);
   };
 
   useEffect(()=>{
     socket.emit("schedule",token,date,(res)=>{
-      console.log("res=",res);
      setSchedules(res); 
     })
   },[date])
 
+  useEffect(()=>{
+    socket.on("refreshScheduleAndCount",(schedules,scheduleCounts)=>{
+      setDate(new Date());
+      setSchedules(schedules);
+      setScheduleCounts(scheduleCounts);
+    });
+
+    socket.emit("getScheduleCountForMonth",token,date,(res)=>{
+      setScheduleCounts(res);
+    })
+  },[socket])
+
+
+  // 일정완료 버튼 클릭 이벤트
   const handleItemClick=(index)=>{
     const newSchedules=schedules.map((schedule,i)=>{
       if(i==index){
@@ -36,12 +49,40 @@ const CustomCalendar = ({socket,token}) => {
     socket.emit("ScheduleChangeSuccess",schedules[index]._id);
   }
 
+  //캘린더의 월이 바뀔때 일별 스케줄 개수 가져오기
+  const monthChange=({activeStartDate,view})=>{
+    if(view==="month"){
+      socket.emit("getScheduleCountForMonth",token,activeStartDate,(res)=>{
+        setScheduleCounts(res);
+      })
+    }
+  }
+
+  const tileContent = ({ date, view }) => {
+    if (view === 'month') {
+      // date 객체를 ISO 문자열로 변환
+      const dateStr = date.toISOString().split('T')[0]; // "2024-02-22"
+      
+      // ISO 8601 형식의 키 값을 로컬 시간대 날짜로 변환하여 비교
+      const data = scheduleCounts[dateStr];
+      if (data) {
+        // 데이터가 있다면 표시합니다.
+        return <p className='schedule-count'>{data}</p>;
+      }
+    }
+    return null;
+  };
+
+  
+
   return (
     <div className="calendar-container">
 
         <Calendar onChange={onChange}
          value={date}
         formatDay={(locale,date)=>moment(date).format("DD")}
+        onActiveStartDateChange={monthChange}
+        tileContent={tileContent}
          />
 
 
@@ -61,11 +102,14 @@ const CustomCalendar = ({socket,token}) => {
                 >
               <div className='schedule-close-btn'>x</div>
             <div className='message-and-btn'>
-              <div className='message'>{schedule.message}</div>
-              <Form.Check 
+            <Form.Check 
                 type="checkbox"
                 checked={schedule.success}
-                onClick={()=>handleItemClick(index)}/>
+                onChange={()=>handleItemClick(index)}/>
+                {schedule.success?<div  className='message'><del style={{color:"#d0d0d0"}}>{schedule.message}</del></div>:
+                <div className='message'>{schedule.message}</div>}
+              
+              
             </div>
           </div>
             ))}
