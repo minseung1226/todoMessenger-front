@@ -241,7 +241,7 @@ const RootPage = () => {
                             user={user}
                             socket={socket}
                             roomType={roomType} />} />
-                        <Route path=":roomId" element={<ChatPage />} />
+                        <Route path=":roomId" element={<ChatPage roomType={roomType} />} />
                     </Routes>
 
 

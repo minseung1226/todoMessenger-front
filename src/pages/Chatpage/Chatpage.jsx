@@ -6,7 +6,8 @@ import { useParams, useNavigate } from "react-router-dom"
 import { getSocket } from "../../socket/socket";
 import { Dropdown, Image } from "react-bootstrap";
 import AlertOkModal from "../../components/AlertOkModal/AlertOkModal";
-const ChatPage = () => {
+import RoomType from "../../enums/RoomType";
+const ChatPage = ({roomType}) => {
 
   const token = localStorage.getItem("jwtToken");
   const [roomName, setRoomName] = useState("");
@@ -80,7 +81,7 @@ const ChatPage = () => {
       {/* nav 이부분 추가  */}
       <nav>
         <div className='nav-title'>
-          <strong className="back" onClick={() => navigate("/home")}>←</strong>
+          <strong className="back" onClick={() =>roomType===RoomType.calendar? navigate("/home"):navigate("/home/rooms")}>←</strong>
           <strong>{formatRoomName(roomName)}</strong>
         </div>
 

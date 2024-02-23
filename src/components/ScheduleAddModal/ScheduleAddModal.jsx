@@ -9,10 +9,6 @@ import DatePicker from "react-multi-date-picker";
 const ScheduleAddModal = ({ isOpen, onClose, socket,token }) => {
     const [message, setMessage] = useState("");
     const [dates, setDates] = useState([]);
-    
-    useEffect(()=>{
-        console.log("date=",dates);
-    },[dates])
 
     const onSubmit = () => {
         socket.emit("scheduleCreate", token, message, dates, (res) => {
