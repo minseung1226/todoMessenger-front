@@ -156,7 +156,7 @@ ipcMain.handle("is-maximized", async (event, windowId) => {
 app.whenReady().then(() => {
     createWindow();
 
-    //Menu.setApplicationMenu(null);
+    Menu.setApplicationMenu(null);
 });
 
 app.on('window-all-closed', () => {
