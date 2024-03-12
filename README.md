@@ -13,6 +13,7 @@
 
 ## ♣️기술스택
 - **프론트앤드** : React, react-bootstrap
+- **프레임워크** : Electron
 - **데이터 베이스** : MongoDB
 - **라이브러리** : react-bootstrap , react-calendar
 
